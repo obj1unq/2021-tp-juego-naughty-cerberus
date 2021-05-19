@@ -1,8 +1,17 @@
 import wollok.game.*
-import pepita.*
+import nivelesycfg.*
+import personaje.*
+
 
 program juego {
-	game.title("Juego Base")
-	game.addVisual(pepita)
+	game.title("Conurvania")
+	game.width(20)
+	game.height(10)
+	game.cellSize(50)
+	game.boardGround("fondo.png")	
+	nivel0.iniciar()
+	game.showAttributes(personajePrincipal)
+	config.asignarTeclas()	
+	
 	game.start()
 }
