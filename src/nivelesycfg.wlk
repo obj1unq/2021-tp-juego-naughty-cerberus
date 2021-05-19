@@ -12,12 +12,17 @@ object nivel0 {
 }
 
 
+
 object config {
 	method asignarTeclas() {
-		keyboard.a().onPressDo({personajePrincipal.moverse(personajePrincipal.position().left(0.5))})
-		keyboard.d().onPressDo({personajePrincipal.moverse(personajePrincipal.position().right(0.5))})
-		keyboard.j().onPressDo({personajePrincipal.esquivar(personajePrincipal.position().left(1))})
+		keyboard.a().onPressDo({personajePrincipal.moverse(personajePrincipal.position().left(0.5))
+								personajePrincipal.mirandoA("Left")})
+		keyboard.d().onPressDo({personajePrincipal.moverse(personajePrincipal.position().right(0.5))
+								personajePrincipal.mirandoA("Right")})
+		keyboard.j().onPressDo({personajePrincipal.esquivar(personajePrincipal.orientacionEsquivar())})
 	}
 	
-	
+	method recargaEnergia(){
+		game.onTick(1000, "recargaEnergia", { personajePrincipal.recargarEnergia() })
+	}
 }
