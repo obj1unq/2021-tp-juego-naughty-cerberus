@@ -10,29 +10,22 @@ object personajePrincipal {
 
 	method image() = direccion.imagenPersonaje()
 
-	method moverse(nuevaPosicion) {
+	method actualizarPosicion(nuevaPosicion) {
 		position = nuevaPosicion
 	}
+	method moverse(){
+		direccion.moveMC()
+	}
 	
-	
-	
-	method orientacionEsquivar(){	// Hacia donde está mirando el personaje
-		if (mirandoA == "Right"){
-			return self.position().right(2)
-		}
-		else {
-			return self.position().left(2)
-		}
-	}		
 	
 	method esquivar(nuevaPosicion) {
 		self.verificarEnergia()
-		energia -= 10
-		position = nuevaPosicion
+		energia -= 30
+		self.actualizarPosicion(nuevaPosicion)
 	}
 
 	method verificarEnergia() {
-		if (energia < 20) {
+		if (energia < 30) {
 			self.error("No tengo energia para esquivar")
 		}
 	}
@@ -42,12 +35,25 @@ object personajePrincipal {
 		energia = (energia + 10).min(100)
 
 	}
-
+  
 }
 object left{
+	var doubleTap = false
 	
-	method movimiento(objeto,num){
-		objeto.position().left(num)
+	method moveMC(){  // Mov izquierda del MainCharacter (personaje principal)	
+		if(doubleTap){ 			// Accion de esquivar
+				personajePrincipal.esquivar(personajePrincipal.position().left(2)) 
+				}// Esta parte se podria reemplazar por una animacion continua de moverse y volver a usar otra tecla para esquivar
+		else{	
+				game.schedule(1, { => doubleTap = true })
+				personajePrincipal.actualizarPosicion(personajePrincipal.position().left(0.5))
+				game.schedule(100, { => doubleTap = false })
+				}
+		}
+	
+	
+	method move(objeto,num){ // general para cualquier objecto, pensado para usarse en los enemigos
+		objeto.actualizarPosicion(objeto.position().left(num)) // todos los objetos que se muevan deben entender el metodo "actualizarPosicion"
 		}
 	method imagenPersonaje(){
 		return "personaje_Stand_Left.png"
@@ -55,11 +61,25 @@ object left{
 }
 
 object right{
+	var doubleTap = false
 	
-	method movimiento(objeto,num){
-		objeto.position().right(num)
+	method moveMC(){  // Mov izquierda del MainCharacter (personaje principal)	
+		if(doubleTap){ 			// Accion de esquivar
+				personajePrincipal.esquivar(personajePrincipal.position().right(2))  
+				}// Esta parte se podria reemplazar por una animacion continua de moverse y volver a usar otra tecla para esquivar
+		else{	
+				game.schedule(1, { => doubleTap = true })
+				personajePrincipal.actualizarPosicion(personajePrincipal.position().right(0.5))
+				game.schedule(100, { => doubleTap = false })
+				}
 		}
+	
+	method move(objeto,num){ // general para cualquier objecto, pensado para usarse en los enemigos
+		objeto.actualizarPosicion(objeto.position().right(num)) // todos los objetos que se muevan deben entender el metodo "actualizarPosicion"
+		}
+		
 	method imagenPersonaje(){
 		return "personaje_Stand_Right.png"
 	}
+	
 }

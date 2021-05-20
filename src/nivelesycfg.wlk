@@ -15,13 +15,14 @@ object nivel0 {
 
 object config {
 	method asignarTeclas() {
-		keyboard.a().onPressDo({personajePrincipal.moverse(personajePrincipal.position().left(0.5))
+		keyboard.a().onPressDo({personajePrincipal.direccion(left)
+								personajePrincipal.moverse()
 								personajePrincipal.mirandoA("Left")
-								personajePrincipal.direccion(left)})
-		keyboard.d().onPressDo({personajePrincipal.moverse(personajePrincipal.position().right(0.5))
+								})
+		keyboard.d().onPressDo({personajePrincipal.direccion(right)
+								personajePrincipal.moverse()
 								personajePrincipal.mirandoA("Right")
-								personajePrincipal.direccion(right)})
-		keyboard.j().onPressDo({personajePrincipal.esquivar(personajePrincipal.orientacionEsquivar())})
+								})
 	}
 	
 	method recargaEnergia(){

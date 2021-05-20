@@ -2,6 +2,8 @@ import wollok.game.*
 import nivelesycfg.*
 import personaje.*
 
+// La parte de movimientos del jugador dejenmela terminar a mi(Braian), pueden hacer la parte de atacar o
+// algun enemigo con el cual combatir,o lo que sea ( Si hacen el ataque recuerden hacer el ataque como un area de ataque,no un target individual)
 
 program juego {
 	game.title("Conurvania")
