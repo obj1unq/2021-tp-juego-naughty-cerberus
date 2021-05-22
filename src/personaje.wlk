@@ -1,4 +1,5 @@
 import wollok.game.*
+import clases.*
 
 object personajePrincipal {
 
@@ -8,7 +9,7 @@ object personajePrincipal {
 	var property position = game.at(0, 1)
 	var image = direccion.imagenPersonaje()
 
-	method image() = direccion.imagenPersonaje() // posteriormente "image"
+	method image() = image // posteriormente "image"
 	
 	method image(imagen){
 		image = imagen
@@ -52,7 +53,7 @@ object left{
 	method moveMC(){  // Mov izquierda del MainCharacter (personaje principal)	
 		if(!doubleTap){ // Un pequeño retraso para no spamear botones de movilidad(y hacer más valioso el esquivar)			
 				game.schedule(1, { => doubleTap = true })
-				personajePrincipal.actualizarPosicion(personajePrincipal.position().left(0.5))
+				runModeL.accion(personajePrincipal,personajePrincipal.direccion())
 				game.schedule(100, { => doubleTap = false })
 				}// Esta parte se podria reemplazar por una animacion continua de moverse pero no veo forma de hacerlo viable.
 		}
@@ -71,7 +72,7 @@ object right{
 	method moveMC(){  // Mov derecha del MainCharacter (personaje principal)	
 		if(!doubleTap){ // Un pequeño retraso para no spamear botones de movilidad(y hacer más valioso el esquivar)			
 				game.schedule(1, { => doubleTap = true })
-				personajePrincipal.actualizarPosicion(personajePrincipal.position().right(0.5))
+				runModeR.accion(personajePrincipal,personajePrincipal.direccion())
 				game.schedule(100, { => doubleTap = false })
 				}// Esta parte se podria reemplazar por una animacion continua de moverse pero no veo forma de hacerlo viable.
 		}
