@@ -17,11 +17,13 @@ object config {
 	method asignarTeclas() {
 		keyboard.a().onPressDo({personajePrincipal.direccion(left)
 								personajePrincipal.moverse()
-								personajePrincipal.mirandoA("Left")
 								})
 		keyboard.d().onPressDo({personajePrincipal.direccion(right)
 								personajePrincipal.moverse()
-								personajePrincipal.mirandoA("Right")
+								})
+		keyboard.j().onPressDo({personajePrincipal.atacar()
+								})
+		keyboard.k().onPressDo({personajePrincipal.esquivar()
 								})
 	}
 	
