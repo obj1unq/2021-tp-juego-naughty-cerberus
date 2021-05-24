@@ -1,10 +1,12 @@
 import wollok.game.*
 import personaje.*
+import enemigos.*
 
 object nivel0 {
 
 	method iniciar() {
-		game.addVisual(personajePrincipal)
+		game.addVisual(spectrum01)
+		game.addVisual(personajePrincipal) // el MC ultimo en cargar así aparece sobre los demás objetos
 		config.recargaEnergia()
 		config.asignarTeclas()
 	}

@@ -7,7 +7,7 @@ class Mode {
 	var property accion 	// el tipo de accion que realizará: (Run,Die,Attack,Dodge)
 	method realizarAccion(personaje,direccion){
 		self.mover(personaje)
-		imageNameConversor.getImgName(personaje, accion, direccion, self.time()) // direccion(derecha o izquierda) hacia donde hará la animacion
+		imageNameConversor.getImgName(personaje, accion, direccion, self.time().toString()) // direccion(derecha o izquierda) hacia donde hará la animacion
 		if(self.time() == totalImg){ 
 			game.removeTickEvent(accion)
 			time = 0
@@ -27,14 +27,14 @@ object runModeL inherits Mode(accion = "Run",speedFrame = 30, totalImg = 3, time
 
     override method mover(personaje){
     	time+=1
-        personaje.actualizarPosicion(personaje.position().left(0.5))
+        personaje.actualizarPosicion(personaje.position().left(0.333))
     }
 }
 object runModeR inherits Mode(accion = "Run",speedFrame = 30, totalImg = 3, time=0) {
 
     override method mover(personaje){
     	time+=1
-        personaje.actualizarPosicion(personaje.position().right(0.5))
+        personaje.actualizarPosicion(personaje.position().right(0.333))
     }    
 }
 

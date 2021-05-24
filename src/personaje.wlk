@@ -1,15 +1,18 @@
 import wollok.game.*
 import clases.*
+import enemigos.*
 
 object personajePrincipal {
 
 	var property vida = 100
 	var property energia = 100
+	var property ataque = 100
+	var property defensa = 1
 	var property direccion = right
 	var property position = game.at(0, 1)
-	var image = direccion.imagenPersonaje()
+	var image = direccion.imagenPersonajeStand(self.nombre())
 
-	method image() = image // posteriormente "image"
+	method image() = image 
 	
 	method image(imagen){
 		image = imagen
@@ -44,45 +47,67 @@ object personajePrincipal {
 	}
   	
   	method atacar(){
-  		
+  		direccion.atacarMC()
+  		self.colisionarGolpe()
+  	}
+  	method colisionarGolpe(){ //Hay que corregir el area de colision porque desde el lado derecho solo colisionan cuando estan en la misma posicion
+  		game.colliders(self).forEach{objeto => objeto.recibirAtaque()}
   	}
 }
 object left{
 	var doubleTap = false
 	
 	method moveMC(){  // Mov izquierda del MainCharacter (personaje principal)	
-		if(!doubleTap){ // Un pequeño retraso para no spamear botones de movilidad(y hacer más valioso el esquivar)			
+		//if(!doubleTap){ // Un pequeño retraso para no spamear botones de movilidad(y hacer más valioso el esquivar)			
 				game.schedule(1, { => doubleTap = true })
 				runModeL.accion(personajePrincipal,personajePrincipal.direccion())
 				game.schedule(100, { => doubleTap = false })
-				}// Esta parte se podria reemplazar por una animacion continua de moverse pero no veo forma de hacerlo viable.
+				game.schedule(500, { => personajePrincipal.image(self.imagenPersonajeStand(personajePrincipal.nombre()))})
+				//}// Esta parte se podria reemplazar por una animacion continua de moverse pero no veo forma de hacerlo viable.
 		}
 	
 	method move(objeto,num){ // general para cualquier objecto, pensado para usarse en los enemigos
 		objeto.actualizarPosicion(objeto.position().left(num)) // todos los objetos que se muevan deben entender el metodo "actualizarPosicion"
 		}
-	method imagenPersonaje(){
-		return "personaje_Stand_Left.png"
+	method imagenPersonajeStand(objeto){
+		return objeto + "_Stand_left.png"
+	} //El atacar del lado izquierdo tiene problemas de posionamiento debido al funcionamiento del metodo addvisual de wollok
+	method atacarMC(){ //por lo cual tendrá un poco más de codigo para reparar el error
+		if(!doubleTap){
+				game.schedule(1, { => doubleTap = true })
+				personajePrincipal.image(vacio.imagenVacia())
+				personajePrincipal.actualizarPosicion(personajePrincipal.position().left(1))
+				attackMode.accion(personajePrincipal,personajePrincipal.direccion())
+				personajePrincipal.image(vacio.imagenVacia())
+				game.schedule(500, { => personajePrincipal.actualizarPosicion(personajePrincipal.position().right(1))
+										personajePrincipal.image(self.imagenPersonajeStand(personajePrincipal.nombre()))
+										doubleTap = false})
+		}
 	}
 }
-
 object right{
 	var doubleTap = false
 	
 	method moveMC(){  // Mov derecha del MainCharacter (personaje principal)	
-		if(!doubleTap){ // Un pequeño retraso para no spamear botones de movilidad(y hacer más valioso el esquivar)			
+		//if(!doubleTap){ // Un pequeño retraso para no spamear botones de movilidad(y hacer más valioso el esquivar)	(desactivado por ahora mientras se resuelven bugs)		
 				game.schedule(1, { => doubleTap = true })
 				runModeR.accion(personajePrincipal,personajePrincipal.direccion())
-				game.schedule(100, { => doubleTap = false })
-				}// Esta parte se podria reemplazar por una animacion continua de moverse pero no veo forma de hacerlo viable.
+				game.schedule(100, { => doubleTap = false})
+				game.schedule(500, { => personajePrincipal.image(self.imagenPersonajeStand(personajePrincipal.nombre()))})
+				//}// Esta parte se podria reemplazar por una animacion continua de moverse pero no veo forma de hacerlo viable.
 		}
 	
 	method move(objeto,num){ // general para cualquier objecto, pensado para usarse en los enemigos
 		objeto.actualizarPosicion(objeto.position().right(num)) // todos los objetos que se muevan deben entender el metodo "actualizarPosicion"
 	}
 		
-	method imagenPersonaje(){
-		return "personaje_Stand_Right.png"
+	method imagenPersonajeStand(objeto){
+		return objeto + "_Stand_right.png"
+	}
+	
+	method atacarMC(){
+		attackMode.accion(personajePrincipal,personajePrincipal.direccion())
+		game.schedule(500, { => personajePrincipal.image(self.imagenPersonajeStand(personajePrincipal.nombre()))})
 	}
 	
 }
@@ -90,5 +115,12 @@ object imageNameConversor {
 
 	method getImgName(objeto, accion,direccion, num) {
 		objeto.image(objeto.nombre() + "_"  + accion + "_" + direccion + "_" + num + ".png")
+	}
+}
+
+object vacio{
+	
+	method imagenVacia(){
+		return "void.png"
 	}
 }
