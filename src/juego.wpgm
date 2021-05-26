@@ -16,6 +16,7 @@ program juego {
 	game.showAttributes(personajePrincipal)
 	game.showAttributes(spectrum01)
 	config.asignarTeclas()	
+	config.movimientoEnemigos()
 	
 	game.start()
 }
