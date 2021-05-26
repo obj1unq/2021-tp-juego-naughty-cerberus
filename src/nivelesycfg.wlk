@@ -32,4 +32,8 @@ object config {
 	method recargaEnergia(){
 		game.onTick(1000, "recargaEnergia", { personajePrincipal.recargarEnergia() })
 	}
+	
+	method movimientoEnemigos() {
+		spectrum01.perseguirMC()
+	}
 }
