@@ -1,14 +1,16 @@
 import wollok.game.*
 import personaje.*
 import enemigos.*
+import misc.*
 
 object nivel0 {
 
 	method iniciar() {
-		game.addVisual(spectrum01)
+		game.addVisual(spectrum02)
 		game.addVisual(personajePrincipal) // el MC ultimo en cargar así aparece sobre los demás objetos
-		config.recargaEnergia()
-		config.asignarTeclas()
+		game.addVisual(escalera)
+		game.addVisual(escotilla)
+
 	}
 
 }
@@ -27,13 +29,25 @@ object config {
 								})
 		keyboard.k().onPressDo({personajePrincipal.esquivar()
 								})
+		keyboard.w().onPressDo({personajePrincipal.subirPorEscalera()
+								})
+		keyboard.s().onPressDo({personajePrincipal.bajarPorEscotilla()
+								})								
+
 	}
 	
-	method recargaEnergia(){
+
+	
+	method recargaEnergia() {
 		game.onTick(1000, "recargaEnergia", { personajePrincipal.recargarEnergia() })
+		
 	}
 	
 	method movimientoEnemigos() {
-		spectrum01.perseguirMC()
+		spectrum02.recorrerPiso()
+	}
+	
+	method configurarColiciones() {
+		game.onCollideDo(personajePrincipal, {objeto => objeto.teEncontro(personajePrincipal)})
 	}
 }
