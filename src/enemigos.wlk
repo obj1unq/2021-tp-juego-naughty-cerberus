@@ -1,6 +1,7 @@
 import wollok.game.*
 import clases.*
 import personaje.*
+import misc.*
 
 class Spectrum {
 
@@ -46,19 +47,60 @@ class Spectrum {
 	}
 
 	method morir() {
+		pocionDeVida.position(self.position())
+		game.addVisual(pocionDeVida)
 		game.removeVisual(self)
+		
 	}
 
-	method perseguirMC() {
-		if (self.mcEnMiNivel()) {
-			self.ponerseEnRangoParaAtacar()
+
+	method recorrerPiso() {
+		game.onTick(750, "spectrum recorre el piso hasta encontrar al MC", { => self.patrullarYCazarMC()})
+	}
+
+	method patrullarYCazarMC() {
+		if (!self.mcEnMiNivel()) {
+			self.caminarHastaElBorde()
 		} else {
-			self.volverAPosicionOriginal()
+			self.spectrumDejaDePatrullar()
+			self.perseguirMC()
+		}
+	}
+	
+	method spectrumDejaDePatrullar() {
+		return game.removeTickEvent("spectrum recorre el piso hasta encontrar al MC")
+	}
+
+	method caminarHastaElBorde() {
+		if (!self.estaEnElBorde())  {
+			self.moverse()
+		} else {
+			self.darLaVuelta()
+			self.moverse()
 		}
 	}
 
-	method volverAPosicionOriginal() {
-	// TODO
+	method estaEnElBorde() {
+		return self.position().x() == 0 || self.position().x() == 19
+	}
+
+	method darLaVuelta() {
+		if (direccion == right) {
+			self.direccion(left)
+		} else {
+			self.direccion(right)
+		}
+	}
+
+	method perseguirMC() {
+		self.verificarQueSigaEnMiNivel()
+		self.ponerseEnRangoParaAtacar()
+	}
+
+	method verificarQueSigaEnMiNivel() {
+		if (!self.mcEnMiNivel()) {
+			self.recorrerPiso()
+		}
 	}
 
 	method mcEnMiNivel() {
@@ -67,25 +109,44 @@ class Spectrum {
 
 	method ponerseEnRangoParaAtacar() {
 		if (!self.estaCercaDelMC()) {
-			game.onTick(500, "acercarse al MC", { => self.moverseHaciaMC()})
+			self.spectrumSeAcercaAlMC()
 		} else {
 			self.atacar()
 		}
+	}
+	
+	method spectrumSeAcercaAlMC() {
+		return game.onTick(500, "acercarse al MC", { => self.moverseHaciaMCSiEstaEnElArea()})
 	}
 
 	method estaCercaDelMC() {
 		return ((self.position().x() - personajePrincipal.position().x()).abs()) < 2
 	}
 
+	method moverseHaciaMCSiEstaEnElArea() {
+		if (!self.mcEnMiNivel()) {
+			self.spectrumDejaDeAcercarseAlMC()
+			self.recorrerPiso()
+		} else {
+			self.moverseHaciaMC() 
+		}
+	}
+	
+	method spectrumDejaDeAcercarseAlMC() {
+		return game.removeTickEvent("acercarse al MC")
+	}
+	
+	
 	method moverseHaciaMC() {
 		if (self.mcALaIzquierda() && !self.estaCercaDelMC()) {
-			self.direccion(left)
+			direccion = left
 			self.moverse()
 		}
 		if (self.mcALaDerecha() && !self.estaCercaDelMC()) {
-			self.direccion(right)
+			direccion = right
 			self.moverse()
-		}
+		} 
+
 	}
 
 	method mcALaIzquierda() {
@@ -95,10 +156,17 @@ class Spectrum {
 	method mcALaDerecha() {
 		return self.position().x() < personajePrincipal.position().x()
 	}
+	
+	
+	method teEncontro(personaje) {
+		
+	}
 
 }
 
 const spectrum01 = new Spectrum()
+
+const spectrum02 = new Spectrum(vida = 500, ataque = 20, defensa = 10, direccion = right, position = game.at(2, 5), nombre = "spectrum", image = right.imagenPersonajeStand("spectrum"))
 
 //const spectrum01 = new Spectrum(vida =  500, ataque = 20, defensa = 10, direccion = left, position = game.at(9,1), 
 // nombre = "spectrum",image = left.imagenPersonajeStand("spectrum"))
