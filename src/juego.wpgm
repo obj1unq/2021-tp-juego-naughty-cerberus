@@ -14,9 +14,10 @@ program juego {
 	game.boardGround("fondo.png")	
 	nivel0.iniciar()
 	game.showAttributes(personajePrincipal)
-	game.showAttributes(spectrum01)
+	game.showAttributes(spectrum02)
 	config.asignarTeclas()	
 	config.movimientoEnemigos()
-	
+	config.recargaEnergia()	
+	config.configurarColiciones()
 	game.start()
 }
