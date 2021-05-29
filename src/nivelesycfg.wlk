@@ -7,9 +7,9 @@ object nivel0 {
 
 	method iniciar() {
 		game.addVisual(spectrum02)
-		game.addVisual(personajePrincipal) // el MC ultimo en cargar así aparece sobre los demás objetos
 		game.addVisual(escalera)
 		game.addVisual(escotilla)
+		game.addVisual(personajePrincipal) // el MC ultimo en cargar así aparece sobre los demás objetos
 
 	}
 

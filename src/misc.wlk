@@ -25,6 +25,7 @@ object escotilla {
 	method teEncontro(personaje) {
 		
 	}
+	method recibirAtaque(){}
 }
 
 

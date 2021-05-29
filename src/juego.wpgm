@@ -3,9 +3,6 @@ import nivelesycfg.*
 import personaje.*
 import enemigos.*
 
-// La parte de movimientos del jugador dejenmela terminar a mi(Braian), pueden hacer la parte de atacar o
-// algun enemigo con el cual combatir,o lo que sea ( Si hacen el ataque recuerden hacer el ataque como un area de ataque,no un target individual)
-
 program juego {
 	game.title("Conurvania")
 	game.width(20)
@@ -20,4 +17,5 @@ program juego {
 	config.recargaEnergia()	
 	config.configurarColiciones()
 	game.start()
+	
 }

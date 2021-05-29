@@ -97,7 +97,7 @@ object left {
 	var doubleTap = false
 
 	method moveMC() { // Mov izquierda del MainCharacter (personaje principal)	
-	// if(!doubleTap){ // Un pequeño retraso para no spamear botones de movilidad(y hacer más valioso el esquivar)			
+	 //if(!doubleTap){ // Un pequeño retraso para no spamear botones de movilidad(y hacer más valioso el esquivar)			
 		game.schedule(1, { => doubleTap = true})
 		runModeL.accion(personajePrincipal, personajePrincipal.direccion())
 		game.schedule(100, { => doubleTap = false})
@@ -115,14 +115,13 @@ object left {
 
 	method atacarMC() { // por lo cual tendrá un poco más de codigo para reparar el error
 		if (!doubleTap) {
-			game.sound("espada-sfx.mp3").play()
 			game.schedule(1, { => doubleTap = true})
 			personajePrincipal.image(vacio.imagenVacia())
-			personajePrincipal.actualizarPosicion(personajePrincipal.position().left(1))
+			personajePrincipal.actualizarPosicion(personajePrincipal.position().left(2))
 			attackMode.accion(personajePrincipal, personajePrincipal.direccion())
 			personajePrincipal.image(vacio.imagenVacia())
 			game.schedule(500, { =>
-				personajePrincipal.actualizarPosicion(personajePrincipal.position().right(1))
+				personajePrincipal.actualizarPosicion(personajePrincipal.position().right(2))
 				personajePrincipal.image(self.imagenPersonajeStand(personajePrincipal.nombre()))
 				doubleTap = false
 			})
@@ -154,11 +153,15 @@ object right {
 	}
 
 	method atacarMC() {
-		attackMode.accion(personajePrincipal, personajePrincipal.direccion())
-		game.schedule(500, { => personajePrincipal.image(self.imagenPersonajeStand(personajePrincipal.nombre()))})
+		if (!doubleTap) {
+			game.schedule(1, { => doubleTap = true})
+			attackMode.accion(personajePrincipal, personajePrincipal.direccion())
+			game.schedule(500, { => personajePrincipal.image(self.imagenPersonajeStand(personajePrincipal.nombre()))
+									doubleTap = false})
+		}
+	}
 	}
 
-}
 
 object imageNameConversor {
 

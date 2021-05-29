@@ -33,6 +33,7 @@ class Spectrum {
 
 	method recibirAtaque() {
 		self.validarVida()
+		game.sound("espada-sfx.mp3").play()
 		vida = vida - self.calculoDeDanio()
 	} // la formula actual es: ATK(del MC en este caso) *  (1 - DEF / (100 + DEF))  
 
@@ -163,8 +164,6 @@ class Spectrum {
 	}
 
 }
-
-const spectrum01 = new Spectrum()
 
 const spectrum02 = new Spectrum(vida = 500, ataque = 20, defensa = 10, direccion = right, position = game.at(2, 5), nombre = "spectrum", image = right.imagenPersonajeStand("spectrum"))
 
