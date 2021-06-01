@@ -4,7 +4,7 @@ import nivelesycfg.*
 import wollok.game.*
 
 object escalera {	
-	var property position = game.at(17,1)
+	var property position = game.at(16,1)
 	
 	method image() {
 		return "escalera.png"
@@ -16,7 +16,7 @@ object escalera {
 }
 
 object escotilla {
-	var property position = game.at(17, 5)
+	var property position = game.at(16, 5)
 	
 	method image() {
 	return "escotilla.png"
@@ -41,6 +41,12 @@ object pocionDeVida {
 		personaje.vida((personaje.vida() + vidaQueRecupera).min(100))  
 		game.removeVisual(self)
 		game.sound("pocion-sfx.mp3").play()
+		
+	}
+	
+	method spawn(enemigo) {
+		self.position(enemigo.position())
+		game.addVisual(self)
 		
 	}
 }

@@ -47,12 +47,11 @@ class Spectrum {
 		}
 	}
 
-	method morir() {
+	method morir() {			
 		pocionDeVida.position(self.position())
 		game.addVisual(pocionDeVida)
 		game.removeVisual(self)
-		
-	}
+		}
 
 
 	method recorrerPiso() {

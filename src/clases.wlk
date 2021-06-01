@@ -27,14 +27,14 @@ object runModeL inherits Mode(accion = "Run",speedFrame = 30, totalImg = 3, time
 
     override method mover(personaje){
     	time+=1
-        personaje.actualizarPosicion(personaje.position().left(0.5))
+        personaje.actualizarPosicion(personaje.position().left(0.33))
     }
 }
 object runModeR inherits Mode(accion = "Run",speedFrame = 30, totalImg = 3, time=0) {
 
     override method mover(personaje){
     	time+=1
-        personaje.actualizarPosicion(personaje.position().right(0.5))
+        personaje.actualizarPosicion(personaje.position().right(0.33))
     }    
 }
 

@@ -15,7 +15,7 @@ program juego {
 	config.asignarTeclas()	
 	config.movimientoEnemigos()
 	config.recargaEnergia()	
-	config.configurarColiciones()
+	config.configurarColisiones()
 	game.start()
 	
 }

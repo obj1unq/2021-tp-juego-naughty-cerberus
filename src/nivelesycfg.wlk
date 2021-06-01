@@ -47,7 +47,7 @@ object config {
 		spectrum02.recorrerPiso()
 	}
 	
-	method configurarColiciones() {
+	method configurarColisiones() {
 		game.onCollideDo(personajePrincipal, {objeto => objeto.teEncontro(personajePrincipal)})
 	}
 }
