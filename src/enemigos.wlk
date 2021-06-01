@@ -22,7 +22,9 @@ class Spectrum {
 	method actualizarPosicion(nuevaPosicion) {
 		position = nuevaPosicion
 	}
-
+	method actualizarImagen(){
+		self.image(direccion.imagenPersonajeStand(self.nombre()))
+	}
 	method moverse() {
 		direccion.move(self, 1)
 	}
@@ -87,8 +89,10 @@ class Spectrum {
 	method darLaVuelta() {
 		if (direccion == right) {
 			self.direccion(left)
+			self.actualizarImagen()
 		} else {
 			self.direccion(right)
+			self.actualizarImagen()
 		}
 	}
 
@@ -141,10 +145,12 @@ class Spectrum {
 		if (self.mcALaIzquierda() && !self.estaCercaDelMC()) {
 			direccion = left
 			self.moverse()
+			self.actualizarImagen()
 		}
 		if (self.mcALaDerecha() && !self.estaCercaDelMC()) {
 			direccion = right
 			self.moverse()
+			self.actualizarImagen()
 		} 
 
 	}

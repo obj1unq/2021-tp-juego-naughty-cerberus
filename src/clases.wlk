@@ -16,7 +16,6 @@ class Mode {
 	}
 	method accion(personaje,direccion) { //el llamado principal (el q comienza a ejecutar el resto de metodos de animacion)
 		game.onTick(speedFrame, accion, {=> self.realizarAccion(personaje,direccion)})
-		
 	}
 	method mover(personaje){
 		time +=1
