@@ -28,6 +28,7 @@ object personajePrincipal {
 	method moverse() {
 		direccion.moveMC()
 	}
+	
 
 	method esquivar() {
 		self.verificarEnergia()
@@ -101,7 +102,6 @@ object left {
 		game.schedule(1, { => doubleTap = true})
 		runModeL.accion(personajePrincipal, personajePrincipal.direccion())
 		game.schedule(100, { => doubleTap = false})
-		game.schedule(500, { => personajePrincipal.image(self.imagenPersonajeStand(personajePrincipal.nombre()))})
 	// }// Esta parte se podria reemplazar por una animacion continua de moverse pero no veo forma de hacerlo viable.
 	}
 
@@ -122,7 +122,6 @@ object left {
 			personajePrincipal.image(vacio.imagenVacia())
 			game.schedule(500, { =>
 				personajePrincipal.actualizarPosicion(personajePrincipal.position().right(2))
-				personajePrincipal.image(self.imagenPersonajeStand(personajePrincipal.nombre()))
 				doubleTap = false
 			})
 
@@ -140,7 +139,6 @@ object right {
 		game.schedule(1, { => doubleTap = true})
 		runModeR.accion(personajePrincipal, personajePrincipal.direccion())
 		game.schedule(100, { => doubleTap = false})
-		game.schedule(500, { => personajePrincipal.image(self.imagenPersonajeStand(personajePrincipal.nombre()))})
 	// }// Esta parte se podria reemplazar por una animacion continua de moverse pero no veo forma de hacerlo viable.
 	}
 
@@ -156,8 +154,7 @@ object right {
 		if (!doubleTap) {
 			game.schedule(1, { => doubleTap = true})
 			attackMode.accion(personajePrincipal, personajePrincipal.direccion())
-			game.schedule(500, { => personajePrincipal.image(self.imagenPersonajeStand(personajePrincipal.nombre()))
-									doubleTap = false})
+			game.schedule(500, { => doubleTap = false})
 		}
 	}
 	}
