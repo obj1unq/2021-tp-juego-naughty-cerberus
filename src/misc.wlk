@@ -28,8 +28,8 @@ object escotilla {
 	method recibirAtaque(){}
 }
 
-
 object pocionDeVida {
+
 	var property vidaQueRecupera = 25
 	var property position = game.origin()
 	
@@ -50,3 +50,37 @@ object pocionDeVida {
 		
 	}
 }
+
+class BarraDeVida{
+	
+	const personaje
+		
+	method position() = game.at(personaje.position().x(),personaje.position().y()+2)
+	
+	method image() { return "vida_" + personaje + self.cantDeVida().toString() + ".png"	}	
+	
+	method cantDeVida()
+		
+}
+
+class BarraDeVidaMC inherits BarraDeVida {
+	
+	override method position() = game.at(0,9)
+	
+	override method cantDeVida() {
+		return personaje.vida()/100.roundUp(1)*100
+	}
+}
+
+class BarraDeVidaSpectrum inherits BarraDeVida {
+	
+	override method cantDeVida() {
+		return personaje.vida()/500.roundUp(1)*100
+	}
+	
+	override method image() { return "vida_" + "spectrum" + self.cantDeVida().toString() + ".png" }
+}
+
+const barraDeVidaMC = new BarraDeVidaMC (personaje=personajePrincipal)
+
+const barraDeVidaSpectrum = new BarraDeVidaSpectrum (personaje=spectrum02)
