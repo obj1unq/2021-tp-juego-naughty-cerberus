@@ -28,7 +28,6 @@ object personajePrincipal {
 	method moverse() {
 		direccion.moveMC()
 	}
-	
 
 	method esquivar() {
 		self.verificarEnergia()
@@ -52,10 +51,24 @@ object personajePrincipal {
 		self.colisionarGolpe()
 	}
 
+	method recibirAtaque(danio) {
+		self.validarVida(danio)
+		vida -= danio
+	}
+
+	method validarVida(danio) {
+		if (vida - danio <= 0) {
+			self.morir()
+		}
+	}
+
+	method morir() {
+		game.removeVisual(self)
+	}
+
 	method colisionarGolpe() { // Hay que corregir el area de colision porque desde el lado derecho solo colisionan cuando estan en la misma posicion
 		game.colliders(self).forEach{ objeto => objeto.recibirAtaque()}
 	}
-
 
 	method subirPorEscalera() {
 		if (self.hayEscalera()) {
@@ -64,7 +77,7 @@ object personajePrincipal {
 			game.say(self, "no hay escalera para subir")
 		}
 	}
-	
+
 	method bajarPorEscotilla() {
 		if (self.hayEscotilla()) {
 			self.irAlPisoDeAbajo()
@@ -72,8 +85,7 @@ object personajePrincipal {
 			game.say(self, "no hay escotilla para bajar")
 		}
 	}
-	
-	
+
 	method hayEscalera() {
 		return game.colliders(self).contains(escalera)
 	}
@@ -89,7 +101,6 @@ object personajePrincipal {
 	method irAlPisoDeAbajo() {
 		self.actualizarPosicion(game.at(self.position().x(), self.position().y() - 4))
 	}
-	
 
 }
 
@@ -98,7 +109,7 @@ object left {
 	var doubleTap = false
 
 	method moveMC() { // Mov izquierda del MainCharacter (personaje principal)	
-	 //if(!doubleTap){ // Un pequeño retraso para no spamear botones de movilidad(y hacer más valioso el esquivar)			
+	// if(!doubleTap){ // Un pequeño retraso para no spamear botones de movilidad(y hacer más valioso el esquivar)			
 		game.schedule(1, { => doubleTap = true})
 		runModeL.accion(personajePrincipal, personajePrincipal.direccion())
 		game.schedule(100, { => doubleTap = false})
@@ -116,15 +127,12 @@ object left {
 	method atacarMC() { // por lo cual tendrá un poco más de codigo para reparar el error
 		if (!doubleTap) {
 			game.schedule(1, { => doubleTap = true})
-			personajePrincipal.image(vacio.imagenVacia())
-			personajePrincipal.actualizarPosicion(personajePrincipal.position().left(2))
+				// personajePrincipal.image(vacio.imagenVacia()) 
+				// personajePrincipal.actualizarPosicion(personajePrincipal.position().left(2))
 			attackMode.accion(personajePrincipal, personajePrincipal.direccion())
-			personajePrincipal.image(vacio.imagenVacia())
-			game.schedule(500, { =>
-				personajePrincipal.actualizarPosicion(personajePrincipal.position().right(2))
-				doubleTap = false
-			})
-
+				// personajePrincipal.image(vacio.imagenVacia())
+			game.schedule(500, { => // personajePrincipal.actualizarPosicion(personajePrincipal.position().right(2))
+			doubleTap = false})
 		}
 	}
 
@@ -157,8 +165,8 @@ object right {
 			game.schedule(500, { => doubleTap = false})
 		}
 	}
-	}
 
+}
 
 object imageNameConversor {
 

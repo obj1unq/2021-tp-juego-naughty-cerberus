@@ -22,15 +22,17 @@ class Spectrum {
 	method actualizarPosicion(nuevaPosicion) {
 		position = nuevaPosicion
 	}
-	method actualizarImagen(){
+
+	method actualizarImagen() {
 		self.image(direccion.imagenPersonajeStand(self.nombre()))
 	}
+
 	method moverse() {
 		direccion.move(self, 1)
 	}
 
 	method atacar() {
-	// T0D0: código aqui pls
+		proyectilDeFuego.lanzar(self)
 	}
 
 	method recibirAtaque() {
@@ -49,14 +51,15 @@ class Spectrum {
 		}
 	}
 
-	method morir() {			
+	method morir() {
 		pocionDeVida.position(self.position())
+		self.spectrumDejaDeAcercarseAlMC()
 		game.addVisual(pocionDeVida)
 		game.removeVisual(self)
-		}
-
+	}
 
 	method recorrerPiso() {
+		self.ponersePasivo()
 		game.onTick(750, "spectrum recorre el piso hasta encontrar al MC", { => self.patrullarYCazarMC()})
 	}
 
@@ -64,17 +67,35 @@ class Spectrum {
 		if (!self.mcEnMiNivel()) {
 			self.caminarHastaElBorde()
 		} else {
+			self.ponerseActivo()
 			self.spectrumDejaDePatrullar()
-			self.perseguirMC()
+			self.spectrumSeAcercaAlMC()
 		}
 	}
-	
+
+	method atacarMCSiEstaEnRango() {
+		if (self.estaCercaDelMC()) {
+			self.mirarAlMC()
+			self.atacar()
+		}
+	}
+
+	method mirarAlMC() {
+		if (self.mcALaDerecha()) {
+			direccion = right
+			self.actualizarImagen()
+		} else {
+			direccion = left
+			self.actualizarImagen()
+		}
+	}
+
 	method spectrumDejaDePatrullar() {
 		return game.removeTickEvent("spectrum recorre el piso hasta encontrar al MC")
 	}
 
 	method caminarHastaElBorde() {
-		if (!self.estaEnElBorde())  {
+		if (!self.estaEnElBorde()) {
 			self.moverse()
 		} else {
 			self.darLaVuelta()
@@ -112,36 +133,49 @@ class Spectrum {
 	}
 
 	method ponerseEnRangoParaAtacar() {
-		if (!self.estaCercaDelMC()) {
-			self.spectrumSeAcercaAlMC()
-		} else {
+		if (self.estaCercaDelMC()) {
 			self.atacar()
+		} else {
+			self.spectrumSeAcercaAlMC()
 		}
 	}
-	
+
+	method dejarDeAtacar() {
+		game.removeTickEvent("lanzar proyectil de fuego")
+	}
+
+	method ponerseActivo() {
+		nombre = "spectrumAct"
+		self.actualizarImagen()
+	}
+
+	method ponersePasivo() {
+		nombre = "spectrum"
+		self.actualizarImagen()
+	}
+
 	method spectrumSeAcercaAlMC() {
-		return game.onTick(500, "acercarse al MC", { => self.moverseHaciaMCSiEstaEnElArea()})
+		game.onTick(450, "acercarse al MC", { => self.moverseHaciaMCSiEstaEnElPiso()})
 	}
 
 	method estaCercaDelMC() {
-		return ((self.position().x() - personajePrincipal.position().x()).abs()) < 2
+		return ((self.position().x() - personajePrincipal.position().x()).abs()) < 6
 	}
 
-	method moverseHaciaMCSiEstaEnElArea() {
+	method moverseHaciaMCSiEstaEnElPiso() {
 		if (!self.mcEnMiNivel()) {
 			self.spectrumDejaDeAcercarseAlMC()
 			self.recorrerPiso()
 		} else {
-			self.moverseHaciaMC() 
+			self.moverseHaciaMCYAtacar()
 		}
 	}
-	
+
 	method spectrumDejaDeAcercarseAlMC() {
-		return game.removeTickEvent("acercarse al MC")
+		game.removeTickEvent("acercarse al MC")
 	}
-	
-	
-	method moverseHaciaMC() {
+
+	method moverseHaciaMCYAtacar() {
 		if (self.mcALaIzquierda() && !self.estaCercaDelMC()) {
 			direccion = left
 			self.moverse()
@@ -151,8 +185,11 @@ class Spectrum {
 			direccion = right
 			self.moverse()
 			self.actualizarImagen()
-		} 
-
+		}
+		if (self.estaCercaDelMC()) {
+			self.ponerseActivo()
+			self.atacar()
+		}
 	}
 
 	method mcALaIzquierda() {
@@ -162,10 +199,56 @@ class Spectrum {
 	method mcALaDerecha() {
 		return self.position().x() < personajePrincipal.position().x()
 	}
-	
-	
+
 	method teEncontro(personaje) {
-		
+	}
+
+}
+
+object proyectilDeFuego {
+
+	var property position
+	var property direccion = null
+	var property image
+	const danioBase = 15
+
+	method lanzar(enemigo) {
+		self.verificarQueElMCEsteEnElPiso(enemigo)
+		self.removeVisualSiYaExiste()
+		self.position(enemigo.position())
+		self.direccion(enemigo.direccion())
+		self.image("fuego_" + direccion + ".png")
+		game.addVisual(self)
+		game.onTick(200, "desplazarse", {=> self.desplazar()})
+	}
+
+	method verificarQueElMCEsteEnElPiso(enemigo) {
+		if (!enemigo.mcEnMiNivel()) {
+			game.removeTickEvent("lanzar proyectil de fuego")
+		}
+	}
+
+	method removeVisualSiYaExiste() {
+		if (game.allVisuals().contains(self)) {
+			game.removeVisual(self)
+		}
+	}
+
+	method image() = image
+
+	method desplazar() {
+		direccion.move(self, 1)
+	}
+
+	method teEncontro(objeto) {
+		objeto.recibirAtaque(danioBase)
+		if (objeto == personajePrincipal) {
+			game.removeVisual(self)
+		}
+	}
+
+	method actualizarPosicion(nuevaPosicion) {
+		position = nuevaPosicion
 	}
 
 }

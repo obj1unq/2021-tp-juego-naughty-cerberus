@@ -4,7 +4,7 @@ import nivelesycfg.*
 import wollok.game.*
 
 object escalera {	
-	var property position = game.at(16,1)
+	var property position = game.at(13,1)
 	
 	method image() {
 		return "escalera.png"
@@ -16,7 +16,7 @@ object escalera {
 }
 
 object escotilla {
-	var property position = game.at(16, 5)
+	var property position = game.at(13, 5)
 	
 	method image() {
 	return "escotilla.png"
