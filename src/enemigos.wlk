@@ -9,7 +9,7 @@ class Spectrum {
 	var property ataque = 20
 	var property defensa = 10
 	var property direccion = left
-	var property position = game.at(15, 1)
+	var property position = new MiPosicion(x = 15, y = 1)
 	var property nombre = "spectrum"
 	var image = direccion.imagenPersonajeStand(nombre)
 
@@ -253,7 +253,7 @@ object proyectilDeFuego {
 
 }
 
-const spectrum02 = new Spectrum(vida = 500, ataque = 20, defensa = 10, direccion = right, position = game.at(2, 5), nombre = "spectrum", image = right.imagenPersonajeStand("spectrum"))
+const spectrum02 = new Spectrum(vida = 500, ataque = 20, defensa = 10, direccion = right, position = new MiPosicion(x = 2, y = 5), nombre = "spectrum", image = right.imagenPersonajeStand("spectrum"))
 
-//const spectrum01 = new Spectrum(vida =  500, ataque = 20, defensa = 10, direccion = left, position = game.at(9,1), 
+//const spectrum01 = new Spectrum(vida =  500, ataque = 20, defensa = 10, direccion = left, position = g//(9,1), 
 // nombre = "spectrum",image = left.imagenPersonajeStand("spectrum"))

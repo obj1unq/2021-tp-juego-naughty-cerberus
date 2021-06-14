@@ -10,8 +10,6 @@ program juego {
 	game.cellSize(50)
 	game.boardGround("fondo.png")	
 	nivel0.iniciar()
-	game.showAttributes(personajePrincipal)
-	game.showAttributes(spectrum02)
 	config.asignarTeclas()	
 	config.movimientoEnemigos()
 	config.recargaEnergia()	

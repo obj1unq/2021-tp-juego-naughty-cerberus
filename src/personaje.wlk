@@ -10,7 +10,7 @@ object personajePrincipal {
 	var property ataque = 100
 	var property defensa = 1
 	var property direccion = right
-	var property position = game.at(0, 1)
+	var property position = new MiPosicion(x = 0, y = 1)
 	var image = direccion.imagenPersonajeStand(self.nombre())
 
 	method image() = image
@@ -95,11 +95,11 @@ object personajePrincipal {
 	}
 
 	method irAlPisoDeArriba() {
-		self.actualizarPosicion(game.at(self.position().x(), self.position().y() + 4))
+		self.actualizarPosicion(new MiPosicion(x = self.position().x(), y = self.position().y() + 4))
 	}
 
 	method irAlPisoDeAbajo() {
-		self.actualizarPosicion(game.at(self.position().x(), self.position().y() - 4))
+		self.actualizarPosicion(new MiPosicion(x = self.position().x(), y = self.position().y() - 4))
 	}
 
 }
@@ -117,7 +117,8 @@ object left {
 	}
 
 	method move(objeto, num) { // general para cualquier objecto, pensado para usarse en los enemigos
-		objeto.actualizarPosicion(objeto.position().left(num)) // todos los objetos que se muevan deben entender el metodo "actualizarPosicion"
+		//objeto.actualizarPosicion(objeto.position().left(num)) // todos los objetos que se muevan deben entender el metodo "actualizarPosicion"
+		objeto.position().x(objeto.position().x() - num)
 	}
 
 	method imagenPersonajeStand(objeto) {
@@ -130,7 +131,7 @@ object left {
 				// personajePrincipal.image(vacio.imagenVacia()) 
 				// personajePrincipal.actualizarPosicion(personajePrincipal.position().left(2))
 			attackMode.accion(personajePrincipal, personajePrincipal.direccion())
-				// personajePrincipal.image(vacio.imagenVacia())
+			personajePrincipal.image(vacio.imagenVacia())
 			game.schedule(500, { => // personajePrincipal.actualizarPosicion(personajePrincipal.position().right(2))
 			doubleTap = false})
 		}
@@ -151,7 +152,8 @@ object right {
 	}
 
 	method move(objeto, num) { // general para cualquier objecto, pensado para usarse en los enemigos
-		objeto.actualizarPosicion(objeto.position().right(num)) // todos los objetos que se muevan deben entender el metodo "actualizarPosicion"
+		objeto.position().x(objeto.position().x() + num)
+		//objeto.actualizarPosicion(objeto.position().right(num)) // todos los objetos que se muevan deben entender el metodo "actualizarPosicion"
 	}
 
 	method imagenPersonajeStand(objeto) {

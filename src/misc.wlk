@@ -2,9 +2,10 @@ import personaje.*
 import enemigos.*
 import nivelesycfg.*
 import wollok.game.*
+import clases.*
 
 object escalera {	
-	var property position = game.at(13,1)
+	var property position = new MiPosicion(x = 13, y = 1)
 	
 	method image() {
 		return "escalera.png"
@@ -16,7 +17,7 @@ object escalera {
 }
 
 object escotilla {
-	var property position = game.at(13, 5)
+	var property position = new MiPosicion(x = 13, y = 5)
 	
 	method image() {
 	return "escotilla.png"
@@ -55,7 +56,7 @@ class BarraDeVida{
 	
 	const personaje
 		
-	method position() = game.at(personaje.position().x(),personaje.position().y()+2)
+	method position() = new MiPosicion(x = personaje.position().x(), y = personaje.position().y()+2)
 	
 	method image() { return "vida_" + personaje + self.cantDeVida().toString() + ".png"	}	
 	
@@ -65,7 +66,7 @@ class BarraDeVida{
 
 class BarraDeVidaMC inherits BarraDeVida {
 	
-	override method position() = game.at(0,9)
+	override method position() = new MiPosicion(x = 0, y = 9)
 	
 	override method cantDeVida() {
 		return personaje.vida()/100.roundUp(1)*100
