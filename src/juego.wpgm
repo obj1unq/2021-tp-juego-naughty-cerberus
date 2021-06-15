@@ -8,12 +8,11 @@ program juego {
 	game.width(20)
 	game.height(10)
 	game.cellSize(50)
-	game.boardGround("fondo.png")	
+	game.boardGround("fondo.png")
 	nivel0.iniciar()
-	config.asignarTeclas()	
+	config.asignarTeclas()
 	config.movimientoEnemigos()
-	config.recargaEnergia()	
+	config.recargaEnergia()
 	config.configurarColisiones()
 	game.start()
-	
 }

@@ -52,10 +52,13 @@ class Spectrum {
 	}
 
 	method morir() {
-		pocionDeVida.position(self.position())
-		self.spectrumDejaDeAcercarseAlMC()
-		game.addVisual(pocionDeVida)
-		game.removeVisual(self)
+		// self.spectrumDejaDeAcercarseAlMC()
+		self.dieMode().accion(self, self.direccion())
+		game.schedule(800, { => game.removeVisual(self)})
+	}
+
+	method dieMode() {
+		return new Mode(accion = "Die", speedFrame = 100, totalImg = 8, time = 0)
 	}
 
 	method recorrerPiso() {
