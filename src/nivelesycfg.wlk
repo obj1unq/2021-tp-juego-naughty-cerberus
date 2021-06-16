@@ -12,6 +12,8 @@ object nivel0 {
 		game.addVisual(ogre01)
 		game.addVisual(personajePrincipal) // el MC ultimo en cargar así aparece sobre los demás objetos
 		game.addVisual(barraDeVidaMC)
+		game.addVisual(barraDeVidaOgre)
+		game.addVisual(barraDeVidaSpectrum)
 	}
 
 }

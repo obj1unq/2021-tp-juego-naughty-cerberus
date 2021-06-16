@@ -59,41 +59,60 @@ object pocionDeVida {
 
 }
 
-class BarraDeVida {
 
+
+class BarraDeVidaMC  {
+	
+	const personaje 
+	
+	method position() = new MiPosicion(x = personaje.position().x(), y = personaje.position().y()+1)
+	
+    method image() {
+		return if (personaje.vida()>0){"vida_" + "personajePrincipal" + self.cantDeVida().toString() + ".png"}			
+				else {"void.png"}
+	}
+
+    method cantDeVida() {
+		return ((personaje.vida() / 100).roundUp(1) * 100).max(0)
+	}
+
+}
+
+class BarraDeVidaSpectrum  {
+	
+	const personaje
+	
+	method position() = new MiPosicion(x = personaje.position().x(), y = personaje.position().y()+1)
+	
+    method image() {
+		return if(personaje.vida()>0){"vida_" + "spectrum" + self.cantDeVida().toString() + ".png"}
+				else {"void.png"}	
+	}
+	
+	 method cantDeVida() {
+		return ((personaje.vida() / 500).roundUp(1) * 100).max(0)
+	}
+
+}
+
+class BarraDeVidaOgre {
+	
 	const personaje
 
-	method position() = new MiPosicion(x = personaje.position().x(), y = personaje.position().y() + 2)
-
+	method position() = new MiPosicion(x = personaje.position().x(), y = personaje.position().y()+2)
+	
 	method image() {
-		return "vida_" + personaje + self.cantDeVida().toString() + ".png"
+		return if(personaje.vida()>0){"vida_" + "ogre" + self.cantDeVida().toString() + ".png"}	
+				else {"void.png"}
+	}	
+	
+	method cantDeVida() {
+		return ((personaje.vida() / 800).roundUp(1) * 100).max(0)
 	}
-
-	method cantDeVida()
-
+	
 }
 
-class BarraDeVidaMC inherits BarraDeVida {
-
-	override method position() = new MiPosicion(x = 0, y = 9)
-
-	override method cantDeVida() {
-		return personaje.vida() / 100.roundUp(1) * 100
-	}
-
-}
-
-class BarraDeVidaSpectrum inherits BarraDeVida {
-
-	override method cantDeVida() {
-		return personaje.vida() / 500.roundUp(1) * 100
-	}
-
-	override method image() {
-		return "vida_" + "spectrum" + self.cantDeVida().toString() + ".png"
-	}
-
-}
 
 const barraDeVidaMC = new BarraDeVidaMC(personaje = personajePrincipal)
-
+const barraDeVidaSpectrum =new BarraDeVidaSpectrum(personaje = spectrum01)
+const barraDeVidaOgre = new BarraDeVidaOgre(personaje = ogre01)
