@@ -264,9 +264,6 @@ class Ogre inherits Enemies {
 		super()
 	}
 
-	method despertarYAtacar() {
-	}
-
 	method mcEstaMuyLejos() {
 		return ((self.position().x() - personajePrincipal.position().x()).abs()) >= 10
 	}
@@ -284,6 +281,14 @@ class Ogre inherits Enemies {
 	override method morir() {
 		super()
 		game.schedule(1050, { => game.removeVisual(self)})
+	}
+
+	method reloadMode() {
+		return new Mode(accion = "reload", speedFrame = 130, totalImg = 8, time = 0)
+	}
+
+	method recargarBallesta() {
+		self.reloadMode().accion(self, self.direccion())
 	}
 
 }
@@ -361,6 +366,7 @@ object flecha inherits Proyectiles {
 
 	override method lanzar(enemigo) {
 		super(enemigo)
+		enemigo.recargarBallesta()
 		game.onTick(100, "desplazamiento flecha", {=> self.desplazar()})
 		game.schedule(1400, { => game.removeTickEvent("desplazamiento flecha")})
 		game.schedule(1400, { => self.removeVisualSiYaExiste()})
