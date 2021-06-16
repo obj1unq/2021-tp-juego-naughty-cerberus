@@ -249,16 +249,19 @@ class Ogre inherits Enemies {
 	method atacarSiSeAcerca() {
 		if (self.estaCercaDelMC()) {
 			self.ponerseActivo()
-			self.atacarADistancia()
+			self.dejaDePatrullar()
+			self.atacar()
 		}
 	}
 
 	override method ponerseActivo() {
-		nombre = "ogreAct"
+		self.nombre("ogreAct")
+		super()
 	}
 
 	override method ponersePasivo() {
-		nombre = "ogre"
+		self.nombre("ogre")
+		super()
 	}
 
 	method despertarYAtacar() {
@@ -268,11 +271,10 @@ class Ogre inherits Enemies {
 		return ((self.position().x() - personajePrincipal.position().x()).abs()) >= 10
 	}
 
-	method atacarADistancia() {
-		game.onTick(1050, "lanzar flechas al MC", { => flecha.lanzar(self)})
-	}
-
 	override method atacar() {
+		self.ponerseActivo()
+		flecha.lanzar(self)
+		game.onTick(1500, self.toString() + "comienza a atacar", { => flecha.lanzar(self)})
 	}
 
 	override method dieMode() {
@@ -296,6 +298,7 @@ class Proyectiles {
 	method lanzar(enemigo) {
 		self.removeVisualSiYaExiste()
 		self.verificarQueElMCEsteEnElPisoYEstaCerca(enemigo)
+		enemigo.mirarAlMC()
 		self.position(new MiPosicion(x = enemigo.position().x(), y = enemigo.position().y()))
 		self.direccion(enemigo.direccion())
 		self.image()
