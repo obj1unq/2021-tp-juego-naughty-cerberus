@@ -117,7 +117,7 @@ object left {
 	}
 
 	method move(objeto, num) { // general para cualquier objecto, pensado para usarse en los enemigos
-		//objeto.actualizarPosicion(objeto.position().left(num)) // todos los objetos que se muevan deben entender el metodo "actualizarPosicion"
+	// objeto.actualizarPosicion(objeto.position().left(num)) // todos los objetos que se muevan deben entender el metodo "actualizarPosicion"
 		objeto.position().x(objeto.position().x() - num)
 	}
 
@@ -153,7 +153,7 @@ object right {
 
 	method move(objeto, num) { // general para cualquier objecto, pensado para usarse en los enemigos
 		objeto.position().x(objeto.position().x() + num)
-		//objeto.actualizarPosicion(objeto.position().right(num)) // todos los objetos que se muevan deben entender el metodo "actualizarPosicion"
+	// objeto.actualizarPosicion(objeto.position().right(num)) // todos los objetos que se muevan deben entender el metodo "actualizarPosicion"
 	}
 
 	method imagenPersonajeStand(objeto) {
