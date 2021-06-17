@@ -51,13 +51,13 @@ object runModeR inherits Mode(accion = "Run", speedFrame = 30, totalImg = 4, tim
 class AttackMC inherits Mode{ //quiza luego este attackMC se convierta en un attack generico para los melee??
 	override method realizarAccion(objeto, direccion) {
 		//objeto.image(direccion.imagenPersonajeAttack(objeto.portador().nombre())) usando algo así como esto
-		objeto.image(direccion.imagenPersonajeAttack(personajePrincipal.nombre()))
+		personajePrincipal.image(direccion.imagenPersonajeAttack(personajePrincipal.nombre()))
 		self.timeLapse(objeto)
 		imageNameConversor.getImgName(objeto, accion, direccion, self.time().toString()) // direccion(derecha o izquierda) hacia donde hará la animacion
 		if (self.time() == totalImg) {
 			game.removeTickEvent(accion)
 			time = 0
-			game.schedule(500, { => objeto.image(direccion.imagenPersonajeStand(objeto.nombre()))
+			game.schedule(500, { => personajePrincipal.image(direccion.imagenPersonajeStand(personajePrincipal.nombre()))
 									objeto.image("sword_void.png")})
 		}
 //		objeto.image(direccion.imagenPersonajeAttack(personajePrincipal.nombre()))

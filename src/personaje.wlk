@@ -105,18 +105,28 @@ object personajePrincipal {
 }
 
 object espadaMC{
-	var property direccion = personajePrincipal.direccion()
 	//const portador = personajePrincipal
-	var property position = new MiPosicion(x = personajePrincipal.position().x(), y = personajePrincipal.position().y())
+	//var property position = new MiPosicion(x = personajePrincipal.position().x(), y = personajePrincipal.position().y())
+	
 	var image = "sword_void.png"
 	method image() = image
 
 	method image(imagen) {
 		image = imagen
 	}
+	method position() {
+		return new MiPosicion(x = self.mirarHacia() , y = personajePrincipal.position().y())
+	}
+	method direccion() { return personajePrincipal.direccion()} //revisar esto tmb
 	method nombre() = "sword"
 	method teEncontro(personaje) {}
 	method recibirAtaque() {}
+	method mirarHacia(){
+		return 	if(self.direccion() == right) {personajePrincipal.position().x()}
+				else{personajePrincipal.position().x()} // se rompe del lado izquierdo,luego lo reviso
+//				else {personajePrincipal.position().x(personajePrincipal.position().x() - 2)}
+	}
+	
 }
 
 object left {
@@ -151,7 +161,7 @@ object left {
 	}
  //si llega a haber problemas de rendimiento por atacar muy rapido lo mejor será hacer el ataque de la espada por separado
 	method espadaMCPosition(){
-		return espadaMC.position().x(personajePrincipal.position().x() - 2)
+		return espadaMC.position().x(personajePrincipal.position().x(personajePrincipal.position().x() - 2))
 	}
 }
 
