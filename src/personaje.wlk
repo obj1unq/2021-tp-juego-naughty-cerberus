@@ -4,7 +4,7 @@ import enemigos.*
 import misc.*
 
 object personajePrincipal {
-
+	
 	var property vida = 100
 	var property energia = 100
 	var property ataque = 100
@@ -48,7 +48,7 @@ object personajePrincipal {
 
 	method atacar() {
 		direccion.atacarMC()
-		self.colisionarGolpe()
+		self.colisionarGolpe(espadaMC)
 	}
 
 	method recibirAtaque(danio) {
@@ -66,8 +66,8 @@ object personajePrincipal {
 		game.removeVisual(self)
 	}
 
-	method colisionarGolpe() { // Hay que corregir el area de colision porque desde el lado derecho solo colisionan cuando estan en la misma posicion
-		game.colliders(self).forEach{ objeto => objeto.recibirAtaque()}
+	method colisionarGolpe(arma) { // me mato yo mismo al atacar? xD quiza con un "if not personaje entonces => recibirataque) se arregla (?
+		game.colliders(arma).forEach{ objeto => objeto.recibirAtaque()}
 	}
 
 	method subirPorEscalera() {
@@ -104,6 +104,21 @@ object personajePrincipal {
 
 }
 
+object espadaMC{
+	var property direccion = personajePrincipal.direccion()
+	//const portador = personajePrincipal
+	var property position = new MiPosicion(x = personajePrincipal.position().x(), y = personajePrincipal.position().y())
+	var image = "sword_void.png"
+	method image() = image
+
+	method image(imagen) {
+		image = imagen
+	}
+	method nombre() = "sword"
+	method teEncontro(personaje) {}
+	method recibirAtaque() {}
+}
+
 object left {
 
 	var doubleTap = false
@@ -123,20 +138,21 @@ object left {
 
 	method imagenPersonajeStand(objeto) {
 		return objeto + "_Stand_left.png"
-	} // El atacar del lado izquierdo tiene problemas de posionamiento debido al funcionamiento del metodo addvisual de wollok
-
-	method atacarMC() { // por lo cual tendrá un poco más de codigo para reparar el error
+	}
+	method imagenPersonajeAttack(objeto){ //probablemente los enemigos melee al igual que el MC tendran problemas al atacar del lado izquierdo
+		return objeto + "_Attack_left.png"
+	}
+	method atacarMC() {
 		if (!doubleTap) {
 			game.schedule(1, { => doubleTap = true})
-				// personajePrincipal.image(vacio.imagenVacia()) 
-				// personajePrincipal.actualizarPosicion(personajePrincipal.position().left(2))
-			attackMode.accion(personajePrincipal, personajePrincipal.direccion())
-			personajePrincipal.image(vacio.imagenVacia())
-			game.schedule(500, { => // personajePrincipal.actualizarPosicion(personajePrincipal.position().right(2))
-			doubleTap = false})
+			attackMode.accion(espadaMC, personajePrincipal.direccion())
+			game.schedule(500, { => doubleTap = false})
 		}
 	}
-
+ //si llega a haber problemas de rendimiento por atacar muy rapido lo mejor será hacer el ataque de la espada por separado
+	method espadaMCPosition(){
+		return espadaMC.position().x(personajePrincipal.position().x() - 2)
+	}
 }
 
 object right {
@@ -159,15 +175,22 @@ object right {
 	method imagenPersonajeStand(objeto) {
 		return objeto + "_Stand_right.png"
 	}
+	
+	method imagenPersonajeAttack(objeto){ //probablemente los enemigos melee al igual que el MC tendran problemas al atacar del lado izquierdo
+		return objeto + "_Attack_right.png"
+	}
 
 	method atacarMC() {
 		if (!doubleTap) {
 			game.schedule(1, { => doubleTap = true})
-			attackMode.accion(personajePrincipal, personajePrincipal.direccion())
+			attackMode.accion(espadaMC, personajePrincipal.direccion())
 			game.schedule(500, { => doubleTap = false})
 		}
 	}
-
+	method espadaMCPosition(){
+		return espadaMC.position().x(personajePrincipal.position().x())
+		//personajePrincipal.position().x()
+	}
 }
 
 object imageNameConversor {

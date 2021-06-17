@@ -14,6 +14,7 @@ object nivel0 {
 		game.addVisual(barraDeVidaMC)
 		game.addVisual(barraDeVidaOgre)
 		game.addVisual(barraDeVidaSpectrum)
+		game.addVisual(espadaMC)
 	}
 
 }
