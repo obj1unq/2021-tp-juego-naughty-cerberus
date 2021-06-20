@@ -46,7 +46,7 @@ object personajePrincipal {
 		energia = (energia + 10).min(100)
 	}
 
-	method atacar() {
+	method atacar() { //intentar cambiar la logica del ataque a buscar todos los enemigos a X distancia en vez de al colisionar,ya que da error porque solo interactua con "la punta" del objeto espada
 		direccion.atacarMC()
 		self.colisionarGolpe(espadaMC)
 	}
@@ -122,9 +122,9 @@ object espadaMC{
 	method teEncontro(personaje) {}
 	method recibirAtaque() {}
 	method mirarHacia(){
-		return 	if(self.direccion() == right) {personajePrincipal.position().x()}
-				else{personajePrincipal.position().x()} // se rompe del lado izquierdo,luego lo reviso
-//				else {personajePrincipal.position().x(personajePrincipal.position().x() - 2)}
+		return 	if(self.direccion() == left) {personajePrincipal.position().x() - 2}
+				//else{personajePrincipal.position().x()} // se rompe del lado izquierdo,luego lo reviso
+				else {personajePrincipal.position().x()}
 	}
 	
 }
