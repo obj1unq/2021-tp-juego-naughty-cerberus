@@ -45,7 +45,7 @@ class Enemies {
 		game.sound("espada-sfx.mp3").play()
 		vida = vida - self.calculoDeDanio()
 	} // la formula actual es: ATK(del MC en este caso) *  (1 - DEF / (100 + DEF))  
-
+	
 	method calculoDeDanio() {
 		return personajePrincipal.ataque() * (1 - self.defensa() / (100 + self.defensa()))
 	}
@@ -55,7 +55,7 @@ class Enemies {
 			self.morir()
 		}
 	}
-
+	method recibirAtaque(danio){} // method vacio para evitar errores,y que a su vez los enemigos no se maten entre si(ya que si todos entendieran el mismo msj se matarian xD)
 	method morir() {
 		self.dieMode().accion(self, self.direccion())
 		game.schedule(799, { => self.dejarDeAtacar()})
@@ -347,7 +347,9 @@ class Proyectiles {
 	}
 
 	method recibirAtaque() {
+		
 	}
+	method recibirAtaque(danio) {}
 
 }
 

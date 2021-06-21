@@ -50,24 +50,42 @@ object personajePrincipal {
 		direccion.atacarMC()
 		self.colisionarGolpe(espadaMC)
 	}
-
 	method recibirAtaque(danio) {
 		self.validarVida(danio)
-		vida -= danio
+		vida = vida - self.calculoDeDanio(danio)
+	} // la formula actual es: ATK(del MC en este caso) *  (1 - DEF / (100 + DEF))  
+
+	method calculoDeDanio(danio) {
+		return danio * (1 - self.defensa() / (100 + self.defensa()))
 	}
 
 	method validarVida(danio) {
-		if (vida - danio <= 0) {
+		if (vida - self.calculoDeDanio(danio) <= 0) {
 			self.morir()
 		}
 	}
+	method recibirAtaque() {
+		
+	}
+
+//	method recibirAtaque(danio) {
+//		self.validarVida(danio)
+//		vida -= danio
+//	}
+//
+//	method validarVida(danio) {
+//		if (vida - danio <= 0) {
+//			self.morir()
+//		}
+//	}
 
 	method morir() {
 		game.removeVisual(self)
 	}
 
 	method colisionarGolpe(arma) { // me mato yo mismo al atacar? xD quiza con un "if not personaje entonces => recibirataque) se arregla (?
-		game.colliders(arma).forEach{ objeto => objeto.recibirAtaque()}
+		game.colliders(arma).forEach{ objeto => objeto.recibirAtaque()
+		}
 	}
 
 	method subirPorEscalera() {
@@ -106,7 +124,6 @@ object personajePrincipal {
 
 object espadaMC{
 	//const portador = personajePrincipal
-	//var property position = new MiPosicion(x = personajePrincipal.position().x(), y = personajePrincipal.position().y())
 	
 	var image = "sword_void.png"
 	method image() = image
@@ -121,12 +138,12 @@ object espadaMC{
 	method nombre() = "sword"
 	method teEncontro(personaje) {}
 	method recibirAtaque() {}
+	method recibirAtaque(danio) {}
 	method mirarHacia(){
 		return 	if(self.direccion() == left) {personajePrincipal.position().x() - 2}
 				//else{personajePrincipal.position().x()} // se rompe del lado izquierdo,luego lo reviso
 				else {personajePrincipal.position().x()}
 	}
-	
 }
 
 object left {
@@ -160,9 +177,6 @@ object left {
 		}
 	}
  //si llega a haber problemas de rendimiento por atacar muy rapido lo mejor será hacer el ataque de la espada por separado
-	method espadaMCPosition(){
-		return espadaMC.position().x(personajePrincipal.position().x(personajePrincipal.position().x() - 2))
-	}
 }
 
 object right {
@@ -196,10 +210,6 @@ object right {
 			attackMode.accion(espadaMC, personajePrincipal.direccion())
 			game.schedule(500, { => doubleTap = false})
 		}
-	}
-	method espadaMCPosition(){
-		return espadaMC.position().x(personajePrincipal.position().x())
-		//personajePrincipal.position().x()
 	}
 }
 

@@ -18,7 +18,7 @@ object escalera {
 	method recibirAtaque() {
 		
 	}
-
+	method recibirAtaque(danio) {}
 }
 
 object escotilla {
@@ -33,7 +33,9 @@ object escotilla {
 	}
 
 	method recibirAtaque() {
+		
 	}
+	method recibirAtaque(danio) {}
 
 }
 
@@ -56,6 +58,10 @@ object pocionDeVida {
 		self.position(enemigo.position())
 		game.addVisual(self)
 	}
+	method recibirAtaque() {
+		
+	}
+	method recibirAtaque(danio) {}
 
 }
 
@@ -75,6 +81,9 @@ class BarraDeVidaMC  {
     method cantDeVida() {
 		return ((personaje.vida() / 100).roundUp(1) * 100).max(0)
 	}
+	method recibirAtaque() {
+	}
+	method recibirAtaque(danio) {}
 
 }
 
@@ -92,6 +101,10 @@ class BarraDeVidaSpectrum  {
 	 method cantDeVida() {
 		return ((personaje.vida() / 500).roundUp(1) * 100).max(0)
 	}
+	method recibirAtaque() {
+		
+	}
+	method recibirAtaque(danio) {}
 
 }
 
@@ -109,7 +122,10 @@ class BarraDeVidaOgre {
 	method cantDeVida() {
 		return ((personaje.vida() / 800).roundUp(1) * 100).max(0)
 	}
-	
+	method recibirAtaque() {
+		
+	}
+	method recibirAtaque(danio) {}
 }
 
 /* Por que clases para la barras de vida del mc? 
