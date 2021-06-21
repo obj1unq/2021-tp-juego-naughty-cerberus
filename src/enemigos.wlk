@@ -373,6 +373,7 @@ object flecha inherits Proyectiles {
 		game.schedule(1400, { => game.removeTickEvent("desplazamiento flecha")})
 		game.schedule(1400, { => self.removeVisualSiYaExiste()})
 	}
+	
 
 }
 

@@ -67,7 +67,6 @@ object personajePrincipal {
 	method recibirAtaque() {
 		
 	}
-
 //	method recibirAtaque(danio) {
 //		self.validarVida(danio)
 //		vida -= danio

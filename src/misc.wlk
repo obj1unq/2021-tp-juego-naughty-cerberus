@@ -127,7 +127,6 @@ class BarraDeVidaOgre {
 	}
 	method recibirAtaque(danio) {}
 }
-
 /* Por que clases para la barras de vida del mc? 
  No se podrian parametrizar las barras de vida de los enemigos? 
  Se podria dar como parametro al inicializar la posicion "extra" que se le debe añadir a Y()
