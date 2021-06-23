@@ -2,13 +2,14 @@ import wollok.game.*
 import nivelesycfg.*
 import personaje.*
 import enemigos.*
+import background.*
 
 program juego {
-	game.title("Conurvania")
+	game.title("AlgunNombreBueno")
 	game.width(20)
 	game.height(10)
 	game.cellSize(50)
-	game.boardGround("fondo.png")
+	game.boardGround("background_black.png")
 	nivel0.iniciar()
 	game.showAttributes(personajePrincipal)
 	game.showAttributes(spectrum01)

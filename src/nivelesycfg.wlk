@@ -2,10 +2,12 @@ import wollok.game.*
 import personaje.*
 import enemigos.*
 import misc.*
+import background.*
 
 object nivel0 {
 
 	method iniciar() {
+		game.addVisual(backGround)
 		game.addVisual(escotilla)
 		game.addVisual(escalera)
 		game.addVisual(spectrum01)
@@ -23,15 +25,23 @@ object config {
 
 	method asignarTeclas() {
 		keyboard.a().onPressDo({ personajePrincipal.direccion(left)
-			personajePrincipal.moverse()
+								 personajePrincipal.moverse()
 		})
 		keyboard.d().onPressDo({ personajePrincipal.direccion(right)
-			personajePrincipal.moverse()
+								 personajePrincipal.moverse()
 		})
 		keyboard.j().onPressDo({ personajePrincipal.atacar()})
 		keyboard.k().onPressDo({ personajePrincipal.esquivar()})
 		keyboard.w().onPressDo({ personajePrincipal.subirPorEscalera()})
 		keyboard.s().onPressDo({ personajePrincipal.bajarPorEscotilla()})
+		keyboard.del().onPressDo({//window.close() 
+		/* La idea es que este objeto se encargue de manejar el abrir y cerrar ventanas de los menus, la idea
+		 * es hacer una lista que actue como una pila de ventanas a ir cerrando,la ultima que se abrio es la primera 
+		 * en cerrarse al darle la orden de cerrar. Cuando se abre una opcion del menu se agrega a la pila el objeto 
+		 */
+		})
+		keyboard.enter().onPressDo({(//window.abrir())
+		})
 	}
 
 	method recargaEnergia() {
