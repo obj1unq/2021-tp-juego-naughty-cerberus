@@ -40,7 +40,7 @@ object config {
 		 * en cerrarse al darle la orden de cerrar. Cuando se abre una opcion del menu se agrega a la pila el objeto 
 		 */
 		})
-		keyboard.enter().onPressDo({(//window.abrir())
+		keyboard.enter().onPressDo({//window.abrir())
 		})
 	}
 
