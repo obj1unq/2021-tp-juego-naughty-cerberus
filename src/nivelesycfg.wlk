@@ -4,10 +4,22 @@ import enemigos.*
 import misc.*
 import background.*
 
+object ajustesIniciales{
+	method iniciar(){
+			game.showAttributes(personajePrincipal)
+			game.showAttributes(spectrum01)
+			game.showAttributes(ogre01)
+			config.asignarTeclas()
+			config.movimientoEnemigos()
+			config.recargaEnergia()
+			config.configurarColisiones()
+	}
+}
+
 object nivel0 {
 
 	method iniciar() {
-		game.addVisual(backGround)
+		backGround.fondo("fondo")
 		game.addVisual(escotilla)
 		game.addVisual(escalera)
 		game.addVisual(spectrum01)
@@ -17,6 +29,8 @@ object nivel0 {
 		game.addVisual(barraDeVidaOgre)
 		game.addVisual(barraDeVidaSpectrum)
 		game.addVisual(espadaMC)
+		ajustesIniciales.iniciar()
+		
 	}
 
 }
@@ -34,14 +48,6 @@ object config {
 		keyboard.k().onPressDo({ personajePrincipal.esquivar()})
 		keyboard.w().onPressDo({ personajePrincipal.subirPorEscalera()})
 		keyboard.s().onPressDo({ personajePrincipal.bajarPorEscotilla()})
-		keyboard.del().onPressDo({//window.close() 
-		/* La idea es que este objeto se encargue de manejar el abrir y cerrar ventanas de los menus, la idea
-		 * es hacer una lista que actue como una pila de ventanas a ir cerrando,la ultima que se abrio es la primera 
-		 * en cerrarse al darle la orden de cerrar. Cuando se abre una opcion del menu se agrega a la pila el objeto 
-		 */
-		})
-		keyboard.enter().onPressDo({//window.abrir())
-		})
 	}
 
 	method recargaEnergia() {

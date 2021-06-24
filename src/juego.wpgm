@@ -3,6 +3,7 @@ import nivelesycfg.*
 import personaje.*
 import enemigos.*
 import background.*
+import menus.*
 
 program juego {
 	game.title("AlgunNombreBueno")
@@ -10,13 +11,7 @@ program juego {
 	game.height(10)
 	game.cellSize(50)
 	game.boardGround("background_black.png")
-	nivel0.iniciar()
-	game.showAttributes(personajePrincipal)
-	game.showAttributes(spectrum01)
-	game.showAttributes(ogre01)
-	config.asignarTeclas()
-	config.movimientoEnemigos()
-	config.recargaEnergia()
-	config.configurarColisiones()
+	mainMenu.iniciar() //Intercambiar entre mainMenu y iniciarJuego segun se necesite.(solo comentar la linea que no nos interese)
+	//iniciarJuego.iniciar()  // A partir de ahora se usa "iniciarJuego.iniciar()" para saltearnos directamente al escenario con el MC
 	game.start()
 }

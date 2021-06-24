@@ -82,7 +82,7 @@ object personajePrincipal {
 		game.removeVisual(self)
 	}
 
-	method colisionarGolpe(arma) { // me mato yo mismo al atacar? xD quiza con un "if not personaje entonces => recibirataque) se arregla (?
+	method colisionarGolpe(arma) {
 		game.colliders(arma).forEach{ objeto => objeto.recibirAtaque()
 		}
 	}
@@ -133,14 +133,13 @@ object espadaMC{
 	method position() {
 		return new MiPosicion(x = self.mirarHacia() , y = personajePrincipal.position().y())
 	}
-	method direccion() { return personajePrincipal.direccion()} //revisar esto tmb
+	method direccion() { return personajePrincipal.direccion()} 
 	method nombre() = "sword"
 	method teEncontro(personaje) {}
 	method recibirAtaque() {}
 	method recibirAtaque(danio) {}
 	method mirarHacia(){
 		return 	if(self.direccion() == left) {personajePrincipal.position().x() - 2}
-				//else{personajePrincipal.position().x()} // se rompe del lado izquierdo,luego lo reviso
 				else {personajePrincipal.position().x()}
 	}
 }
