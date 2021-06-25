@@ -65,7 +65,7 @@ object personajePrincipal {
 
 	method atacar() { // intentar cambiar la logica del ataque a buscar todos los enemigos a X distancia en vez de al colisionar,ya que da error porque solo interactua con "la punta" del objeto espada
 		direccion.atacarMC()
-		self.colisionarGolpe(espadaMC)
+		self.colisionarGolpe() // espadaMC era antes la variable
 	}
 
 	method recibirAtaque(danio) {
@@ -86,22 +86,15 @@ object personajePrincipal {
 	method recibirAtaque() {
 	}
 
-//	method recibirAtaque(danio) {
-//		self.validarVida(danio)
-//		vida -= danio
-//	}
-//
-//	method validarVida(danio) {
-//		if (vida - danio <= 0) {
-//			self.morir()
-//		}
-//	}
 	method morir() {
 		game.removeVisual(self)
 	}
 
-	method colisionarGolpe(arma) {
-		game.colliders(arma).forEach{ objeto => objeto.recibirAtaque()}
+	method colisionarGolpe() { // antes tenia  parametro arma y se le daba espadaMC
+		direccion.obtenerObjetosParaAtacar(self,2)
+		direccion.objetivos().forEach{objeto => objeto.recibirAtaque()}
+		direccion.objetivos(#{})
+		//game.colliders(arma).forEach{ objeto => objeto.recibirAtaque()}
 	}
 
 	method subirPorEscalera() {
@@ -175,13 +168,15 @@ object espadaMC {
 			personajePrincipal.position().x()
 		}
 	}
-
+	
 }
 
 object left {
 
 	var doubleTap = false
-
+	var property objetivos = #{}
+	var posicion
+	
 	method moveMC() { // Mov izquierda del MainCharacter (personaje principal)	
 	// if(!doubleTap){ // Un pequeño retraso para no spamear botones de movilidad(y hacer más valioso el esquivar)			
 		game.schedule(1, { => doubleTap = true})
@@ -210,14 +205,23 @@ object left {
 			game.schedule(500, { => doubleTap = false})
 		}
 	}
+	method obtenerObjetosParaAtacar(objeto,distancia){
+		var numero = distancia + 1 
+		numero.times({iteracion => 		numero -= 1
+										posicion = new Position(x = objeto.position().x() - numero, y = objeto.position().y())
+										objetivos += game.getObjectsIn(posicion)
+										})
 
+
+	}
 // si llega a haber problemas de rendimiento por atacar muy rapido lo mejor será hacer el ataque de la espada por separado
 }
 
 object right {
 
 	var doubleTap = false
-
+	var property objetivos = #{}
+	var posicion
 	method moveMC() { // Mov derecha del MainCharacter (personaje principal)	
 	// if(!doubleTap){ // Un pequeño retraso para no spamear botones de movilidad(y hacer más valioso el esquivar)	(desactivado por ahora mientras se resuelven bugs)		
 		game.schedule(1, { => doubleTap = true})
@@ -246,8 +250,16 @@ object right {
 			game.schedule(500, { => doubleTap = false})
 		}
 	}
+	method obtenerObjetosParaAtacar(objeto,distancia){
+		var numero = distancia + 1 
+		numero.times({iteracion => 		numero -= 1
+										posicion = new Position(x = objeto.position().x() + numero, y = objeto.position().y())
+										objetivos += game.getObjectsIn(posicion)
+										})
 
+	}
 }
+
 
 object imageNameConversor {
 
