@@ -46,7 +46,7 @@ object config {
 			personajePrincipal.moverse()
 		})
 		keyboard.j().onPressDo({ personajePrincipal.atacar()})
-		keyboard.k().onPressDo({ personajePrincipal.esquivar()})
+		keyboard.k().onPressDo({ personajePrincipal.bloquear()})
 		keyboard.w().onPressDo({ personajePrincipal.subirPorEscalera()})
 		keyboard.s().onPressDo({ personajePrincipal.bajarPorEscotilla()})
 	}

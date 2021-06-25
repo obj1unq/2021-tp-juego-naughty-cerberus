@@ -4,13 +4,14 @@ import enemigos.*
 import misc.*
 
 object personajePrincipal {
-	
+
 	var property vida = 100
 	var property energia = 100
 	var property ataque = 100
 	var property defensa = 1
 	var property direccion = right
 	var property position = new MiPosicion(x = 0, y = 1)
+	var property nombre = "personaje"
 	var image = direccion.imagenPersonajeStand(self.nombre())
 
 	method image() = image
@@ -19,8 +20,11 @@ object personajePrincipal {
 		image = imagen
 	}
 
-	method nombre() = "personaje"
+	method actualizarImagen() {
+		self.image(direccion.imagenPersonajeStand(nombre.toString()))
+	}
 
+//	method nombre() = "personaje"
 	method actualizarPosicion(nuevaPosicion) {
 		position = nuevaPosicion
 	}
@@ -29,15 +33,28 @@ object personajePrincipal {
 		direccion.moveMC()
 	}
 
-	method esquivar() {
+	method bloquear() {
 		self.verificarEnergia()
-		energia -= 30
-		direccion.move(self, 2)
+		energia -= 25
+		self.modoBloqueo()
+		game.schedule(500, { => self.salirDeModoBloqueo()})
+	}
+
+	method modoBloqueo() {
+		self.nombre("personajeBlock")
+		self.actualizarImagen()
+		self.defensa(100)
+	}
+
+	method salirDeModoBloqueo() {
+		self.nombre("personaje")
+		self.actualizarImagen()
+		self.defensa(1)
 	}
 
 	method verificarEnergia() {
 		if (energia < 30) {
-			self.error("No tengo energia para esquivar")
+			self.error("No tengo energia para bloquear")
 		}
 	}
 
@@ -46,10 +63,11 @@ object personajePrincipal {
 		energia = (energia + 10).min(100)
 	}
 
-	method atacar() { //intentar cambiar la logica del ataque a buscar todos los enemigos a X distancia en vez de al colisionar,ya que da error porque solo interactua con "la punta" del objeto espada
+	method atacar() { // intentar cambiar la logica del ataque a buscar todos los enemigos a X distancia en vez de al colisionar,ya que da error porque solo interactua con "la punta" del objeto espada
 		direccion.atacarMC()
 		self.colisionarGolpe(espadaMC)
 	}
+
 	method recibirAtaque(danio) {
 		self.validarVida(danio)
 		vida = vida - self.calculoDeDanio(danio)
@@ -64,9 +82,10 @@ object personajePrincipal {
 			self.morir()
 		}
 	}
+
 	method recibirAtaque() {
-		
 	}
+
 //	method recibirAtaque(danio) {
 //		self.validarVida(danio)
 //		vida -= danio
@@ -77,14 +96,12 @@ object personajePrincipal {
 //			self.morir()
 //		}
 //	}
-
 	method morir() {
 		game.removeVisual(self)
 	}
 
 	method colisionarGolpe(arma) {
-		game.colliders(arma).forEach{ objeto => objeto.recibirAtaque()
-		}
+		game.colliders(arma).forEach{ objeto => objeto.recibirAtaque()}
 	}
 
 	method subirPorEscalera() {
@@ -121,27 +138,44 @@ object personajePrincipal {
 
 }
 
-object espadaMC{
-	//const portador = personajePrincipal
-	
+object espadaMC {
+
+	// const portador = personajePrincipal
 	var image = "sword_void.png"
+
 	method image() = image
 
 	method image(imagen) {
 		image = imagen
 	}
+
 	method position() {
-		return new MiPosicion(x = self.mirarHacia() , y = personajePrincipal.position().y())
+		return new MiPosicion(x = self.mirarHacia(), y = personajePrincipal.position().y())
 	}
-	method direccion() { return personajePrincipal.direccion()} 
+
+	method direccion() {
+		return personajePrincipal.direccion()
+	}
+
 	method nombre() = "sword"
-	method teEncontro(personaje) {}
-	method recibirAtaque() {}
-	method recibirAtaque(danio) {}
-	method mirarHacia(){
-		return 	if(self.direccion() == left) {personajePrincipal.position().x() - 2}
-				else {personajePrincipal.position().x()}
+
+	method teEncontro(personaje) {
 	}
+
+	method recibirAtaque() {
+	}
+
+	method recibirAtaque(danio) {
+	}
+
+	method mirarHacia() {
+		return if (self.direccion() == left) {
+			personajePrincipal.position().x() - 2
+		} else {
+			personajePrincipal.position().x()
+		}
+	}
+
 }
 
 object left {
@@ -164,9 +198,11 @@ object left {
 	method imagenPersonajeStand(objeto) {
 		return objeto + "_Stand_left.png"
 	}
-	method imagenPersonajeAttack(objeto){ //probablemente los enemigos melee al igual que el MC tendran problemas al atacar del lado izquierdo
+
+	method imagenPersonajeAttack(objeto) { // probablemente los enemigos melee al igual que el MC tendran problemas al atacar del lado izquierdo
 		return objeto + "_Attack_left.png"
 	}
+
 	method atacarMC() {
 		if (!doubleTap) {
 			game.schedule(1, { => doubleTap = true})
@@ -174,7 +210,8 @@ object left {
 			game.schedule(500, { => doubleTap = false})
 		}
 	}
- //si llega a haber problemas de rendimiento por atacar muy rapido lo mejor será hacer el ataque de la espada por separado
+
+// si llega a haber problemas de rendimiento por atacar muy rapido lo mejor será hacer el ataque de la espada por separado
 }
 
 object right {
@@ -197,8 +234,8 @@ object right {
 	method imagenPersonajeStand(objeto) {
 		return objeto + "_Stand_right.png"
 	}
-	
-	method imagenPersonajeAttack(objeto){ //probablemente los enemigos melee al igual que el MC tendran problemas al atacar del lado izquierdo
+
+	method imagenPersonajeAttack(objeto) { // probablemente los enemigos melee al igual que el MC tendran problemas al atacar del lado izquierdo
 		return objeto + "_Attack_right.png"
 	}
 
@@ -209,6 +246,7 @@ object right {
 			game.schedule(500, { => doubleTap = false})
 		}
 	}
+
 }
 
 object imageNameConversor {
