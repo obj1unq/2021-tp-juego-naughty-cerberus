@@ -4,16 +4,18 @@ import enemigos.*
 import misc.*
 import background.*
 
-object ajustesIniciales{
-	method iniciar(){
-			game.showAttributes(personajePrincipal)
-			game.showAttributes(spectrum01)
-			game.showAttributes(ogre01)
-			config.asignarTeclas()
-			config.movimientoEnemigos()
-			config.recargaEnergia()
-			config.configurarColisiones()
+object ajustesIniciales {
+
+	method iniciar() {
+		game.showAttributes(personajePrincipal)
+		game.showAttributes(spectrum01)
+		game.showAttributes(ogre01)
+		config.asignarTeclas()
+		config.movimientoEnemigos()
+		config.recargaEnergia()
+		config.configurarColisiones()
 	}
+
 }
 
 object nivel0 {
@@ -30,7 +32,6 @@ object nivel0 {
 		game.addVisual(barraDeVidaSpectrum)
 		game.addVisual(espadaMC)
 		ajustesIniciales.iniciar()
-		
 	}
 
 }
@@ -39,10 +40,10 @@ object config {
 
 	method asignarTeclas() {
 		keyboard.a().onPressDo({ personajePrincipal.direccion(left)
-								 personajePrincipal.moverse()
+			personajePrincipal.moverse()
 		})
 		keyboard.d().onPressDo({ personajePrincipal.direccion(right)
-								 personajePrincipal.moverse()
+			personajePrincipal.moverse()
 		})
 		keyboard.j().onPressDo({ personajePrincipal.atacar()})
 		keyboard.k().onPressDo({ personajePrincipal.esquivar()})

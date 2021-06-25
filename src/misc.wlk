@@ -14,11 +14,13 @@ object escalera {
 
 	method teEncontro(personaje) {
 	}
-	
+
 	method recibirAtaque() {
-		
 	}
-	method recibirAtaque(danio) {}
+
+	method recibirAtaque(danio) {
+	}
+
 }
 
 object escotilla {
@@ -33,15 +35,16 @@ object escotilla {
 	}
 
 	method recibirAtaque() {
-		
 	}
-	method recibirAtaque(danio) {}
+
+	method recibirAtaque(danio) {
+	}
 
 }
 
-object pocionDeVida {
+class PocionDeVida {
 
-	var property vidaQueRecupera = 25
+	var property vidaQueRecupera
 	var property position = game.origin()
 
 	method image() {
@@ -58,79 +61,103 @@ object pocionDeVida {
 		self.position(enemigo.position())
 		game.addVisual(self)
 	}
+
 	method recibirAtaque() {
-		
 	}
-	method recibirAtaque(danio) {}
+
+	method recibirAtaque(danio) {
+	}
 
 }
 
+class BarraDeVidaMC {
 
+	const personaje
 
-class BarraDeVidaMC  {
-	
-	const personaje 
-	
-	method position() = new MiPosicion(x = personaje.position().x(), y = personaje.position().y()+1)
-	
-    method image() {
-		return if (personaje.vida()>0){"vida_" + "personajePrincipal" + self.cantDeVida().toString() + ".png"}			
-				else {"void.png"}
+	method position() = new MiPosicion(x = personaje.position().x(), y = personaje.position().y() + 1)
+
+	method image() {
+		return if (personaje.vida() > 0) {
+			"vida_" + "personajePrincipal" + self.cantDeVida().toString() + ".png"
+		} else {
+			"void.png"
+		}
 	}
 
-    method cantDeVida() {
+	method cantDeVida() {
 		return ((personaje.vida() / 100).roundUp(1) * 100).max(0)
 	}
+
 	method recibirAtaque() {
 	}
-	method recibirAtaque(danio) {}
+
+	method recibirAtaque(danio) {
+	}
 
 }
 
-class BarraDeVidaSpectrum  {
-	
+class BarraDeVidaSpectrum {
+
 	const personaje
-	
-	method position() = new MiPosicion(x = personaje.position().x(), y = personaje.position().y()+1)
-	
-    method image() {
-		return if(personaje.vida()>0){"vida_" + "spectrum" + self.cantDeVida().toString() + ".png"}
-				else {"void.png"}	
+
+	method position() = new MiPosicion(x = personaje.position().x(), y = personaje.position().y() + 1)
+
+	method image() {
+		return if (personaje.vida() > 0) {
+			"vida_" + "spectrum" + self.cantDeVida().toString() + ".png"
+		} else {
+			"void.png"
+		}
 	}
-	
-	 method cantDeVida() {
+
+	method cantDeVida() {
 		return ((personaje.vida() / 500).roundUp(1) * 100).max(0)
 	}
+
 	method recibirAtaque() {
-		
 	}
-	method recibirAtaque(danio) {}
+
+	method recibirAtaque(danio) {
+	}
 
 }
 
 class BarraDeVidaOgre {
-	
+
 	const personaje
 
-	method position() = new MiPosicion(x = personaje.position().x(), y = personaje.position().y()+2)
-	
+	method position() = new MiPosicion(x = personaje.position().x(), y = personaje.position().y() + 2)
+
 	method image() {
-		return if(personaje.vida()>0){"vida_" + "ogre" + self.cantDeVida().toString() + ".png"}	
-				else {"void.png"}
-	}	
-	
+		return if (personaje.vida() > 0) {
+			"vida_" + "ogre" + self.cantDeVida().toString() + ".png"
+		} else {
+			"void.png"
+		}
+	}
+
 	method cantDeVida() {
 		return ((personaje.vida() / 800).roundUp(1) * 100).max(0)
 	}
+
 	method recibirAtaque() {
-		
 	}
-	method recibirAtaque(danio) {}
+
+	method recibirAtaque(danio) {
+	}
+
 }
+
 /* Por que clases para la barras de vida del mc? 
- No se podrian parametrizar las barras de vida de los enemigos? 
- Se podria dar como parametro al inicializar la posicion "extra" que se le debe añadir a Y()
-Si quieren pueden hacerlo,sino lo hago yo despues - Braian */
+ *  No se podrian parametrizar las barras de vida de los enemigos? 
+ *  Se podria dar como parametro al inicializar la posicion "extra" que se le debe añadir a Y()
+ Si quieren pueden hacerlo,sino lo hago yo despues - Braian */
 const barraDeVidaMC = new BarraDeVidaMC(personaje = personajePrincipal)
-const barraDeVidaSpectrum =new BarraDeVidaSpectrum(personaje = spectrum01)
+
+const barraDeVidaSpectrum = new BarraDeVidaSpectrum(personaje = spectrum01)
+
 const barraDeVidaOgre = new BarraDeVidaOgre(personaje = ogre01)
+
+const pocionDeVida01 = new PocionDeVida(vidaQueRecupera = 25)
+const pocionDeVida02 = new PocionDeVida(vidaQueRecupera = 25)
+

@@ -11,6 +11,7 @@ class Enemies {
 	var property direccion = right
 	var property position = new MiPosicion(x = 0, y = 0)
 	var property nombre
+	var property pocionDeVidaAsignada
 	var image
 
 	method image() = image
@@ -45,7 +46,7 @@ class Enemies {
 		game.sound("espada-sfx.mp3").play()
 		vida = vida - self.calculoDeDanio()
 	} // la formula actual es: ATK(del MC en este caso) *  (1 - DEF / (100 + DEF))  
-	
+
 	method calculoDeDanio() {
 		return personajePrincipal.ataque() * (1 - self.defensa() / (100 + self.defensa()))
 	}
@@ -55,10 +56,14 @@ class Enemies {
 			self.morir()
 		}
 	}
-	method recibirAtaque(danio){} // method vacio para evitar errores,y que a su vez los enemigos no se maten entre si(ya que si todos entendieran el mismo msj se matarian xD)
+
+	method recibirAtaque(danio) {
+	} // method vacio para evitar errores,y que a su vez los enemigos no se maten entre si(ya que si todos entendieran el mismo msj se matarian xD)
+
 	method morir() {
+//		self.dejarDeAtacar()
+		game.schedule(150, { => self.dejarDeAtacar()})
 		self.dieMode().accion(self, self.direccion())
-		game.schedule(799, { => self.dejarDeAtacar()})
 	}
 
 	method dieMode()
@@ -205,6 +210,10 @@ class Enemies {
 	method teEncontro(personaje) {
 	}
 
+	method estaVivo() {
+		return game.allVisuals().contains(self)
+	}
+
 }
 
 class Spectrum inherits Enemies {
@@ -229,7 +238,7 @@ class Spectrum inherits Enemies {
 //		self.ponerseActivo()
 		super()
 		game.schedule(799, { => game.removeVisual(self)})
-		game.schedule(800, { => pocionDeVida.spawn(self)})
+		game.schedule(800, { => pocionDeVidaAsignada.spawn(self)})
 	}
 
 	override method dieMode() {
@@ -281,6 +290,7 @@ class Ogre inherits Enemies {
 	override method morir() {
 		super()
 		game.schedule(1050, { => game.removeVisual(self)})
+		game.schedule(1050, { => pocionDeVidaAsignada.spawn(self)})
 	}
 
 	method reloadMode() {
@@ -302,12 +312,19 @@ class Proyectiles {
 
 	method lanzar(enemigo) {
 		self.removeVisualSiYaExiste()
+		self.verificarQueSigaVivo(enemigo)
 		self.verificarQueElMCEsteEnElPisoYEstaCerca(enemigo)
 		enemigo.mirarAlMC()
 		self.position(new MiPosicion(x = enemigo.position().x(), y = enemigo.position().y()))
 		self.direccion(enemigo.direccion())
 		self.image()
 		game.addVisual(self)
+	}
+
+	method verificarQueSigaVivo(enemigo) {
+		if (!enemigo.estaVivo()) {
+			enemigo.dejarDeAtacar()
+		}
 	}
 
 	method removeVisualDelProyectil() {
@@ -347,9 +364,10 @@ class Proyectiles {
 	}
 
 	method recibirAtaque() {
-		
 	}
-	method recibirAtaque(danio) {}
+
+	method recibirAtaque(danio) {
+	}
 
 }
 
@@ -373,13 +391,13 @@ object flecha inherits Proyectiles {
 		game.schedule(1400, { => game.removeTickEvent("desplazamiento flecha")})
 		game.schedule(1400, { => self.removeVisualSiYaExiste()})
 	}
-	
 
 }
 
-const ogre01 = new Ogre(vida = 800, ataque = 30, defensa = 20, direccion = right, position = new MiPosicion(x = 2, y = 5), nombre = "Ogre", image = right.imagenPersonajeStand("ogre"))
+const ogre01 = new Ogre(vida = 800, ataque = 30, defensa = 20, direccion = right, position = new MiPosicion(x = 2, y = 5), nombre = "Ogre", image = right.imagenPersonajeStand("ogre"), pocionDeVidaAsignada = pocionDeVida01)
 
-const spectrum01 = new Spectrum(vida = 500, ataque = 20, defensa = 10, direccion = left, position = new MiPosicion(x = 19, y = 1), nombre = "Spectrum", image = left.imagenPersonajeStand("spectrum"))
+const spectrum01 = new Spectrum(vida = 500, ataque = 20, defensa = 10, direccion = left, position = new MiPosicion(x = 19, y = 1), nombre = "Spectrum", image = left.imagenPersonajeStand("spectrum"), pocionDeVidaAsignada = pocionDeVida02)
 
+//const spectrum02 = new Spectrum(vida = 500, ataque = 20, defensa = 10, direccion = right, position = new MiPosicion(x = 2, y = 5), nombre = "Spectrum", image = right.imagenPersonajeStand("spectrum"))
 //const spectrum01 = new Spectrum(vida =  500, ataque = 20, defensa = 10, direccion = left, position = g//(9,1), 
 // nombre = "spectrum",image = left.imagenPersonajeStand("spectrum"))
