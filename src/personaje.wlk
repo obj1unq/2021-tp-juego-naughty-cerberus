@@ -43,9 +43,12 @@ object personajePrincipal {
 	}
 
 	method modoBloqueo() {
-		blockStance = true
-		self.image(direccion.imagenPersonajeBlock(self))
-		defensa = defensa * 2
+		if(not self.blockStance()){
+			blockStance = true
+			self.image(direccion.imagenPersonajeBlock(self.nombre()))
+			defensa = defensa * 2
+		
+		}
 	}
 
 	method salirDeModoBloqueo() {
@@ -207,7 +210,7 @@ object left {
 		return objeto + "_Attack_left.png"
 	}
 	method imagenPersonajeBlock(objeto){
-		return objeto.toString() + "_Block_left.png"
+		return objeto + "_Block_left.png"
 	}
 //	method atacarMC() {
 //		if (not doubleTap and not personajePrincipal.blockStance()) {
@@ -255,7 +258,7 @@ object right {
 		return objeto + "_Attack_right.png"
 	}
 	method imagenPersonajeBlock(objeto){
-		return objeto.toString() + "_Block_right.png"
+		return objeto + "_Block_right.png"
 	}
 //	method atacarMC() {
 //		if (not doubleTap and not personajePrincipal.blockStance()) {
