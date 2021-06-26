@@ -8,10 +8,12 @@ object personajePrincipal {
 	var property vida = 100
 	var property energia = 100
 	var property ataque = 100
-	var property defensa = 1
+	var property defensa = 20
 	var property direccion = right
 	var property position = new MiPosicion(x = 0, y = 1)
 	var property nombre = "personaje"
+	var property blockStance = false
+	var property doubleTap = false
 	var image = direccion.imagenPersonajeStand(self.nombre())
 
 	method image() = image
@@ -30,7 +32,7 @@ object personajePrincipal {
 	}
 
 	method moverse() {
-		direccion.moveMC()
+		if(not self.blockStance()){direccion.moveMC()}
 	}
 
 	method bloquear() {
@@ -41,19 +43,19 @@ object personajePrincipal {
 	}
 
 	method modoBloqueo() {
-		self.nombre("personajeBlock")
-		self.actualizarImagen()
-		self.defensa(100)
+		blockStance = true
+		self.image(direccion.imagenPersonajeBlock(self))
+		defensa = defensa * 2
 	}
 
 	method salirDeModoBloqueo() {
-		self.nombre("personaje")
+		blockStance = false
 		self.actualizarImagen()
-		self.defensa(1)
+		defensa = defensa / 2
 	}
 
 	method verificarEnergia() {
-		if (energia < 30) {
+		if (energia < 25) {
 			self.error("No tengo energia para bloquear")
 		}
 	}
@@ -63,16 +65,24 @@ object personajePrincipal {
 		energia = (energia + 10).min(100)
 	}
 
-	method atacar() { // intentar cambiar la logica del ataque a buscar todos los enemigos a X distancia en vez de al colisionar,ya que da error porque solo interactua con "la punta" del objeto espada
-		direccion.atacarMC()
-		self.colisionarGolpe() // espadaMC era antes la variable
+	method atacar() {
+		if (not doubleTap and not self.blockStance()) {
+			game.schedule(1, { => doubleTap = true})
+			self.realizarAtaque()
+			self.colisionarGolpe()
+			}
 	}
-
+	method realizarAtaque(){
+		
+		attackMode.accion(espadaMC, self.direccion())
+		game.schedule(500, { => doubleTap = false})
+		
+	}
 	method recibirAtaque(danio) {
 		self.validarVida(danio)
 		vida = vida - self.calculoDeDanio(danio)
 	} // la formula actual es: ATK(del MC en este caso) *  (1 - DEF / (100 + DEF))  
-
+		//
 	method calculoDeDanio(danio) {
 		return danio * (1 - self.defensa() / (100 + self.defensa()))
 	}
@@ -90,11 +100,11 @@ object personajePrincipal {
 		game.removeVisual(self)
 	}
 
-	method colisionarGolpe() { // antes tenia  parametro arma y se le daba espadaMC
+	method colisionarGolpe() {
 		direccion.obtenerObjetosParaAtacar(self,2)
 		direccion.objetivos().forEach{objeto => objeto.recibirAtaque()}
 		direccion.objetivos(#{})
-		//game.colliders(arma).forEach{ objeto => objeto.recibirAtaque()}
+		
 	}
 
 	method subirPorEscalera() {
@@ -173,15 +183,14 @@ object espadaMC {
 
 object left {
 
-	var doubleTap = false
 	var property objetivos = #{}
-	var posicion
+	//var doubleTap = false
 	
 	method moveMC() { // Mov izquierda del MainCharacter (personaje principal)	
 	// if(!doubleTap){ // Un pequeño retraso para no spamear botones de movilidad(y hacer más valioso el esquivar)			
-		game.schedule(1, { => doubleTap = true})
+		//game.schedule(1, { => doubleTap = true})
 		runModeL.accion(personajePrincipal, personajePrincipal.direccion())
-		game.schedule(100, { => doubleTap = false})
+		//game.schedule(100, { => doubleTap = false})
 	// }// Esta parte se podria reemplazar por una animacion continua de moverse pero no veo forma de hacerlo viable.
 	}
 
@@ -197,16 +206,19 @@ object left {
 	method imagenPersonajeAttack(objeto) { // probablemente los enemigos melee al igual que el MC tendran problemas al atacar del lado izquierdo
 		return objeto + "_Attack_left.png"
 	}
-
-	method atacarMC() {
-		if (!doubleTap) {
-			game.schedule(1, { => doubleTap = true})
-			attackMode.accion(espadaMC, personajePrincipal.direccion())
-			game.schedule(500, { => doubleTap = false})
-		}
+	method imagenPersonajeBlock(objeto){
+		return objeto.toString() + "_Block_left.png"
 	}
+//	method atacarMC() {
+//		if (not doubleTap and not personajePrincipal.blockStance()) {
+//			game.schedule(1, { => doubleTap = true})
+//			attackMode.accion(espadaMC, personajePrincipal.direccion())
+//			game.schedule(1000, { => doubleTap = false})
+//		}}
+	
 	method obtenerObjetosParaAtacar(objeto,distancia){
-		var numero = distancia + 1 
+		var numero = distancia + 1
+		var posicion 
 		numero.times({iteracion => 		numero -= 1
 										posicion = new Position(x = objeto.position().x() - numero, y = objeto.position().y())
 										objetivos += game.getObjectsIn(posicion)
@@ -219,14 +231,14 @@ object left {
 
 object right {
 
-	var doubleTap = false
+	//var doubleTap = false
 	var property objetivos = #{}
-	var posicion
+	
 	method moveMC() { // Mov derecha del MainCharacter (personaje principal)	
 	// if(!doubleTap){ // Un pequeño retraso para no spamear botones de movilidad(y hacer más valioso el esquivar)	(desactivado por ahora mientras se resuelven bugs)		
-		game.schedule(1, { => doubleTap = true})
+	//	game.schedule(1, { => doubleTap = true})
 		runModeR.accion(personajePrincipal, personajePrincipal.direccion())
-		game.schedule(100, { => doubleTap = false})
+	//	game.schedule(100, { => doubleTap = false})
 	// }// Esta parte se podria reemplazar por una animacion continua de moverse pero no veo forma de hacerlo viable.
 	}
 
@@ -242,16 +254,19 @@ object right {
 	method imagenPersonajeAttack(objeto) { // probablemente los enemigos melee al igual que el MC tendran problemas al atacar del lado izquierdo
 		return objeto + "_Attack_right.png"
 	}
-
-	method atacarMC() {
-		if (!doubleTap) {
-			game.schedule(1, { => doubleTap = true})
-			attackMode.accion(espadaMC, personajePrincipal.direccion())
-			game.schedule(500, { => doubleTap = false})
-		}
+	method imagenPersonajeBlock(objeto){
+		return objeto.toString() + "_Block_right.png"
 	}
+//	method atacarMC() {
+//		if (not doubleTap and not personajePrincipal.blockStance()) {
+//			game.schedule(1, { => doubleTap = true})
+//			attackMode.accion(espadaMC, personajePrincipal.direccion())
+//			game.schedule(1000, { => doubleTap = false})
+//		}}
+	
 	method obtenerObjetosParaAtacar(objeto,distancia){
 		var numero = distancia + 1 
+		var posicion
 		numero.times({iteracion => 		numero -= 1
 										posicion = new Position(x = objeto.position().x() + numero, y = objeto.position().y())
 										objetivos += game.getObjectsIn(posicion)
