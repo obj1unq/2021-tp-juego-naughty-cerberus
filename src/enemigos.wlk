@@ -12,6 +12,10 @@ class Enemies {
 	var property position = new MiPosicion(x = 0, y = 0)
 	var property nombre
 	var property pocionDeVidaAsignada
+	const property posicionBarra = 0
+	const property vidaInicial = 500 //la vida maxima con la empieza un enemigo(sin modificarse)
+	var property barraDeVida = new BarraDeVidaEnemigo(enemigo = self)
+
 	var image
 
 	method image() = image
@@ -394,9 +398,8 @@ object flecha inherits Proyectiles {
 
 }
 
-const ogre01 = new Ogre(vida = 800, ataque = 30, defensa = 20, direccion = right, position = new MiPosicion(x = 2, y = 5), nombre = "Ogre", image = right.imagenPersonajeStand("ogre"), pocionDeVidaAsignada = pocionDeVida01)
-
-const spectrum01 = new Spectrum(vida = 500, ataque = 20, defensa = 10, direccion = left, position = new MiPosicion(x = 19, y = 1), nombre = "Spectrum", image = left.imagenPersonajeStand("spectrum"), pocionDeVidaAsignada = pocionDeVida02)
+const ogre01 = new Ogre(vida = 800, vidaInicial = 800, ataque = 30, defensa = 20, direccion = right, position = new MiPosicion(x = 2, y = 5), nombre = "Ogre", image = right.imagenPersonajeStand("ogre"), pocionDeVidaAsignada = pocionDeVida01,posicionBarra = 2)
+const spectrum01 = new Spectrum(vida = 500, vidaInicial = 500, ataque = 20, defensa = 10, direccion = left, position = new MiPosicion(x = 19, y = 1), nombre = "Spectrum", image = left.imagenPersonajeStand("spectrum"), pocionDeVidaAsignada = pocionDeVida02,posicionBarra = 1)
 
 //const spectrum02 = new Spectrum(vida = 500, ataque = 20, defensa = 10, direccion = right, position = new MiPosicion(x = 2, y = 5), nombre = "Spectrum", image = right.imagenPersonajeStand("spectrum"))
 //const spectrum01 = new Spectrum(vida =  500, ataque = 20, defensa = 10, direccion = left, position = g//(9,1), 

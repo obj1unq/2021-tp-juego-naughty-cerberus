@@ -7,9 +7,6 @@ import background.*
 object ajustesIniciales {
 
 	method iniciar() {
-		game.showAttributes(personajePrincipal)
-		game.showAttributes(spectrum01)
-		game.showAttributes(ogre01)
 		config.asignarTeclas()
 		config.movimientoEnemigos()
 		config.recargaEnergia()
@@ -28,8 +25,10 @@ object nivel0 {
 		game.addVisual(ogre01)
 		game.addVisual(personajePrincipal) // el MC ultimo en cargar así aparece sobre los demás objetos
 		game.addVisual(barraDeVidaMC)
-		game.addVisual(barraDeVidaOgre)
-		game.addVisual(barraDeVidaSpectrum)
+		game.addVisual(spectrum01.barraDeVida())
+		game.addVisual(ogre01.barraDeVida())
+//		game.addVisual(ogre01.barraDeVida())
+//		game.addVisual(spectrum01.barraDeVida())
 		game.addVisual(espadaMC)
 		ajustesIniciales.iniciar()
 	}
