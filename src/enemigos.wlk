@@ -12,6 +12,9 @@ class Enemies {
 	var property position = new MiPosicion(x = 0, y = 0)
 	var property nombre
 	var property pocionDeVidaAsignada
+	const property posicionBarra = 0
+	const property vidaInicial = 500 // la vida maxima con la empieza un enemigo(sin modificarse)
+	var property barraDeVida = new BarraDeVidaEnemigo(enemigo = self)
 	var image
 
 	method image() = image

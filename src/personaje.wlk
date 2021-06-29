@@ -48,14 +48,14 @@ object personajePrincipal {
 		if (not self.blockStance()) {
 			blockStance = true
 			self.image(direccion.imagenPersonajeBlock(self.nombre()))
-			defensa = defensa * 2
+			defensa = defensa * 2 + 400
 		}
 	}
 
 	method salirDeModoBloqueo() {
 		blockStance = false
 		self.actualizarImagen()
-		defensa = defensa / 2
+		defensa = (defensa - 400) / 2
 	}
 
 	method verificarEnergia() {

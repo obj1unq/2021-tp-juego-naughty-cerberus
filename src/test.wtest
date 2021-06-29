@@ -1,0 +1,21 @@
+import wollok.game.*
+import nivelesycfg.*
+import personaje.*
+import enemigos.*
+import background.*
+import menus.*
+import misc.*
+import clases.*
+
+//describe "Test de valores iniciales" {
+
+//	fixture {
+//		
+//	}
+	
+	
+//	test "testX" {
+//	}
+//
+//
+//}

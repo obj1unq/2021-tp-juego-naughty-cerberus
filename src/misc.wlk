@@ -96,22 +96,30 @@ class BarraDeVidaMC {
 
 }
 
-class BarraDeVidaSpectrum {
+class BarraDeVidaEnemigo {
 
-	const personaje
+	const property enemigo
 
-	method position() = new MiPosicion(x = personaje.position().x(), y = personaje.position().y() + 1)
+	method position() = new MiPosicion(x = enemigo.position().x(), y = enemigo.position().y() + self.posicionExtra())
 
-	method image() {
-		return if (personaje.vida() > 0) {
-			"vida_" + "spectrum" + self.cantDeVida().toString() + ".png"
+	method image() { // corregir aca,el problema es que la vida del enemigo debe estar convertida en % y falta eso.
+		return if (enemigo.vida() > 0) {
+			"vida_enemigo_" + self.cantDeVida().toString() + ".png"
 		} else {
 			"void.png"
 		}
 	}
 
-	method cantDeVida() {
-		return ((personaje.vida() / 500).roundUp(1) * 100).max(0)
+	method cantDeVida() { // hay que hacer que cantDeVida lo convierta en % y luego lo divida por 10
+		return ((enemigo.vida() / self.vidaInicial().max(1)).roundUp(1) * 100).max(0) / 10
+	}
+
+	method vidaInicial() {
+		return enemigo.vidaInicial()
+	}
+
+	method posicionExtra() {
+		return enemigo.posicionBarra()
 	}
 
 	method recibirAtaque() {
@@ -120,30 +128,7 @@ class BarraDeVidaSpectrum {
 	method recibirAtaque(danio) {
 	}
 
-}
-
-class BarraDeVidaOgre {
-
-	const personaje
-
-	method position() = new MiPosicion(x = personaje.position().x(), y = personaje.position().y() + 2)
-
-	method image() {
-		return if (personaje.vida() > 0) {
-			"vida_" + "ogre" + self.cantDeVida().toString() + ".png"
-		} else {
-			"void.png"
-		}
-	}
-
-	method cantDeVida() {
-		return ((personaje.vida() / 800).roundUp(1) * 100).max(0)
-	}
-
-	method recibirAtaque() {
-	}
-
-	method recibirAtaque(danio) {
+	method teEncontro(personaje) {
 	}
 
 }
@@ -154,10 +139,11 @@ class BarraDeVidaOgre {
  Si quieren pueden hacerlo,sino lo hago yo despues - Braian */
 const barraDeVidaMC = new BarraDeVidaMC(personaje = personajePrincipal)
 
-const barraDeVidaSpectrum = new BarraDeVidaSpectrum(personaje = spectrum01)
-
+//const ogre01barra = new BarraDeVidaEnemigo(enemigo = ogre01)//enemigo = ogre01
+const spectrum01barra = new BarraDeVidaEnemigo(enemigo = spectrum01) //enemigo = spectrum01
 //const barraDeVidaSpectrum = new BarraDeVidaSpectrum(personaje = spectrum01)
-const barraDeVidaOgre = new BarraDeVidaOgre(personaje = wolf01)
+
+const wolf01barra = new BarraDeVidaEnemigo(enemigo = wolf01)
 
 const pocionDeVida01 = new PocionDeVida(vidaQueRecupera = 25)
 
