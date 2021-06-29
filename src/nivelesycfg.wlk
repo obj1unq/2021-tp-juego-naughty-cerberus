@@ -9,7 +9,8 @@ object ajustesIniciales {
 	method iniciar() {
 		game.showAttributes(personajePrincipal)
 		game.showAttributes(spectrum01)
-		game.showAttributes(ogre01)
+		game.showAttributes(wolf01)
+//		game.showAttributes(ogre01)
 		config.asignarTeclas()
 		config.movimientoEnemigos()
 		config.recargaEnergia()
@@ -25,7 +26,8 @@ object nivel0 {
 		game.addVisual(escotilla)
 		game.addVisual(escalera)
 		game.addVisual(spectrum01)
-		game.addVisual(ogre01)
+		game.addVisual(wolf01)
+//		game.addVisual(ogre01)
 		game.addVisual(personajePrincipal) // el MC ultimo en cargar así aparece sobre los demás objetos
 		game.addVisual(barraDeVidaMC)
 		game.addVisual(barraDeVidaOgre)
@@ -56,8 +58,9 @@ object config {
 	}
 
 	method movimientoEnemigos() {
-		spectrum01.recorrerPiso()
-		ogre01.recorrerPiso()
+		spectrum01.vigilarPiso()
+		wolf01.vigilarPiso()
+//		ogre01.vigilarPiso()
 	}
 
 	method configurarColisiones() {

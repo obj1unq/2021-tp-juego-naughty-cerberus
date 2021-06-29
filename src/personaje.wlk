@@ -32,7 +32,9 @@ object personajePrincipal {
 	}
 
 	method moverse() {
-		if(not self.blockStance()){direccion.moveMC()}
+		if (not self.blockStance()) {
+			direccion.moveMC()
+		}
 	}
 
 	method bloquear() {
@@ -43,11 +45,10 @@ object personajePrincipal {
 	}
 
 	method modoBloqueo() {
-		if(not self.blockStance()){
+		if (not self.blockStance()) {
 			blockStance = true
 			self.image(direccion.imagenPersonajeBlock(self.nombre()))
 			defensa = defensa * 2
-		
 		}
 	}
 
@@ -73,19 +74,20 @@ object personajePrincipal {
 			game.schedule(1, { => doubleTap = true})
 			self.realizarAtaque()
 			self.colisionarGolpe()
-			}
+		}
 	}
-	method realizarAtaque(){
-		
+
+	method realizarAtaque() {
 		attackMode.accion(espadaMC, self.direccion())
 		game.schedule(500, { => doubleTap = false})
-		
 	}
+
 	method recibirAtaque(danio) {
 		self.validarVida(danio)
 		vida = vida - self.calculoDeDanio(danio)
 	} // la formula actual es: ATK(del MC en este caso) *  (1 - DEF / (100 + DEF))  
-		//
+	//
+
 	method calculoDeDanio(danio) {
 		return danio * (1 - self.defensa() / (100 + self.defensa()))
 	}
@@ -104,10 +106,9 @@ object personajePrincipal {
 	}
 
 	method colisionarGolpe() {
-		direccion.obtenerObjetosParaAtacar(self,2)
-		direccion.objetivos().forEach{objeto => objeto.recibirAtaque()}
+		direccion.obtenerObjetosParaAtacar(self, 2)
+		direccion.objetivos().forEach{ objeto => objeto.recibirAtaque()}
 		direccion.objetivos(#{})
-		
 	}
 
 	method subirPorEscalera() {
@@ -181,20 +182,24 @@ object espadaMC {
 			personajePrincipal.position().x()
 		}
 	}
-	
+
 }
 
 object left {
 
 	var property objetivos = #{}
-	//var doubleTap = false
-	
+
+	// var doubleTap = false
 	method moveMC() { // Mov izquierda del MainCharacter (personaje principal)	
 	// if(!doubleTap){ // Un pequeño retraso para no spamear botones de movilidad(y hacer más valioso el esquivar)			
-		//game.schedule(1, { => doubleTap = true})
+	// game.schedule(1, { => doubleTap = true})
 		runModeL.accion(personajePrincipal, personajePrincipal.direccion())
-		//game.schedule(100, { => doubleTap = false})
+	// game.schedule(100, { => doubleTap = false})
 	// }// Esta parte se podria reemplazar por una animacion continua de moverse pero no veo forma de hacerlo viable.
+	}
+
+	method moveWolf(lobo) {
+		runModeWolfL.accion(lobo, lobo.direccion())
 	}
 
 	method move(objeto, num) { // general para cualquier objecto, pensado para usarse en los enemigos
@@ -209,40 +214,45 @@ object left {
 	method imagenPersonajeAttack(objeto) { // probablemente los enemigos melee al igual que el MC tendran problemas al atacar del lado izquierdo
 		return objeto + "_Attack_left.png"
 	}
-	method imagenPersonajeBlock(objeto){
+
+	method imagenPersonajeBlock(objeto) {
 		return objeto + "_Block_left.png"
 	}
+
 //	method atacarMC() {
 //		if (not doubleTap and not personajePrincipal.blockStance()) {
 //			game.schedule(1, { => doubleTap = true})
 //			attackMode.accion(espadaMC, personajePrincipal.direccion())
 //			game.schedule(1000, { => doubleTap = false})
 //		}}
-	
-	method obtenerObjetosParaAtacar(objeto,distancia){
+	method obtenerObjetosParaAtacar(objeto, distancia) {
 		var numero = distancia + 1
-		var posicion 
-		numero.times({iteracion => 		numero -= 1
-										posicion = new Position(x = objeto.position().x() - numero, y = objeto.position().y())
-										objetivos += game.getObjectsIn(posicion)
-										})
-
-
+		var posicion
+		numero.times({ iteracion =>
+			numero -= 1
+			posicion = new Position(x = objeto.position().x() - numero, y = objeto.position().y())
+			objetivos += game.getObjectsIn(posicion)
+		})
 	}
+
 // si llega a haber problemas de rendimiento por atacar muy rapido lo mejor será hacer el ataque de la espada por separado
 }
 
 object right {
 
-	//var doubleTap = false
+	// var doubleTap = false
 	var property objetivos = #{}
-	
+
 	method moveMC() { // Mov derecha del MainCharacter (personaje principal)	
 	// if(!doubleTap){ // Un pequeño retraso para no spamear botones de movilidad(y hacer más valioso el esquivar)	(desactivado por ahora mientras se resuelven bugs)		
-	//	game.schedule(1, { => doubleTap = true})
+	// game.schedule(1, { => doubleTap = true})
 		runModeR.accion(personajePrincipal, personajePrincipal.direccion())
-	//	game.schedule(100, { => doubleTap = false})
+	// game.schedule(100, { => doubleTap = false})
 	// }// Esta parte se podria reemplazar por una animacion continua de moverse pero no veo forma de hacerlo viable.
+	}
+
+	method moveWolf(lobo) {
+		runModeWolfR.accion(lobo, lobo.direccion())
 	}
 
 	method move(objeto, num) { // general para cualquier objecto, pensado para usarse en los enemigos
@@ -257,27 +267,28 @@ object right {
 	method imagenPersonajeAttack(objeto) { // probablemente los enemigos melee al igual que el MC tendran problemas al atacar del lado izquierdo
 		return objeto + "_Attack_right.png"
 	}
-	method imagenPersonajeBlock(objeto){
+
+	method imagenPersonajeBlock(objeto) {
 		return objeto + "_Block_right.png"
 	}
+
 //	method atacarMC() {
 //		if (not doubleTap and not personajePrincipal.blockStance()) {
 //			game.schedule(1, { => doubleTap = true})
 //			attackMode.accion(espadaMC, personajePrincipal.direccion())
 //			game.schedule(1000, { => doubleTap = false})
 //		}}
-	
-	method obtenerObjetosParaAtacar(objeto,distancia){
-		var numero = distancia + 1 
+	method obtenerObjetosParaAtacar(objeto, distancia) {
+		var numero = distancia + 1
 		var posicion
-		numero.times({iteracion => 		numero -= 1
-										posicion = new Position(x = objeto.position().x() + numero, y = objeto.position().y())
-										objetivos += game.getObjectsIn(posicion)
-										})
-
+		numero.times({ iteracion =>
+			numero -= 1
+			posicion = new Position(x = objeto.position().x() + numero, y = objeto.position().y())
+			objetivos += game.getObjectsIn(posicion)
+		})
 	}
-}
 
+}
 
 object imageNameConversor {
 

@@ -156,8 +156,10 @@ const barraDeVidaMC = new BarraDeVidaMC(personaje = personajePrincipal)
 
 const barraDeVidaSpectrum = new BarraDeVidaSpectrum(personaje = spectrum01)
 
-const barraDeVidaOgre = new BarraDeVidaOgre(personaje = ogre01)
+//const barraDeVidaSpectrum = new BarraDeVidaSpectrum(personaje = spectrum01)
+const barraDeVidaOgre = new BarraDeVidaOgre(personaje = wolf01)
 
 const pocionDeVida01 = new PocionDeVida(vidaQueRecupera = 25)
+
 const pocionDeVida02 = new PocionDeVida(vidaQueRecupera = 25)
 

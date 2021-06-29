@@ -28,7 +28,6 @@ class Mode {
 
 }
 
-
 object runModeL inherits Mode(accion = "Run", speedFrame = 30, totalImg = 4, time = 0) {
 
 	override method timeLapse(objeto) {
@@ -48,28 +47,50 @@ object runModeR inherits Mode(accion = "Run", speedFrame = 30, totalImg = 4, tim
 	}
 
 }
-class AttackMC inherits Mode{ //quiza luego este attackMC se convierta en un attack generico para los melee??
+
+object runModeWolfL inherits Mode(accion = "Run", speedFrame = 45, totalImg = 4, time = 0) {
+
+	override method timeLapse(objeto) {
+		time += 1
+		objeto.position().x(objeto.position().x() - 0.25)
+	}
+
+}
+
+object runModeWolfR inherits Mode(accion = "Run", speedFrame = 45, totalImg = 4, time = 0) {
+
+	override method timeLapse(objeto) {
+		time += 1
+		objeto.position().x(objeto.position().x() + 0.25)
+	}
+
+}
+
+class AttackMC inherits Mode { //quiza luego este attackMC se convierta en un attack generico para los melee??
+
 	override method realizarAccion(objeto, direccion) {
-		//objeto.image(direccion.imagenPersonajeAttack(objeto.portador().nombre())) usando algo así como esto
+		// objeto.image(direccion.imagenPersonajeAttack(objeto.portador().nombre())) usando algo así como esto
 		personajePrincipal.image(direccion.imagenPersonajeAttack(personajePrincipal.nombre()))
 		self.timeLapse(objeto)
 		imageNameConversor.getImgName(objeto, accion, direccion, self.time().toString()) // direccion(derecha o izquierda) hacia donde hará la animacion
 		if (self.time() == totalImg) {
 			game.removeTickEvent(accion)
 			time = 0
-			game.schedule(500, { => personajePrincipal.image(direccion.imagenPersonajeStand(personajePrincipal.nombre()))
-									objeto.image("sword_void.png")})
+			game.schedule(500, { =>
+				personajePrincipal.image(direccion.imagenPersonajeStand(personajePrincipal.nombre()))
+				objeto.image("sword_void.png")
+			})
 		}
 //		objeto.image(direccion.imagenPersonajeAttack(personajePrincipal.nombre()))
 //		super(objeto,direccion)
 //		game.removeVisual(objeto)
 	}
+
 //	override method accion(objeto, direccion) {
 //		direccion.espadaMCPosition()
 //		super(objeto, direccion)
 //	}
 }
-
 
 const attackMode = new AttackMC(accion = "Attack", speedFrame = 65, totalImg = 3, time = 0)
 

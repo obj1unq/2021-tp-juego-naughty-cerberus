@@ -6,7 +6,7 @@ import misc.*
 class Enemies {
 
 	var property vida = 500
-	var property ataque = 20
+	var property ataque = 35
 	var property defensa = 10
 	var property direccion = right
 	var property position = new MiPosicion(x = 0, y = 0)
@@ -62,25 +62,24 @@ class Enemies {
 
 	method morir() {
 //		self.dejarDeAtacar()
-		game.schedule(150, { => self.dejarDeAtacar()})
+		game.schedule(1, { => self.dejarDeAtacar()})
 		self.dieMode().accion(self, self.direccion())
 	}
 
 	method dieMode()
 
-	method recorrerPiso() {
-		self.ponersePasivo()
-		game.onTick(750, self.toString() + "recorre el piso hasta encontrar al MC", { => self.patrullarYCazarMC()})
+	method patrullarYCazarMC() {
+		if (self.mcEnMiNivel()) {
+			self.atacarSiSeAcerca()
+		}
 	}
 
-	method patrullarYCazarMC() {
-		if (!self.mcEnMiNivel()) {
-			self.caminarHastaElBorde()
-		} else {
-			self.ponerseActivo()
-			self.dejaDePatrullar()
-			self.seAcercaAlMC()
-		}
+	method atacarSiSeAcerca() {
+	}
+
+	method vigilarPiso() {
+		self.ponersePasivo()
+		game.onTick(750, self.toString() + "recorre el piso hasta encontrar al MC", { => self.patrullarYCazarMC()})
 	}
 
 	method atacarMCSiEstaEnRango() {
@@ -114,16 +113,18 @@ class Enemies {
 	}
 
 	method estaEnElBorde() {
-		return self.position().x() == 0 || self.position().x() == 19
+		return self.position().x() <= 1 or self.position().x() >= 18
 	}
 
 	method darLaVuelta() {
 		if (direccion == right) {
 			self.direccion(left)
 			self.actualizarImagen()
+//			self.moverse()
 		} else {
 			self.direccion(right)
 			self.actualizarImagen()
+//			self.moverse()
 		}
 	}
 
@@ -134,7 +135,8 @@ class Enemies {
 
 	method verificarQueSigaEnMiNivel() {
 		if (!self.mcEnMiNivel()) {
-			self.recorrerPiso()
+			self.vigilarPiso()
+			self.ponersePasivo()
 		}
 	}
 
@@ -153,7 +155,7 @@ class Enemies {
 	method dejarDeAtacar() {
 		game.removeTickEvent(self.toString() + "comienza a atacar")
 		if (vida > 0) {
-			self.recorrerPiso()
+			self.vigilarPiso()
 		}
 	}
 
@@ -176,7 +178,7 @@ class Enemies {
 	method moverseHaciaMCSiEstaEnElPiso() {
 		if (!self.mcEnMiNivel()) {
 			self.dejaDeAcercarseAlMC()
-			self.recorrerPiso()
+			self.vigilarPiso()
 		} else {
 			self.moverseHaciaMCYAtacar()
 		}
@@ -211,12 +213,22 @@ class Enemies {
 	}
 
 	method estaVivo() {
-		return game.allVisuals().contains(self)
+		return game.allVisuals().contains(self) and self.vida() > 0
 	}
 
 }
 
 class Spectrum inherits Enemies {
+
+	override method patrullarYCazarMC() {
+		if (!self.mcEnMiNivel()) {
+			self.caminarHastaElBorde()
+		} else {
+			self.ponerseActivo()
+			self.dejaDePatrullar()
+			self.seAcercaAlMC()
+		}
+	}
 
 	override method atacar() {
 		super()
@@ -249,13 +261,7 @@ class Spectrum inherits Enemies {
 
 class Ogre inherits Enemies {
 
-	override method patrullarYCazarMC() {
-		if (self.mcEnMiNivel()) {
-			self.atacarSiSeAcerca()
-		}
-	}
-
-	method atacarSiSeAcerca() {
+	override method atacarSiSeAcerca() {
 		if (self.estaCercaDelMC()) {
 			self.ponerseActivo()
 			self.dejaDePatrullar()
@@ -284,13 +290,13 @@ class Ogre inherits Enemies {
 	}
 
 	override method dieMode() {
-		return new Mode(accion = "Die", speedFrame = 150, totalImg = 7, time = 0)
+		return new Mode(accion = "Die", speedFrame = 250, totalImg = 7, time = 0)
 	}
 
 	override method morir() {
 		super()
-		game.schedule(1050, { => game.removeVisual(self)})
-		game.schedule(1050, { => pocionDeVidaAsignada.spawn(self)})
+		game.schedule(1750, { => game.removeVisual(self)})
+		game.schedule(1750, { => pocionDeVidaAsignada.spawn(self)})
 	}
 
 	method reloadMode() {
@@ -299,6 +305,132 @@ class Ogre inherits Enemies {
 
 	method recargarBallesta() {
 		self.reloadMode().accion(self, self.direccion())
+	}
+
+}
+
+class Wolf inherits Enemies {
+
+	override method ponerseActivo() {
+		nombre = "wolfAct"
+		super()
+	}
+
+	override method ponersePasivo() {
+		nombre = "wolf"
+		super()
+	}
+
+	override method moverse() {
+		direccion.moveWolf(self)
+	}
+
+	override method atacarSiSeAcerca() {
+		self.mirarAlMC()
+		self.ponerseActivo()
+		if (self.estaCercaDelMC()) {
+			self.dejaDePatrullar()
+			self.modoRabioso()
+			game.sound("wolfActive-sfx.mp3").play()
+		}
+	}
+
+	method modoRabioso() {
+		game.onTick(140, self.toString() + "corre hasta los bordes", { => self.caminarHastaElBorde()})
+	}
+
+	override method caminarHastaElBorde() {
+		self.verificarQueSigaEnMiNivel()
+		if (self.estaVivo()) {
+			super()
+		} else {
+			self.morir()
+		}
+	}
+
+	method salirModoRabioso() {
+		game.removeTickEvent(self.toString() + "corre hasta los bordes")
+	}
+
+	method dejarDeIrHaciaLosBordes() {
+		game.removeTickEvent(self.toString() + "corre hasta los bordes")
+		self.vigilarPiso()
+	}
+
+	override method dieMode() {
+		return new Mode(accion = "Die", speedFrame = 250, totalImg = 8, time = 0)
+	}
+
+	override method verificarQueSigaEnMiNivel() {
+		if (!self.mcEnMiNivel()) {
+			game.schedule(140, { =>
+				self.salirModoRabioso()
+				self.vigilarPiso()
+			})
+//			self.salirModoRabioso()
+//			self.vigilarPiso()
+//			game.schedule(140, {=> self.vigilarPiso()})
+		}
+	}
+
+	override method morir() {
+		if (!self.estaAturdido()) {
+			self.salirModoRabioso()
+		} else {
+			self.ponerseActivo()
+		}
+		self.dieMode().accion(self, self.direccion())
+		game.schedule(2000, { => game.removeVisual(self)})
+		game.schedule(2000, { => pocionDeVidaAsignada.spawn(self)})
+	}
+
+	override method teEncontro(objeto) {
+		if (objeto == personajePrincipal and personajePrincipal.blockStance()) {
+			self.aturdirseBrevemente()
+		} else {
+			objeto.recibirAtaque(ataque)
+		}
+	}
+
+	method aturdirseBrevemente() {
+		self.salirModoRabioso()
+		game.schedule(280, { => self.modoAturdido()})
+//		self.ponerseActivo()
+//		self.modoAturdido()
+		game.schedule(1850, { =>
+			if (self.estaVivo()) {
+				self.ponerseActivo()
+				self.modoRabioso()
+			}
+		})
+	}
+
+	method modoAturdido() {
+//		self.salirModoRabioso()
+		nombre = "wolfStunned"
+		self.actualizarImagen()
+	}
+
+	/* 	method stunnedMode() {
+	 * 		return new Mode(accion = "stunned", speedFrame = 100, totalImg = 4, time = 0)
+	 * 	}
+	 */
+	method estaAturdido() {
+		return nombre == "wolfStunned"
+	}
+
+	override method darLaVuelta() {
+		super()
+		self.irAlBordeMasCercano()
+		self.moverse()
+	}
+
+	method irAlBordeMasCercano() {
+		if (self.position().x() < 10) {
+			self.position().x(1)
+		} else {
+			self.position().x(18)
+		}
 	}
 
 }
@@ -312,7 +444,7 @@ class Proyectiles {
 
 	method lanzar(enemigo) {
 		self.removeVisualSiYaExiste()
-		self.verificarQueSigaVivo(enemigo)
+//		self.verificarQueSigaVivo(enemigo)
 		self.verificarQueElMCEsteEnElPisoYEstaCerca(enemigo)
 		enemigo.mirarAlMC()
 		self.position(new MiPosicion(x = enemigo.position().x(), y = enemigo.position().y()))
@@ -394,9 +526,10 @@ object flecha inherits Proyectiles {
 
 }
 
-const ogre01 = new Ogre(vida = 800, ataque = 30, defensa = 20, direccion = right, position = new MiPosicion(x = 2, y = 5), nombre = "Ogre", image = right.imagenPersonajeStand("ogre"), pocionDeVidaAsignada = pocionDeVida01)
+//const ogre01 = new Ogre(vida = 800, ataque = 30, defensa = 20, direccion = right, position = new MiPosicion(x = 2, y = 5), nombre = "Ogre", image = right.imagenPersonajeStand("ogre"), pocionDeVidaAsignada = pocionDeVida01)
+const spectrum01 = new Spectrum(vida = 500, ataque = 20, defensa = 10, direccion = left, position = new MiPosicion(x = 2, y = 5), nombre = "Spectrum", image = left.imagenPersonajeStand("spectrum"), pocionDeVidaAsignada = pocionDeVida01)
 
-const spectrum01 = new Spectrum(vida = 500, ataque = 20, defensa = 10, direccion = left, position = new MiPosicion(x = 19, y = 1), nombre = "Spectrum", image = left.imagenPersonajeStand("spectrum"), pocionDeVidaAsignada = pocionDeVida02)
+const wolf01 = new Wolf(vida = 500, ataque = 35, defensa = 0, direccion = left, position = new MiPosicion(x = 12, y = 1), nombre = "wolf", image = left.imagenPersonajeStand("wolf"), pocionDeVidaAsignada = pocionDeVida02)
 
 //const spectrum02 = new Spectrum(vida = 500, ataque = 20, defensa = 10, direccion = right, position = new MiPosicion(x = 2, y = 5), nombre = "Spectrum", image = right.imagenPersonajeStand("spectrum"))
 //const spectrum01 = new Spectrum(vida =  500, ataque = 20, defensa = 10, direccion = left, position = g//(9,1), 
