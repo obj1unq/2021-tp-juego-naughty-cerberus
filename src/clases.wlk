@@ -1,5 +1,6 @@
 import personaje.*
 import wollok.game.*
+import nivelesycfg.*
 
 class Mode {
 
@@ -32,8 +33,8 @@ object runModeL inherits Mode(accion = "Run", speedFrame = 30, totalImg = 4, tim
 
 	override method timeLapse(objeto) {
 		time += 1
-		objeto.position().x(objeto.position().x() - 0.25)
-	// objeto.actualizarPosicion() // delegar responsabilidad a actualizarPosicion(que luego será cambiado por move() seguramente)
+		left.move(objeto,0.25)
+		//objeto.position().x(objeto.position().x() - 0.25)
 	}
 
 }
@@ -42,8 +43,9 @@ object runModeR inherits Mode(accion = "Run", speedFrame = 30, totalImg = 4, tim
 
 	override method timeLapse(objeto) {
 		time += 1
-		objeto.position().x(objeto.position().x() + 0.25)
-	// objeto.actualizarPosicion() //lo mismo que en runModeL
+		right.move(objeto,0.25)
+	//	objeto.position().x(objeto.position().x() + 0.25)
+
 	}
 
 }
@@ -52,7 +54,7 @@ object runModeWolfL inherits Mode(accion = "Run", speedFrame = 45, totalImg = 4,
 
 	override method timeLapse(objeto) {
 		time += 1
-		objeto.position().x(objeto.position().x() - 0.25)
+		left.move(objeto,0.25)
 	}
 
 }
@@ -61,7 +63,7 @@ object runModeWolfR inherits Mode(accion = "Run", speedFrame = 45, totalImg = 4,
 
 	override method timeLapse(objeto) {
 		time += 1
-		objeto.position().x(objeto.position().x() + 0.25)
+		right.move(objeto,0.25)
 	}
 
 }
@@ -126,4 +128,59 @@ class MiPosicion {
 	method down(n) = new MiPosicion(x = x, y = y - n)
 
 }
+
+class Teleport{
+	var property xTP
+	var property yTP
+	var property pantallaNueva = nivel1
+	var property posX 
+	var property posY 
+	var property image = "void.png"
+	
+	method position() = new Position(x = xTP, y = yTP)
+	method teEncontro(personaje){
+		game.clear()
+		pantallaNueva.iniciar()
+		self.cambiarPosicion(personaje) 
+		}
+	
+	method cambiarPosicion(personaje){
+		
+		personaje.position().x(posX)
+		personaje.position().y(posY)
+	}
+	method recibirAtaque() {
+	}
+
+	method recibirAtaque(danio) {
+	}
+}
+
+class Muro inherits Teleport{
+	
+	override method teEncontro(personaje){
+		self.cambiarPosicion(personaje)
+	}
+	override method cambiarPosicion(personaje){
+		super(personaje)
+		self.darLaVuelta(personaje)
+		personaje.actualizarImagen()
+	}
+	method darLaVuelta(personaje){
+		if(personaje.direccion() == right)	{personaje.direccion(left)} //En un futuro se puede cambiar este if por un opuestoDireccion(objeto) en el cual le mandas un msj a los objetos right o left y estos se encargan de devolver el opuesto o directamente cambiar la direccion del objeto dado.
+		else								{personaje.direccion(right)} // Esto implicaria tambien cambiar varias partes del código donde se usa una estructura similar,asi que por cuestiones de tiempo lo dejamos para el final si nos sobra tiempo.
+	}
+}
+
+const tpTunelAbajo = new Teleport(xTP = 12, yTP = 1, pantallaNueva = nivel1, posX = 4, posY = 9)
+
+const bloqueoIzquierdaArriba = new Muro(xTP = -1, yTP = 5, posX = 0, posY = 5)
+const bloqueoIzquierdaAbajo = new Muro(xTP = -1, yTP = 1, posX = 0, posY = 1)
+const bloqueoDerechaArriba = new Muro(xTP = 20, yTP = 5, posX = 19, posY = 5)
+const bloqueoDerechaAbajo = new Muro(xTP = 20, yTP = 1, posX = 19,  posY = 1)
+
+const tpPantalla2 = new Teleport(xTP = 20, yTP = 1, pantallaNueva = pantalla2, posX = 0,  posY = 1)
+const tpRegresoPantalla1 = new Teleport(xTP = 20, yTP = 1, pantallaNueva = pantalla1, posX = 19,  posY = 1)
+
+
 

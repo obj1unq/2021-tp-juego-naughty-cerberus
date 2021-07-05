@@ -133,17 +133,7 @@ class BarraDeVidaEnemigo {
 
 }
 
-/* Por que clases para la barras de vida del mc? 
- *  No se podrian parametrizar las barras de vida de los enemigos? 
- *  Se podria dar como parametro al inicializar la posicion "extra" que se le debe añadir a Y()
- Si quieren pueden hacerlo,sino lo hago yo despues - Braian */
 const barraDeVidaMC = new BarraDeVidaMC(personaje = personajePrincipal)
-
-//const ogre01barra = new BarraDeVidaEnemigo(enemigo = ogre01)//enemigo = ogre01
-const spectrum01barra = new BarraDeVidaEnemigo(enemigo = spectrum01) //enemigo = spectrum01
-//const barraDeVidaSpectrum = new BarraDeVidaSpectrum(personaje = spectrum01)
-
-const wolf01barra = new BarraDeVidaEnemigo(enemigo = wolf01)
 
 const pocionDeVida01 = new PocionDeVida(vidaQueRecupera = 25)
 

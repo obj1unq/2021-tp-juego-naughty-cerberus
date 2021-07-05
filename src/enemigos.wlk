@@ -2,9 +2,11 @@ import wollok.game.*
 import clases.*
 import personaje.*
 import misc.*
+import nivelesycfg.*
 
 class Enemies {
 
+	var property pantalla
 	var property vida = 500
 	var property ataque = 35
 	var property defensa = 10
@@ -12,7 +14,6 @@ class Enemies {
 	var property position = new MiPosicion(x = 0, y = 0)
 	var property nombre
 	var property pocionDeVidaAsignada
-	const property posicionBarra = 0
 	const property vidaInicial = 500 // la vida maxima con la empieza un enemigo(sin modificarse)
 	var property barraDeVida = new BarraDeVidaEnemigo(enemigo = self)
 	var image
@@ -68,7 +69,10 @@ class Enemies {
 		game.schedule(1, { => self.dejarDeAtacar()})
 		self.dieMode().accion(self, self.direccion())
 	}
-
+	method quitarDeLaPantalla(){
+		game.removeVisual(self)
+		pantalla.enemigos().remove(self)
+	}
 	method dieMode()
 
 	method patrullarYCazarMC() {
@@ -218,7 +222,10 @@ class Enemies {
 	method estaVivo() {
 		return game.allVisuals().contains(self) and self.vida() > 0
 	}
-
+	
+	method posicionBarra(){
+		return 1
+	}
 }
 
 class Spectrum inherits Enemies {
@@ -252,14 +259,13 @@ class Spectrum inherits Enemies {
 	override method morir() {
 //		self.ponerseActivo()
 		super()
-		game.schedule(799, { => game.removeVisual(self)})
+		game.schedule(799, { => self.quitarDeLaPantalla()})
 		game.schedule(800, { => pocionDeVidaAsignada.spawn(self)})
 	}
 
 	override method dieMode() {
 		return new Mode(accion = "Die", speedFrame = 100, totalImg = 8, time = 0)
 	}
-
 }
 
 class Ogre inherits Enemies {
@@ -298,10 +304,9 @@ class Ogre inherits Enemies {
 
 	override method morir() {
 		super()
-		game.schedule(1750, { => game.removeVisual(self)})
+		game.schedule(1750, { => self.quitarDeLaPantalla()	})
 		game.schedule(1750, { => pocionDeVidaAsignada.spawn(self)})
 	}
-
 	method reloadMode() {
 		return new Mode(accion = "reload", speedFrame = 130, totalImg = 8, time = 0)
 	}
@@ -309,7 +314,9 @@ class Ogre inherits Enemies {
 	method recargarBallesta() {
 		self.reloadMode().accion(self, self.direccion())
 	}
-
+	override method posicionBarra(){
+		return 2
+	}
 }
 
 class Wolf inherits Enemies {
@@ -383,7 +390,7 @@ class Wolf inherits Enemies {
 			self.ponerseActivo()
 		}
 		self.dieMode().accion(self, self.direccion())
-		game.schedule(2000, { => game.removeVisual(self)})
+		game.schedule(2000, { => self.quitarDeLaPantalla() })
 		game.schedule(2000, { => pocionDeVidaAsignada.spawn(self)})
 	}
 
@@ -434,6 +441,9 @@ class Wolf inherits Enemies {
 		} else {
 			self.position().x(18)
 		}
+	}
+	override method posicionBarra(){
+		return 0
 	}
 
 }
@@ -529,11 +539,20 @@ object flecha inherits Proyectiles {
 
 }
 
-//const ogre01 = new Ogre(vida = 800, ataque = 30, defensa = 20, direccion = right, position = new MiPosicion(x = 2, y = 5), nombre = "Ogre", image = right.imagenPersonajeStand("ogre"), pocionDeVidaAsignada = pocionDeVida01)
-const spectrum01 = new Spectrum(vida = 500, ataque = 20, defensa = 10, direccion = left, position = new MiPosicion(x = 2, y = 5), nombre = "Spectrum", image = left.imagenPersonajeStand("spectrum"), pocionDeVidaAsignada = pocionDeVida01)
+// Enemigos:
+//Nivel 1
+//Pantalla 1
+const spectrum01 = new Spectrum(pantalla = pantalla1,vida = 500,vidaInicial = 500, ataque = 20, defensa = 10, direccion = left, position = new MiPosicion(x = 2, y = 1), nombre = "Spectrum", image = left.imagenPersonajeStand("spectrum"), pocionDeVidaAsignada = pocionDeVida01)
+//Pantalla 2
+const spectrum02 = new Spectrum(pantalla = pantalla2,vida = 500,vidaInicial = 500, ataque = 20, defensa = 10, direccion = left, position = new MiPosicion(x = 2, y = 5), nombre = "Spectrum", image = left.imagenPersonajeStand("spectrum"), pocionDeVidaAsignada = pocionDeVida01)
+const ogre01 = new Ogre(pantalla = pantalla2,vida = 800,vidaInicial = 800, ataque = 30, defensa = 20, direccion = right, position = new MiPosicion(x = 2, y = 5), nombre = "Ogre", image = right.imagenPersonajeStand("ogre"), pocionDeVidaAsignada = pocionDeVida01)
+////Pantalla 3
+//const wolf01 = new Wolf(pantalla = pantalla3,vida = 500,vidaInicial = 500, ataque = 35, defensa = 0, direccion = left, position = new MiPosicion(x = 12, y = 1), nombre = "wolf", image = left.imagenPersonajeStand("wolf"), pocionDeVidaAsignada = pocionDeVida02)
+////Pantalla 4
+//const wolf02 = new Wolf(pantalla = pantalla4,vida = 500,vidaInicial = 500, ataque = 35, defensa = 0, direccion = left, position = new MiPosicion(x = 12, y = 1), nombre = "wolf", image = left.imagenPersonajeStand("wolf"), pocionDeVidaAsignada = pocionDeVida02)
+//const wolf03 = new Wolf(pantalla = pantalla4,vida = 500,vidaInicial = 500, ataque = 35, defensa = 0, direccion = left, position = new MiPosicion(x = 12, y = 1), nombre = "wolf", image = left.imagenPersonajeStand("wolf"), pocionDeVidaAsignada = pocionDeVida02)
+////Pantalla 5
+//const spectrum03 = new Spectrum(pantalla = pantalla5,vida = 500,vidaInicial = 500, ataque = 20, defensa = 10, direccion = left, position = new MiPosicion(x = 2, y = 5), nombre = "Spectrum", image = left.imagenPersonajeStand("spectrum"), pocionDeVidaAsignada = pocionDeVida01)
+//const ogre02 = new Ogre(pantalla = pantalla5,vida = 800,vidaInicial = 800, ataque = 30, defensa = 20, direccion = right, position = new MiPosicion(x = 2, y = 5), nombre = "Ogre", image = right.imagenPersonajeStand("ogre"), pocionDeVidaAsignada = pocionDeVida01)
+//const wolf04 = new Wolf(pantalla = pantalla5,vida = 500,vidaInicial = 500, ataque = 35, defensa = 0, direccion = left, position = new MiPosicion(x = 12, y = 1), nombre = "wolf", image = left.imagenPersonajeStand("wolf"), pocionDeVidaAsignada = pocionDeVida02)
 
-const wolf01 = new Wolf(vida = 500, ataque = 35, defensa = 0, direccion = left, position = new MiPosicion(x = 12, y = 1), nombre = "wolf", image = left.imagenPersonajeStand("wolf"), pocionDeVidaAsignada = pocionDeVida02)
-
-//const spectrum02 = new Spectrum(vida = 500, ataque = 20, defensa = 10, direccion = right, position = new MiPosicion(x = 2, y = 5), nombre = "Spectrum", image = right.imagenPersonajeStand("spectrum"))
-//const spectrum01 = new Spectrum(vida =  500, ataque = 20, defensa = 10, direccion = left, position = g//(9,1), 
-// nombre = "spectrum",image = left.imagenPersonajeStand("spectrum"))

@@ -30,7 +30,12 @@ object personajePrincipal {
 	method actualizarPosicion(nuevaPosicion) {
 		position = nuevaPosicion
 	}
-
+	
+// borrar este metodo despues de probar
+	method decirPos(){
+		self.error("PosX = " + self.position().x().toString() + ", PosY = " + self.position().y().toString())
+	}	
+	
 	method moverse() {
 		if (not self.blockStance()) {
 			direccion.moveMC()
@@ -141,6 +146,14 @@ object personajePrincipal {
 
 	method irAlPisoDeAbajo() {
 		self.actualizarPosicion(new MiPosicion(x = self.position().x(), y = self.position().y() - 4))
+	}
+	method caerSiNoEstasEnPiso() {
+		if (not self.estaEnElPiso()) {
+			self.position().y(self.position().y() - 1) 
+		}
+	}
+	method estaEnElPiso() {
+		return self.position().y() == 1 or self.position().y() == 5
 	}
 
 }

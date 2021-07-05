@@ -60,7 +60,7 @@ object iniciarJuego{
 			game.removeVisual(controles)
 			game.removeVisual(salir)
 			game.removeVisual(selector)
-			nivel0.iniciar()
+			eventNivel0.iniciar()
 	}
 }
 object controles{
