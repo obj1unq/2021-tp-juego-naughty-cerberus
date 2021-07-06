@@ -107,5 +107,71 @@ class Lightning{
 		return new Mode(accion = "Falling", speedFrame = 35, totalImg = 10, time = 0)
 	}
 }
+
+object selectorEspada{
+	var opciones = [yes,no]
+	
+	const property image = "sel_espada.png"
+	
+	method position() {
+		return new MiPosicion(x = self.seleccion().position().x()-1 , y = self.seleccion().position().y())		
+		}
+		
+	method seleccion() = opciones.head()
+	
+	method derecha(){
+		const seleccionActual = self.seleccion()
+		opciones.remove(seleccionActual)
+		opciones.add(seleccionActual)
+		
+		}
+	method izquierda(){
+		const ultimaSeleccion = opciones.last()
+		opciones.remove(ultimaSeleccion)
+		opciones = [ultimaSeleccion] + opciones		
+	}
+}
+
+object endMenu{
+	
+	method iniciar(){
+		game.clear()
+		backGround.fondo("gameover1")
+		game.addVisual(backGround)
+		game.addVisual(yes)
+		game.addVisual(no)
+		game.addVisual(selectorEspada)
+		self.controles()
+	}
+	
+	method controles(){
+		keyboard.left().onPressDo({selectorEspada.izquierda()})
+		keyboard.right().onPressDo({selectorEspada.derecha()})
+		keyboard.enter().onPressDo({selectorEspada.seleccion().iniciar()})
+	}
+}
+object yes{
+	const property position = new MiPosicion(x = 8, y = 3)
+	method image(){return "yes.png"}
+	
+	method iniciar(){
+		game.removeVisual(self)
+		game.removeVisual(no)
+		game.removeVisual(selectorEspada)		
+		//TODO: REINICIAR
+		
+	}
+}
+
+object no{
+	const property position = new MiPosicion(x = 11, y = 3)
+	method image(){return "no.png"}
+	
+	method iniciar(){
+		game.stop()
+	}
+}
+
+
 const rayo1 = new Lightning(position = new MiPosicion(x = 17, y = 2))
 const rayo2 = new Lightning(position = new MiPosicion(x = 0, y = 2))

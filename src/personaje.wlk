@@ -2,6 +2,7 @@ import wollok.game.*
 import clases.*
 import enemigos.*
 import misc.*
+import menus.*
 
 object personajePrincipal {
 
@@ -109,6 +110,7 @@ object personajePrincipal {
 
 	method morir() {
 		game.removeVisual(self)
+		endMenu.iniciar()
 	}
 
 	method colisionarGolpe() {
