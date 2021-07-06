@@ -639,7 +639,8 @@ class Dragon inherits Enemies {
 
 	override method morir() {
 		game.sound("dragonDeath.mp3").play()
-		nombre = "dragon"
+		self.ponersePasivo()
+		self.direccion(down)
 		self.dieMode().accion(self, self.direccion())
 		game.schedule(1000, { => game.removeVisual(self)})
 	}
