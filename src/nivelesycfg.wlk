@@ -163,7 +163,7 @@ object pantalla3 inherits Nivel1 {
 //		game.addVisual(escotilla)
 //		game.addVisual(escalera)
 		super()
-		config.configurarColisionesDragon()
+//		config.configurarColisionesDragon()
 	}
 
 	override method agregarTPs() {
