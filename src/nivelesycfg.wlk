@@ -21,6 +21,7 @@ object eventNivel0{
 	
 	method iniciar(){
 		backGround.fondo("nivel1_2")
+		game.addVisual(backGround)
 		game.addVisual(personajePrincipal)
 		game.addVisual(tpTunelAbajo)
 		ajustesIniciales.ajustesBasicos()
@@ -32,86 +33,84 @@ object eventNivel0{
 		
 	}
 }
-object nivel1 {
-	method iniciar() {
-		pantalla1.iniciar()
+class Nivel1 {
+	
+	method iniciar(){
+		self.agregarEnemigos()
+		self.agregarBarrasDeVidaEnemigos()
+		game.addVisual(personajePrincipal) // el MC ultimo en cargar así aparece sobre los demás objetos
+		game.addVisual(barraDeVidaMC)
+		game.addVisual(espadaMC)
+		self.agregarBloqueos()
+		self.movimientoEnemigos()
+		self.agregarTPs()
+		ajustesIniciales.iniciar()
+		}
+	method agregarEnemigos(){}
+	method agregarBarrasDeVidaEnemigos(){}
+
+	method movimientoEnemigos(){}
+	method agregarBloqueos(){
+	}
+	method agregarTPs(){
+		
 	}
 }
 
-object pantalla1{
-	var property enemigos = [spectrum01]		
-	
-	method iniciar(){
+object pantalla1 inherits Nivel1{	
+	var property enemigos = [spectrum01]
+	override method iniciar(){
 		backGround.fondo("nivel1_5")
 		game.addVisual(backGround)
 		game.addVisual(escotilla)
 		game.addVisual(escalera)
-		self.agregarEnemigos()
-		self.agregarBarrasDeVidaEnemigos()
-		game.addVisual(personajePrincipal) // el MC ultimo en cargar así aparece sobre los demás objetos
-		game.addVisual(barraDeVidaMC)
-		game.addVisual(espadaMC)
-		self.agregarBloqueos()
-		self.movimientoEnemigos()
-		self.agregarTPs()
-		ajustesIniciales.iniciar()
+		super()
 		}
 	
-	method agregarEnemigos(){
-		enemigos.forEach({enemigo => game.addVisual(enemigo)})
-	}
-	method agregarBarrasDeVidaEnemigos(){
-		enemigos.forEach({enemigo => game.addVisual(enemigo.barraDeVida())})
-	}
-
-	method movimientoEnemigos() {
-		enemigos.forEach({enemigo => enemigo.vigilarPiso()})
-	}
-	method agregarBloqueos(){
+	override method agregarBloqueos(){
 		game.addVisual(bloqueoIzquierdaArriba)
 		game.addVisual(bloqueoIzquierdaAbajo)
 		game.addVisual(bloqueoDerechaArriba)
 	}
-	method agregarTPs(){
+	override method agregarTPs(){
 		game.addVisual(tpPantalla2)
 	}
+	override method agregarEnemigos(){
+		enemigos.forEach({enemigo => game.addVisual(enemigo)})
+	}
+	override method agregarBarrasDeVidaEnemigos(){
+		enemigos.forEach({enemigo => game.addVisual(enemigo.barraDeVida())})
+	}
+
+	override method movimientoEnemigos() {
+		enemigos.forEach({enemigo => enemigo.vigilarPiso()})
+	}
 }
-object pantalla2{
-	var property enemigos = [spectrum02,ogre01]		
-	
-	method iniciar(){
+object pantalla2 inherits Nivel1{	
+	var property enemigos = [spectrum02,ogre01]
+	override method iniciar(){
 		backGround.fondo("nivel1_6")
 		game.addVisual(backGround)
 		game.addVisual(escotilla)
 		game.addVisual(escalera)
-		self.agregarEnemigos()
-		self.agregarBarrasDeVidaEnemigos()
-		game.addVisual(personajePrincipal) // el MC ultimo en cargar así aparece sobre los demás objetos
-		game.addVisual(barraDeVidaMC)
-		game.addVisual(espadaMC)
-		self.agregarBloqueos()
-		self.movimientoEnemigos()
-		self.agregarTPs()
-		ajustesIniciales.iniciar()
+		super()
 		}
 	
-	method agregarEnemigos(){
-		enemigos.forEach({enemigo => game.addVisual(enemigo)})
-	}
-	method agregarBarrasDeVidaEnemigos(){
-		enemigos.forEach({enemigo => game.addVisual(enemigo.barraDeVida())})
-	}
-
-	method movimientoEnemigos() {
-		enemigos.forEach({enemigo => enemigo.vigilarPiso()})
-	}
-	method agregarBloqueos(){
-	}
-	method agregarTPs(){
+	override method agregarTPs(){
 		game.addVisual(tpRegresoPantalla1)
 //		game.addVisual(tpPantalla3)
 //		game.addVisual(tpPantalla4)
 //		game.addVisual(tpBossAlternativo)
+	}
+	override method agregarEnemigos(){
+		enemigos.forEach({enemigo => game.addVisual(enemigo)})
+	}
+	override method agregarBarrasDeVidaEnemigos(){
+		enemigos.forEach({enemigo => game.addVisual(enemigo.barraDeVida())})
+	}
+
+	override method movimientoEnemigos() {
+		enemigos.forEach({enemigo => enemigo.vigilarPiso()})
 	}
 }
 object config {

@@ -10,22 +10,34 @@ object mainMenu {
 	method iniciar(){
 		backGround.fondo("mainMenu")
 		game.addVisual(backGround)
+//		self.reproducirMusica()            //No se detiene la musica por algun motivo...
 		game.addVisual(iniciarJuego)
 		game.addVisual(controles)
 		game.addVisual(salir)
 		game.addVisual(selector)
+		game.addVisual(rayo1)
+		rayo1.iniciar()
+		game.addVisual(rayo2)
+		rayo2.iniciar()
 		self.controles()		
 	}
 	method controles(){
 		keyboard.up().onPressDo({selector.subir()})
 		keyboard.down().onPressDo({selector.bajar()})
-		keyboard.del().onPressDo({//objeto.close() 
-		/* La idea es que este objeto se encargue de manejar el abrir y cerrar ventanas de los menus, la idea
+		keyboard.del().onPressDo({controles.close() 
+		/* Para hacer en un futuro:
+		 * La idea es crear luego un objeto que se encargue de manejar el abrir y cerrar ventanas de los menus y dialogos de NPCs y MC, la idea
 		 * es hacer una lista que actue como una pila de ventanas a ir cerrando,la ultima que se abrio es la primera 
-		 * en cerrarse al darle la orden de cerrar. Cuando se abre una opcion del menu se agrega a la pila el objeto 
+		 * en cerrarse al darle la orden de cerrar. Cuando se abre una opcion del menu o dialogo este se agrega a la pila el objeto 
 		 */
 		})
 		keyboard.enter().onPressDo({selector.seleccion().iniciar()})
+	}
+	method reproducirMusica() {
+		game.schedule(3000, { => game.sound("sound-MainMenu.mp3").play() })
+	}
+	method detenerMusica(){
+		game.schedule(1, { => game.sound("sound-MainMenu.mp3").stop() })
 	}
 }
 
@@ -56,10 +68,8 @@ object iniciarJuego{
 	method image(){return "iniciarJuego.png"}
 	
 	method iniciar(){
-			game.removeVisual(self)
-			game.removeVisual(controles)
-			game.removeVisual(salir)
-			game.removeVisual(selector)
+			game.clear()
+		//	mainMenu.detenerMusica()
 			eventNivel0.iniciar()
 	}
 }
@@ -68,11 +78,34 @@ object controles{
 	method image(){return "controles.png"}
 	
 	method iniciar(){
-		//T0D0
+		rayo1.quitarAnimacion()
+		rayo2.quitarAnimacion()
+		game.addVisual(self)
+	}
+	method close(){
+		game.removeVisual(self)
 	}
 }
 object salir{	
 	const property position = new MiPosicion(x = 7, y = 1)
 	method image(){return "salir.png"}
 	method iniciar(){game.stop()}
+}
+class Lightning{
+	var property direccion = right
+	var property image = "void.png"
+	var property position
+	var property nombre = "lightning"
+
+	method iniciar(){
+		game.onTick(4000, self.toString(), { self.animacion().accion(self, self.direccion())})
 	}
+	method quitarAnimacion(){
+		game.removeTickEvent(self.toString())
+	}
+	method animacion(){
+		return new Mode(accion = "Falling", speedFrame = 35, totalImg = 10, time = 0)
+	}
+}
+const rayo1 = new Lightning(position = new MiPosicion(x = 17, y = 2))
+const rayo2 = new Lightning(position = new MiPosicion(x = 0, y = 2))

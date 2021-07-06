@@ -6,7 +6,7 @@ import background.*
 import menus.*
 
 program juego {
-	game.title("AlgunNombreBueno")
+	game.title("Whispers In The Dark")
 	game.width(20)
 	game.height(10)
 	game.cellSize(50)

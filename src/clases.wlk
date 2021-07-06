@@ -1,6 +1,7 @@
 import personaje.*
 import wollok.game.*
 import nivelesycfg.*
+import menus.*
 
 class Mode {
 
@@ -98,7 +99,7 @@ const attackMode = new AttackMC(accion = "Attack", speedFrame = 65, totalImg = 3
 
 //const enemigoAtacarADistancia = new Mode(accion = "AttackDistance",speedFrame = 65, totalImg = 3, time=0)
 //const enemigoAtacarAAMelee = new Mode(accion = "AttackMelee",speedFrame = 65, totalImg = 3, time=0)
-const dodgeMode = new Mode(accion = "Dodge", speedFrame = 65, totalImg = 3, time = 0)
+//const dodgeMode = new Mode(accion = "Dodge", speedFrame = 65, totalImg = 3, time = 0)
 
 const dieModeMC = new Mode(accion = "Die", speedFrame = 60, totalImg = 3, time = 0)
 
@@ -132,7 +133,7 @@ class MiPosicion {
 class Teleport{
 	var property xTP
 	var property yTP
-	var property pantallaNueva = nivel1
+	var property pantallaNueva = pantalla1
 	var property posX 
 	var property posY 
 	var property image = "void.png"
@@ -172,7 +173,7 @@ class Muro inherits Teleport{
 	}
 }
 
-const tpTunelAbajo = new Teleport(xTP = 12, yTP = 1, pantallaNueva = nivel1, posX = 4, posY = 9)
+const tpTunelAbajo = new Teleport(xTP = 12, yTP = 1, pantallaNueva = pantalla1, posX = 4, posY = 9)
 
 const bloqueoIzquierdaArriba = new Muro(xTP = -1, yTP = 5, posX = 0, posY = 5)
 const bloqueoIzquierdaAbajo = new Muro(xTP = -1, yTP = 1, posX = 0, posY = 1)
@@ -180,7 +181,7 @@ const bloqueoDerechaArriba = new Muro(xTP = 20, yTP = 5, posX = 19, posY = 5)
 const bloqueoDerechaAbajo = new Muro(xTP = 20, yTP = 1, posX = 19,  posY = 1)
 
 const tpPantalla2 = new Teleport(xTP = 20, yTP = 1, pantallaNueva = pantalla2, posX = 0,  posY = 1)
-const tpRegresoPantalla1 = new Teleport(xTP = 20, yTP = 1, pantallaNueva = pantalla1, posX = 19,  posY = 1)
+const tpRegresoPantalla1 = new Teleport(xTP = -1, yTP = 1, pantallaNueva = pantalla1, posX = 19,  posY = 1)
 
 
 
