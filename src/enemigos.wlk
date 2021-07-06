@@ -701,7 +701,7 @@ class Proyectiles {
 	}
 
 	method teEncontro(objeto) {
-		objeto.recibirAtaque(danioBase * enemigoUtilizandolo.ataque() / 100)
+		objeto.recibirAtaque(danioBase * self.enemigoUtilizandolo().ataque() / 100)
 		if (objeto == personajePrincipal) {
 			game.removeVisual(self)
 		}
