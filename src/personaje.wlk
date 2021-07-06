@@ -191,7 +191,7 @@ object personajePrincipal {
 	}
 
 	method irAlPisoDeAbajo() {
-		self.actualizarPosicion(new MiPosicion(x = self.position().x(), y = self.position().y() - 4))
+		self.actualizarPosicion(new MiPosicion(x = self.position().x(), y = self.position().y() - self.escotillaPresente().pisosQueBaja()))
 	}
 
 	method caerSiNoEstasEnPiso() {

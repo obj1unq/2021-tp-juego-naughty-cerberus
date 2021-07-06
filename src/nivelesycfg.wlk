@@ -10,8 +10,8 @@ object ajustesIniciales {
 	method iniciar() {
 		config.asignarTeclas()
 		config.recargaEnergia()
-		config.agregarGravedad()
 		self.ajustesBasicos()
+//				config.agregarGravedad()
 	}
 
 	method ajustesBasicos() {
@@ -80,6 +80,7 @@ object pantalla1 inherits Nivel1 {
 	var property enemigos = [ spectrum01, wolf01 ]
 
 	override method iniciar() {
+		config.agregarGravedad()
 		backGround.fondo("nivel1_5")
 		game.addVisual(backGround)
 		game.addVisual(escotilla01)
@@ -149,6 +150,7 @@ object pantalla3 inherits Nivel1 {
 	var property enemigos = [ dragon ]
 
 	override method iniciar() {
+		config.configurarColisionesDragon()
 		backGround.fondo("nivelDragon")
 		game.addVisual(backGround)
 		game.addVisual(escalera03)
@@ -158,6 +160,7 @@ object pantalla3 inherits Nivel1 {
 		game.addVisual(cannon01)
 		game.addVisual(cannon02)
 		game.addVisual(cannon03)
+		game.addVisual(cajaDeBalas)
 //		game.addVisual(escotilla)
 //		game.addVisual(escalera)
 		super()
@@ -165,6 +168,9 @@ object pantalla3 inherits Nivel1 {
 
 	override method agregarTPs() {
 		game.addVisual(tpRegresoPantalla2)
+		game.addVisual(bloqueoBordeCannon02)
+		game.addVisual(bloqueoBordeCannon03)
+		game.addVisual(bloqueoEnElDragon)
 //		game.addVisual(tpPantalla3)
 //		game.addVisual(tpPantalla4)
 //		game.addVisual(tpBossAlternativo)
@@ -210,8 +216,12 @@ object config {
 
 	method configurarColisiones() {
 		game.onCollideDo(personajePrincipal, { objeto => objeto.teEncontro(personajePrincipal)})
-//		game.onCollideDo(dragon, { objeto => objeto.teEncontro(dragon)})
 	}
+
+	method configurarColisionesDragon() {
+		game.onCollideDo(dragon, { objeto => objeto.teEncontro(dragon)})
+	}
+	
 
 	method agregarGravedad() {
 		game.onTick(300, "GRAVEDAD", { personajePrincipal.caerSiNoEstasEnPiso()})
