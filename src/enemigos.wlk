@@ -481,7 +481,6 @@ class Wolf inherits Enemies {
 
 }
 
-
 class Dragon inherits Enemies {
 
 	var property balasRecibidas = 0
