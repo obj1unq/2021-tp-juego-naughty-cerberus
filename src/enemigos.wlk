@@ -523,10 +523,12 @@ class Dragon inherits Enemies {
 	}
 
 	override method atacar() {
-		game.schedule(500, { => fuegoDeDragon.lanzar(self) // self.moverseDosPisos()
+		if (self.estaVivo()) {
+			game.schedule(500, { => fuegoDeDragon.lanzar(self) // self.moverseDosPisos()
 //			self.moverse()
-		})
-		game.onTick(3000, self.toString() + "ataca y cambia de piso", { => self.atacarYCambiarDePiso()})
+			})
+			game.onTick(3000, self.toString() + "ataca y cambia de piso", { => self.atacarYCambiarDePiso()})
+		}
 	}
 
 	method atacarYCambiarDePiso() {
