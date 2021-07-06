@@ -155,10 +155,14 @@ object yes{
 	method image(){return "yes.png"}
 	
 	method iniciar(){
-		game.removeVisual(self)
-		game.removeVisual(no)
-		game.removeVisual(selectorEspada)		
-		//TODO: REINICIAR
+		game.clear()
+		personajePrincipal.actualizarPosicion(new MiPosicion(x = 0, y = 1))
+		personajePrincipal.direccion(right)
+		personajePrincipal.actualizarImagen()
+		personajePrincipal.vida(100)
+		eventNivel0.iniciar()
+		
+		//TODO: REINICIAR ENEMIGOS
 		
 	}
 }
