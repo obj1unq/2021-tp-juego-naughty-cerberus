@@ -160,6 +160,8 @@ object pantalla3 inherits Nivel1 {
 		game.addVisual(cannon02)
 		game.addVisual(cannon03)
 		game.addVisual(cajaDeBalas)
+		game.addVisual(bloqueoDerechaArribaDragon)
+		game.addVisual(bloqueoDerechaMedioDragon)
 //		game.addVisual(escotilla)
 //		game.addVisual(escalera)
 		super()
