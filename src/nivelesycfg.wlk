@@ -150,7 +150,6 @@ object pantalla3 inherits Nivel1 {
 	var property enemigos = [ dragon ]
 
 	override method iniciar() {
-		config.configurarColisionesDragon()
 		backGround.fondo("nivelDragon")
 		game.addVisual(backGround)
 		game.addVisual(escalera03)
@@ -164,6 +163,7 @@ object pantalla3 inherits Nivel1 {
 //		game.addVisual(escotilla)
 //		game.addVisual(escalera)
 		super()
+		config.configurarColisionesDragon()
 	}
 
 	override method agregarTPs() {
@@ -221,7 +221,6 @@ object config {
 	method configurarColisionesDragon() {
 		game.onCollideDo(dragon, { objeto => objeto.teEncontro(dragon)})
 	}
-	
 
 	method agregarGravedad() {
 		game.onTick(300, "GRAVEDAD", { personajePrincipal.caerSiNoEstasEnPiso()})
