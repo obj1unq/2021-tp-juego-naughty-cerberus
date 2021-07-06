@@ -178,6 +178,7 @@ object pantalla3 inherits Nivel1 {
 
 	override method agregarEnemigos() {
 		enemigos.forEach({ enemigo => game.addVisual(enemigo)})
+		game.onCollideDo(dragon, { objeto => objeto.teEncontro(dragon)})
 	}
 
 	override method agregarBarrasDeVidaEnemigos() {
@@ -216,10 +217,6 @@ object config {
 
 	method configurarColisiones() {
 		game.onCollideDo(personajePrincipal, { objeto => objeto.teEncontro(personajePrincipal)})
-	}
-
-	method configurarColisionesDragon() {
-		game.onCollideDo(dragon, { objeto => objeto.teEncontro(dragon)})
 	}
 
 	method agregarGravedad() {
