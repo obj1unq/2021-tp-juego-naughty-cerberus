@@ -799,7 +799,7 @@ object cannonBall inherits Proyectiles {
 // Enemigos:
 //Nivel 1
 //Pantalla 1
-const wolf01 = new Wolf(pantalla = pantalla1, vida = 300, vidaInicial = 300, ataque = 20, defensa = 0, direccion = left, position = new MiPosicion(x = 17, y = 5), nombre = "Wolf", image = left.imagenPersonajeStand("Wolf"), pocionDeVidaAsignada = pocionDeVida01)
+const wolf01 = new Wolf(pantalla = pantalla1, vida = 500, vidaInicial = 500, ataque = 20, defensa = 10, direccion = left, position = new MiPosicion(x = 17, y = 5), nombre = "Wolf", image = left.imagenPersonajeStand("Wolf"), pocionDeVidaAsignada = pocionDeVida01)
 
 const spectrum01 = new Spectrum(pantalla = pantalla1, vida = 500, vidaInicial = 500, ataque = 20, defensa = 10, direccion = left, position = new MiPosicion(x = 2, y = 1), nombre = "Spectrum", image = left.imagenPersonajeStand("spectrum"), pocionDeVidaAsignada = pocionDeVida01)
 
