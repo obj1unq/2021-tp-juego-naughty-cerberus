@@ -324,3 +324,11 @@ const escalera01 = new Escalera(position = new MiPosicion(x = 13, y = 1))
 
 const escotilla01 = new Escotilla(position = new MiPosicion(x = 13, y = 5))
 
+const escalera03 = new EscaleraChica(position = new MiPosicion(x = 8, y = 1))
+
+const escalera04 = new EscaleraChica(position = new MiPosicion(x = 6, y = 4))
+
+const escotilla03 = new EscotillaChica(position = new MiPosicion(x = 8, y = 4))
+
+const escotilla04 = new EscotillaChica(position = new MiPosicion(x = 6, y = 7))
+

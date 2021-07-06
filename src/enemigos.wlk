@@ -658,7 +658,7 @@ class Proyectiles {
 	var property enemigoUtilizandolo
 
 	method lanzar(enemigo) {
-		enemigoUtilizandolo = enemigo
+		self.enemigoUtilizandolo(enemigo)
 		self.removeVisualSiYaExiste()
 //		self.verificarQueSigaVivo(enemigo)
 		self.verificarQueElMCEsteEnElPisoYEstaCerca(enemigo)
