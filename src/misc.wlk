@@ -15,6 +15,9 @@ class Escalera {
 	method recibirAtaque(danio) {
 	}
 
+	method recibirAtaque() {
+	}
+
 	method esEscalera() {
 		return true
 	}
@@ -57,6 +60,9 @@ class Escotilla {
 	}
 
 	method recibirAtaque(danio) {
+	}
+
+	method recibirAtaque() {
 	}
 
 	method esEscotilla() {
