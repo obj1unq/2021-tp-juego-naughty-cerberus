@@ -658,7 +658,7 @@ class Proyectiles {
 	var property enemigoUtilizandolo
 
 	method lanzar(enemigo) {
-		self.enemigoUtilizandolo(enemigo)
+		enemigoUtilizandolo = enemigo
 		self.removeVisualSiYaExiste()
 //		self.verificarQueSigaVivo(enemigo)
 		self.verificarQueElMCEsteEnElPisoYEstaCerca(enemigo)
@@ -701,7 +701,7 @@ class Proyectiles {
 	}
 
 	method teEncontro(objeto) {
-		objeto.recibirAtaque(danioBase )
+		objeto.recibirAtaque(danioBase * enemigoUtilizandolo.ataque() / 100)
 		if (objeto == personajePrincipal) {
 			game.removeVisual(self)
 		}
