@@ -77,7 +77,7 @@ object nivelDragon {
 
 object pantalla1 inherits Nivel1 {
 
-	var property enemigos = [ spectrum01 ]
+	var property enemigos = [ spectrum01, wolf01 ]
 
 	override method iniciar() {
 		backGround.fondo("nivel1_5")

@@ -655,7 +655,7 @@ class Proyectiles {
 	var property position
 	var property image
 	var property direccion
-	var property danioBase = 10
+	var property danioBase = 50
 	var property enemigoUtilizandolo
 
 	method lanzar(enemigo) {
@@ -702,7 +702,7 @@ class Proyectiles {
 	}
 
 	method teEncontro(objeto) {
-		objeto.recibirAtaque(danioBase * self.enemigoUtilizandolo().ataque() / 100)
+		objeto.recibirAtaque((self.danioBase() * self.enemigoUtilizandolo().ataque()) / 100)
 		if (objeto == personajePrincipal) {
 			game.removeVisual(self)
 		}
@@ -795,14 +795,17 @@ object cannonBall inherits Proyectiles {
 // Enemigos:
 //Nivel 1
 //Pantalla 1
-const dragon = new Dragon(pantalla = pantalla3, vida = 700, vidaInicial = 700, ataque = 200, defensa = 300, direccion = down, position = new MiPosicion(x = 17, y = 1), nombre = "DragonStanding", image = down.imagenPersonajeStand("dragonStanding"), pocionDeVidaAsignada = pocionDeVida01)
+const wolf01 = new Wolf(pantalla = pantalla1, vida = 300, vidaInicial = 300, ataque = 25, defensa = 0, direccion = left, position = new MiPosicion(x = 17, y = 5), nombre = "Wolf", image = left.imagenPersonajeStand("Wolf"), pocionDeVidaAsignada = pocionDeVida01)
 
-const spectrum01 = new Spectrum(pantalla = pantalla1, vida = 500, vidaInicial = 500, ataque = 20, defensa = 10, direccion = left, position = new MiPosicion(x = 2, y = 1), nombre = "Spectrum", image = left.imagenPersonajeStand("spectrum"), pocionDeVidaAsignada = pocionDeVida01)
+const spectrum01 = new Spectrum(pantalla = pantalla1, vida = 500, vidaInicial = 500, ataque = 30, defensa = 10, direccion = left, position = new MiPosicion(x = 2, y = 1), nombre = "Spectrum", image = left.imagenPersonajeStand("spectrum"), pocionDeVidaAsignada = pocionDeVida01)
 
 //Pantalla 2
 const spectrum02 = new Spectrum(pantalla = pantalla2, vida = 500, vidaInicial = 500, ataque = 20, defensa = 10, direccion = left, position = new MiPosicion(x = 2, y = 5), nombre = "Spectrum", image = left.imagenPersonajeStand("spectrum"), pocionDeVidaAsignada = pocionDeVida01)
 
 const ogre01 = new Ogre(pantalla = pantalla2, vida = 800, vidaInicial = 800, ataque = 30, defensa = 20, direccion = right, position = new MiPosicion(x = 2, y = 5), nombre = "Ogre", image = right.imagenPersonajeStand("ogre"), pocionDeVidaAsignada = pocionDeVida01)
+
+//pantalla 3
+const dragon = new Dragon(pantalla = pantalla3, vida = 700, vidaInicial = 700, ataque = 200, defensa = 300, direccion = down, position = new MiPosicion(x = 17, y = 1), nombre = "DragonStanding", image = down.imagenPersonajeStand("dragonStanding"), pocionDeVidaAsignada = pocionDeVida01)
 
 ////Pantalla 3
 //const wolf01 = new Wolf(pantalla = pantalla3,vida = 500,vidaInicial = 500, ataque = 35, defensa = 0, direccion = left, position = new MiPosicion(x = 12, y = 1), nombre = "wolf", image = left.imagenPersonajeStand("wolf"), pocionDeVidaAsignada = pocionDeVida02)
