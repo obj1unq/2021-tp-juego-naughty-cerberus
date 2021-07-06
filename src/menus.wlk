@@ -80,10 +80,10 @@ object controles{
 	method iniciar(){
 		rayo1.quitarAnimacion()
 		rayo2.quitarAnimacion()
-		game.addVisual(self)
+	//	game.addVisual(la pantalla de controles)
 	}
 	method close(){
-		game.removeVisual(self)
+	//	game.removeVisual(pantalla de controles)
 	}
 }
 object salir{	
