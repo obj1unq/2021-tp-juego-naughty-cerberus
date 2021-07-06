@@ -69,6 +69,24 @@ object runModeWolfR inherits Mode(accion = "Run", speedFrame = 45, totalImg = 4,
 
 }
 
+object runModeDragonU inherits Mode(accion = "flight", speedFrame = 50, totalImg = 4, time = 0) {
+
+	override method timeLapse(objeto) {
+		time += 1
+		objeto.position().y(objeto.position().y() + 0.25)
+	}
+
+}
+
+object runModeDragonD inherits Mode(accion = "flight", speedFrame = 50, totalImg = 4, time = 0) {
+
+	override method timeLapse(objeto) {
+		time += 1
+		objeto.position().y(objeto.position().y() - 0.25)
+	}
+
+}
+
 class AttackMC inherits Mode { //quiza luego este attackMC se convierta en un attack generico para los melee??
 
 	override method realizarAccion(objeto, direccion) {
@@ -181,6 +199,8 @@ const bloqueoDerechaArriba = new Muro(xTP = 20, yTP = 5, posX = 19, posY = 5)
 const bloqueoDerechaAbajo = new Muro(xTP = 20, yTP = 1, posX = 19,  posY = 1)
 
 const tpPantalla2 = new Teleport(xTP = 20, yTP = 1, pantallaNueva = pantalla2, posX = 0,  posY = 1)
+const tpPantalla3 = new Teleport(xTP = 20, yTP = 1, pantallaNueva = pantalla3, posX = 0,  posY = 1)
+const tpRegresoPantalla2 = new Teleport(xTP = -1, yTP = 1, pantallaNueva = pantalla2, posX = 19, posY = 1)
 const tpRegresoPantalla1 = new Teleport(xTP = -1, yTP = 1, pantallaNueva = pantalla1, posX = 19,  posY = 1)
 
 

@@ -69,10 +69,12 @@ class Enemies {
 		game.schedule(1, { => self.dejarDeAtacar()})
 		self.dieMode().accion(self, self.direccion())
 	}
-	method quitarDeLaPantalla(){
+
+	method quitarDeLaPantalla() {
 		game.removeVisual(self)
 		pantalla.enemigos().remove(self)
 	}
+
 	method dieMode()
 
 	method patrullarYCazarMC() {
@@ -222,10 +224,23 @@ class Enemies {
 	method estaVivo() {
 		return game.allVisuals().contains(self) and self.vida() > 0
 	}
-	
-	method posicionBarra(){
+
+	method posicionBarra() {
 		return 1
 	}
+
+	method esCannon() {
+		return true
+	}
+
+	method esEscalera() {
+		return false
+	}
+
+	method esEscotilla() {
+		return false
+	}
+
 }
 
 class Spectrum inherits Enemies {
@@ -266,6 +281,7 @@ class Spectrum inherits Enemies {
 	override method dieMode() {
 		return new Mode(accion = "Die", speedFrame = 100, totalImg = 8, time = 0)
 	}
+
 }
 
 class Ogre inherits Enemies {
@@ -304,9 +320,10 @@ class Ogre inherits Enemies {
 
 	override method morir() {
 		super()
-		game.schedule(1750, { => self.quitarDeLaPantalla()	})
+		game.schedule(1750, { => self.quitarDeLaPantalla()})
 		game.schedule(1750, { => pocionDeVidaAsignada.spawn(self)})
 	}
+
 	method reloadMode() {
 		return new Mode(accion = "reload", speedFrame = 130, totalImg = 8, time = 0)
 	}
@@ -314,9 +331,11 @@ class Ogre inherits Enemies {
 	method recargarBallesta() {
 		self.reloadMode().accion(self, self.direccion())
 	}
-	override method posicionBarra(){
+
+	override method posicionBarra() {
 		return 2
 	}
+
 }
 
 class Wolf inherits Enemies {
@@ -335,9 +354,23 @@ class Wolf inherits Enemies {
 		direccion.moveWolf(self)
 	}
 
+	/*override method atacarSiSeAcerca() {
+	 * 	self.mirarAlMC()
+	 * 	self.ponerseActivo()
+	 * 	if (self.estaCercaDelMC()) {
+	 * 		self.dejaDePatrullar()
+	 * 		self.modoRabioso()
+	 * 		game.sound("wolfActive-sfx.mp3").play()
+	 * 	}
+	 * }
+	 */
 	override method atacarSiSeAcerca() {
 		self.mirarAlMC()
 		self.ponerseActivo()
+		self.ponerseRabiosoSiSeAcerca()
+	}
+
+	method ponerseRabiosoSiSeAcerca() {
 		if (self.estaCercaDelMC()) {
 			self.dejaDePatrullar()
 			self.modoRabioso()
@@ -373,13 +406,12 @@ class Wolf inherits Enemies {
 
 	override method verificarQueSigaEnMiNivel() {
 		if (!self.mcEnMiNivel()) {
-			game.schedule(140, { =>
+			game.schedule(80, { =>
 				self.salirModoRabioso()
 				self.vigilarPiso()
 			})
-//			self.salirModoRabioso()
-//			self.vigilarPiso()
-//			game.schedule(140, {=> self.vigilarPiso()})
+			self.salirModoRabioso()
+			self.vigilarPiso()
 		}
 	}
 
@@ -390,7 +422,7 @@ class Wolf inherits Enemies {
 			self.ponerseActivo()
 		}
 		self.dieMode().accion(self, self.direccion())
-		game.schedule(2000, { => self.quitarDeLaPantalla() })
+		game.schedule(2000, { => self.quitarDeLaPantalla()})
 		game.schedule(2000, { => pocionDeVidaAsignada.spawn(self)})
 	}
 
@@ -442,8 +474,177 @@ class Wolf inherits Enemies {
 			self.position().x(18)
 		}
 	}
-	override method posicionBarra(){
+
+	override method posicionBarra() {
 		return 0
+	}
+
+}
+
+
+class Dragon inherits Enemies {
+
+	var property balasRecibidas = 0
+
+//	override method actualizarImagen() {
+//		self.image()
+//	}
+	override method moverse() {
+		direccion.moveDragon(self)
+		game.sound("dragonFlap.mp3").play()
+	}
+
+	override method patrullarYCazarMC() {
+		self.comenzarAAtacarCuandoSeAcerque()
+	}
+
+	method comenzarAAtacarCuandoSeAcerque() {
+		if (self.estaCercaDelMC()) {
+			self.dejaDePatrullar()
+			self.ponerseActivo()
+			self.despertarseYAtacar()
+		}
+	}
+
+	override method ponerseActivo() {
+		game.sound("dragonRoar.mp3").play()
+		nombre = "dragon"
+		super()
+	}
+
+	override method ponersePasivo() {
+		nombre = "dragonStanding"
+		super()
+	}
+
+	method despertarseYAtacar() {
+		game.schedule(1000, { => self.atacar()})
+	}
+
+	override method atacar() {
+		game.schedule(500, { => fuegoDeDragon.lanzar(self) // self.moverseDosPisos()
+//			self.moverse()
+		})
+		game.onTick(3000, self.toString() + "ataca y cambia de piso", { => self.atacarYCambiarDePiso()})
+	}
+
+	method atacarYCambiarDePiso() {
+		self.volarHastaElTechoOElSuelo()
+		game.schedule(2000, { => fuegoDeDragon.lanzar(self)})
+	}
+
+	override method dejarDeAtacar() {
+		game.removeTickEvent(self.toString() + "ataca y cambia de piso")
+	}
+
+	method volarHastaElTechoOElSuelo() {
+		if (!self.estaEnElSueloOEnElTecho()) {
+			self.moverseTresPisos()
+		} else {
+			self.darLaVuelta()
+			self.moverseTresPisos()
+		}
+	}
+
+	method moverseDosPisos() {
+		self.moverse()
+		game.schedule(1000, { => self.moverse()})
+	}
+
+	method moverseTresPisos() {
+		self.moverse()
+		game.schedule(500, { => self.moverse()})
+		game.schedule(1000, {=> self.moverse()})
+	}
+
+	override method darLaVuelta() {
+		if (direccion == up) {
+			direccion = down
+		} else {
+			direccion = up
+		}
+	}
+
+	method estaEnElSueloOEnElTecho() {
+		return self.position().y() <= 1 or self.position().y() >= 7
+	}
+
+	method caerSiNoEstaEnElSuelo() {
+		if (not self.position().y() == 1) {
+			self.caerse()
+		}
+	}
+
+	method caerHastaLlegarAlSuelo() {
+		self.dejarDeAtacar()
+		self.modoCaida()
+		game.onTick(200, self.toString() + "cae hasta llegar al suelo", { => self.caerUnPisoHastaTocarElSuelo()})
+	}
+
+	method caerUnPisoHastaTocarElSuelo() {
+		if (self.position().y() > 1) {
+			self.caerse()
+		} else {
+			game.removeTickEvent(self.toString() + "cae hasta llegar al suelo")
+			self.aturdirseBrevemente()
+		}
+	}
+
+	method caerse() {
+		self.position().y(self.position().y() - 1)
+	}
+
+	method modoCaida() {
+		nombre = "dragonFalling"
+		self.actualizarImagen()
+	}
+
+	method aturdirseBrevemente() {
+		self.modoAturdido()
+		self.defensa(100)
+		game.schedule(6000, { => self.recomponerse()})
+	}
+
+	method modoAturdido() {
+		nombre = "dragonStunned"
+		self.actualizarImagen()
+	}
+
+	method recomponerse() {
+		self.ponersePasivo()
+		self.defensa(300)
+		self.direccion(down)
+		game.schedule(3000, { => self.dejarDeRecomponerse()})
+		game.schedule(3000, { => self.atacar()})
+	}
+
+	method levantarse() {
+		nombre = "dragonStanding"
+		self.actualizarImagen()
+	}
+
+	method dejarDeRecomponerse() {
+		nombre = "dragon"
+		self.actualizarImagen()
+	}
+
+	override method estaCercaDelMC() {
+		return ((self.position().x() - personajePrincipal.position().x()).abs()) < 13
+	}
+
+	method recibirBala() {
+		balasRecibidas += 1
+	}
+
+	override method morir() {
+		game.sound("dragonDeath.mp3").play()
+		nombre = "dragon"
+		self.dieMode().accion(self, self.direccion())
+		game.schedule(1000, { => game.removeVisual(self)})
+	}
+
+	override method dieMode() {
+		return new Mode(accion = "Die", speedFrame = 250, totalImg = 4, time = 0)
 	}
 
 }
@@ -454,8 +655,10 @@ class Proyectiles {
 	var property image
 	var property direccion
 	var property danioBase = 10
+	var property enemigoUtilizandolo
 
 	method lanzar(enemigo) {
+		self.enemigoUtilizandolo(enemigo)
 		self.removeVisualSiYaExiste()
 //		self.verificarQueSigaVivo(enemigo)
 		self.verificarQueElMCEsteEnElPisoYEstaCerca(enemigo)
@@ -498,7 +701,7 @@ class Proyectiles {
 	}
 
 	method teEncontro(objeto) {
-		objeto.recibirAtaque(danioBase)
+		objeto.recibirAtaque(danioBase )
 		if (objeto == personajePrincipal) {
 			game.removeVisual(self)
 		}
@@ -539,13 +742,65 @@ object flecha inherits Proyectiles {
 
 }
 
+object fuegoDeDragon inherits Proyectiles {
+
+	override method lanzar(enemigo) {
+		self.removeVisualSiYaExiste()
+//		self.verificarQueSigaVivo(enemigo)
+//		self.verificarQueElMCEsteEnElPisoYEstaCerca(enemigo)
+//		enemigo.mirarAlMC()
+		self.position(new MiPosicion(x = enemigo.position().x(), y = enemigo.position().y()))
+		self.direccion(left)
+		self.image()
+		game.addVisual(self)
+		game.sound("dragonFire.mp3").play()
+		game.onTick(100, "desplazamiento fuego de dragon", {=> self.desplazar()})
+		game.schedule(2000, { => game.removeTickEvent("desplazamiento fuego de dragon")})
+		game.schedule(2000, { => self.removeVisualSiYaExiste()})
+	}
+
+	override method image() {
+		return self.toString() + ".png"
+	}
+
+}
+
+object cannonBall inherits Proyectiles {
+
+	override method lanzar(cannon) {
+		self.direccion(right)
+		self.position(new MiPosicion(x = cannon.position().x() + 1, y = cannon.position().y()))
+		self.image()
+		game.addVisual(self)
+		game.onTick(70, "desplazamiento bala de cañon", { => self.desplazar()})
+		game.schedule(1100, { => game.removeTickEvent("desplazamiento bala de cañon")})
+		game.schedule(1100, { => self.removeVisualSiYaExiste()})
+	}
+
+	override method teEncontro(objeto) {
+		objeto.recibirBala()
+		game.sound("cannonBallimpact.mp3").play()
+		game.removeVisual(self)
+		if (objeto.balasRecibidas() >= 3) {
+			objeto.caerHastaLlegarAlSuelo()
+			objeto.balasRecibidas(0)
+		}
+	}
+
+}
+
 // Enemigos:
 //Nivel 1
 //Pantalla 1
-const spectrum01 = new Spectrum(pantalla = pantalla1,vida = 500,vidaInicial = 500, ataque = 20, defensa = 10, direccion = left, position = new MiPosicion(x = 2, y = 1), nombre = "Spectrum", image = left.imagenPersonajeStand("spectrum"), pocionDeVidaAsignada = pocionDeVida01)
+const dragon = new Dragon(pantalla = pantalla3, vida = 700, vidaInicial = 700, ataque = 200, defensa = 300, direccion = down, position = new MiPosicion(x = 17, y = 1), nombre = "DragonStanding", image = down.imagenPersonajeStand("dragonStanding"), pocionDeVidaAsignada = pocionDeVida01)
+
+const spectrum01 = new Spectrum(pantalla = pantalla1, vida = 500, vidaInicial = 500, ataque = 20, defensa = 10, direccion = left, position = new MiPosicion(x = 2, y = 1), nombre = "Spectrum", image = left.imagenPersonajeStand("spectrum"), pocionDeVidaAsignada = pocionDeVida01)
+
 //Pantalla 2
-const spectrum02 = new Spectrum(pantalla = pantalla2,vida = 500,vidaInicial = 500, ataque = 20, defensa = 10, direccion = left, position = new MiPosicion(x = 2, y = 5), nombre = "Spectrum", image = left.imagenPersonajeStand("spectrum"), pocionDeVidaAsignada = pocionDeVida01)
-const ogre01 = new Ogre(pantalla = pantalla2,vida = 800,vidaInicial = 800, ataque = 30, defensa = 20, direccion = right, position = new MiPosicion(x = 2, y = 5), nombre = "Ogre", image = right.imagenPersonajeStand("ogre"), pocionDeVidaAsignada = pocionDeVida01)
+const spectrum02 = new Spectrum(pantalla = pantalla2, vida = 500, vidaInicial = 500, ataque = 20, defensa = 10, direccion = left, position = new MiPosicion(x = 2, y = 5), nombre = "Spectrum", image = left.imagenPersonajeStand("spectrum"), pocionDeVidaAsignada = pocionDeVida01)
+
+const ogre01 = new Ogre(pantalla = pantalla2, vida = 800, vidaInicial = 800, ataque = 30, defensa = 20, direccion = right, position = new MiPosicion(x = 2, y = 5), nombre = "Ogre", image = right.imagenPersonajeStand("ogre"), pocionDeVidaAsignada = pocionDeVida01)
+
 ////Pantalla 3
 //const wolf01 = new Wolf(pantalla = pantalla3,vida = 500,vidaInicial = 500, ataque = 35, defensa = 0, direccion = left, position = new MiPosicion(x = 12, y = 1), nombre = "wolf", image = left.imagenPersonajeStand("wolf"), pocionDeVidaAsignada = pocionDeVida02)
 ////Pantalla 4
@@ -555,4 +810,3 @@ const ogre01 = new Ogre(pantalla = pantalla2,vida = 800,vidaInicial = 800, ataqu
 //const spectrum03 = new Spectrum(pantalla = pantalla5,vida = 500,vidaInicial = 500, ataque = 20, defensa = 10, direccion = left, position = new MiPosicion(x = 2, y = 5), nombre = "Spectrum", image = left.imagenPersonajeStand("spectrum"), pocionDeVidaAsignada = pocionDeVida01)
 //const ogre02 = new Ogre(pantalla = pantalla5,vida = 800,vidaInicial = 800, ataque = 30, defensa = 20, direccion = right, position = new MiPosicion(x = 2, y = 5), nombre = "Ogre", image = right.imagenPersonajeStand("ogre"), pocionDeVidaAsignada = pocionDeVida01)
 //const wolf04 = new Wolf(pantalla = pantalla5,vida = 500,vidaInicial = 500, ataque = 35, defensa = 0, direccion = left, position = new MiPosicion(x = 12, y = 1), nombre = "wolf", image = left.imagenPersonajeStand("wolf"), pocionDeVidaAsignada = pocionDeVida02)
-

@@ -14,6 +14,7 @@ object personajePrincipal {
 	var property nombre = "personaje"
 	var property blockStance = false
 	var property doubleTap = false
+	var property tieneBala = false
 	var image = direccion.imagenPersonajeStand(self.nombre())
 
 	method image() = image
@@ -30,12 +31,12 @@ object personajePrincipal {
 	method actualizarPosicion(nuevaPosicion) {
 		position = nuevaPosicion
 	}
-	
+
 // borrar este metodo despues de probar
-	method decirPos(){
+	method decirPos() {
 		self.error("PosX = " + self.position().x().toString() + ", PosY = " + self.position().y().toString())
-	}	
-	
+	}
+
 	method moverse() {
 		if (not self.blockStance()) {
 			direccion.moveMC()
@@ -53,7 +54,7 @@ object personajePrincipal {
 		if (not self.blockStance()) {
 			blockStance = true
 			self.image(direccion.imagenPersonajeBlock(self.nombre()))
-			defensa = defensa * 2 + 400
+			defensa = defensa * 2 + 200
 		}
 	}
 
@@ -116,44 +117,161 @@ object personajePrincipal {
 		direccion.objetivos(#{})
 	}
 
-	method subirPorEscalera() {
-		if (self.hayEscalera()) {
-			self.irAlPisoDeArriba()
-		} else {
-			game.say(self, "no hay escalera para subir")
+	/*	method subirPorEscalera() {
+	 * 		if (self.hayEscalera()) {
+	 * 			self.irAlPisoDeArriba()
+	 * 		} else {
+	 * 			game.say(self, "no hay escalera para subir")
+	 * 		}
+	 * 	}
+
+	 * 	method bajarPorEscotilla() {
+	 * 		if (self.hayEscotilla()) {
+	 * 			self.irAlPisoDeAbajo()
+	 * 		} else {
+	 * 			game.say(self, "no hay escotilla para bajar")
+	 * 		}
+	 * 	}
+	 * 
+	 * 	
+	 * 	
+	 * 	
+
+	 * 	method hayEscalera() {
+	 * 		return game.colliders(self).contains(escalera)
+	 * 	}
+
+	 * 	method hayEscotilla() {
+	 * 		return game.colliders(self).contains(escotilla)
+	 * 	}
+	 * 
+	 * 
+	 */
+	method subirSiHayEscalera() {
+		self.verificarQueHayaEscalera()
+		self.irAlPisoDeArriba()
+	}
+
+	method bajarSiHayEscotilla() {
+		self.verificarQueHayaEscotilla()
+		self.irAlPisoDeAbajo()
+	}
+
+	method verificarQueHayaEscotilla() {
+		if (not self.colisiones().any({ objeto => objeto.esEscotilla()})) {
+			self.error("no hay escotilla para bajar")
 		}
 	}
 
-	method bajarPorEscotilla() {
-		if (self.hayEscotilla()) {
-			self.irAlPisoDeAbajo()
-		} else {
-			game.say(self, "no hay escotilla para bajar")
+	method verificarQueHayaEscalera() {
+		if (not self.colisiones().any({ objeto => objeto.esEscalera()})) {
+			self.error("no hay escalera para subir")
 		}
 	}
 
-	method hayEscalera() {
-		return game.colliders(self).contains(escalera)
+	method colisiones() {
+		return game.colliders(self)
 	}
 
-	method hayEscotilla() {
-		return game.colliders(self).contains(escotilla)
+	method escaleraPresente() {
+		return self.colisiones().find{ objeto => objeto.esEscalera() }
+	}
+
+	method escotillaPresente() {
+		return self.colisiones().find{ objeto => objeto.esEscotilla() }
+	}
+
+	method teEncontro(objeto) {
 	}
 
 	method irAlPisoDeArriba() {
-		self.actualizarPosicion(new MiPosicion(x = self.position().x(), y = self.position().y() + 4))
+		self.actualizarPosicion(new MiPosicion(x = self.position().x(), y = self.position().y() + self.escaleraPresente().pisosQueSube()))
 	}
 
 	method irAlPisoDeAbajo() {
 		self.actualizarPosicion(new MiPosicion(x = self.position().x(), y = self.position().y() - 4))
 	}
+
 	method caerSiNoEstasEnPiso() {
 		if (not self.estaEnElPiso()) {
-			self.position().y(self.position().y() - 1) 
+			self.position().y(self.position().y() - 1)
 		}
 	}
+
 	method estaEnElPiso() {
 		return self.position().y() == 1 or self.position().y() == 5
+	}
+
+	method estaSobreUnCannon() {
+		return game.colliders(self).any{ objeto => objeto.esCannon() }
+	}
+
+	method estaSobreUnaCajaDeBalas() {
+		return game.colliders(self).contains(cajaDeBalas)
+	}
+
+	method agarrarBalaOCargarCannon() {
+		self.verificarQueEstaEnUnaCajaOUnCannon()
+		if (self.estaSobreUnaCajaDeBalas()) {
+			self.agarrarBalaSiNoTiene()
+		} else {
+			self.cargarCannonSiEstaDescargado()
+		}
+	}
+
+	method verificarQueEstaEnUnaCajaOUnCannon() {
+		if (!self.estaSobreUnCannon() and !self.estaSobreUnaCajaDeBalas()) {
+			game.error("no estoy sobre un cañon o caja")
+		}
+	}
+
+	method agarrarBalaSiNoTiene() {
+		self.verificarQueNoTieneBala()
+		self.tieneBala(true)
+		game.say(self, "tengo una bala")
+		self.nombre("personajeConBala")
+		self.actualizarImagen()
+	}
+
+	method verificarQueNoTieneBala() {
+		if (self.tieneBala()) {
+			game.error("ya tengo una bala")
+		}
+	}
+
+	method cargarCannonSiEstaDescargado() {
+		self.verificarQueElCannonEstaDescargado()
+		self.verificarQueTengoBala()
+		self.cannonPresente().cargarSiTieneBala()
+		self.nombre("personaje")
+		self.actualizarImagen()
+	}
+
+	method verificarQueElCannonEstaDescargado() {
+		if (self.cannonPresente().estaCargado()) {
+			game.error("el cañon ya esta cargado")
+		}
+	}
+
+	method verificarQueTengoBala() {
+		if (!self.tieneBala()) {
+			game.error("no tengo bala para cargar")
+		}
+	}
+
+	method cannonPresente() {
+		return game.colliders(self).find{ objeto => objeto.esCannon() }
+	}
+
+	method dispararCannon() {
+		self.verificarQueEstaEnUnCannon()
+		self.cannonPresente().disparar()
+	}
+
+	method verificarQueEstaEnUnCannon() {
+		if (!self.estaSobreUnCannon()) {
+			game.error("no estoy sobre un cañon")
+		}
 	}
 
 }
@@ -194,6 +312,14 @@ object espadaMC {
 		} else {
 			personajePrincipal.position().x()
 		}
+	}
+
+	method esEscalera() {
+		return false
+	}
+
+	method esEscotilla() {
+		return false
 	}
 
 }
@@ -299,6 +425,38 @@ object right {
 			posicion = new Position(x = objeto.position().x() + numero, y = objeto.position().y())
 			objetivos += game.getObjectsIn(posicion)
 		})
+	}
+
+}
+
+object up {
+
+	method moveDragon(_dragon) {
+		runModeDragonU.accion(_dragon, _dragon.direccion())
+	}
+
+	method move(objeto, num) { // general para cualquier objecto, pensado para usarse en los enemigos
+		objeto.position().x(objeto.position().y() + num)
+	}
+
+	method imagenPersonajeStand(objeto) {
+		return objeto + "_Stand_up.png"
+	}
+
+}
+
+object down {
+
+	method moveDragon(_dragon) {
+		runModeDragonD.accion(_dragon, _dragon.direccion())
+	}
+
+	method move(objeto, num) { // general para cualquier objecto, pensado para usarse en los enemigos
+		objeto.position().x(objeto.position().y() - num)
+	}
+
+	method imagenPersonajeStand(objeto) {
+		return objeto + "_Stand_up.png"
 	}
 
 }

@@ -13,29 +13,32 @@ object ajustesIniciales {
 		config.agregarGravedad()
 		self.ajustesBasicos()
 	}
-	method ajustesBasicos(){
+
+	method ajustesBasicos() {
 		config.configurarColisiones()
 	}
+
 }
-object eventNivel0{
-	
-	method iniciar(){
+
+object eventNivel0 {
+
+	method iniciar() {
 		backGround.fondo("nivel1_2")
 		game.addVisual(backGround)
 		game.addVisual(personajePrincipal)
 		game.addVisual(tpTunelAbajo)
 		ajustesIniciales.ajustesBasicos()
-		game.schedule(2000, { => 12.times({i => personajePrincipal.moverse()}) })
-		//game.say(personajePrincipal, "DEBO SALVAR A MI FAMILIA CUANTO ANTES!")
+		game.schedule(2000, { => 12.times({ i => personajePrincipal.moverse()})})
+			// game.say(personajePrincipal, "DEBO SALVAR A MI FAMILIA CUANTO ANTES!")
 		game.say(personajePrincipal, "DEBO SALVAR A MI")
 		game.say(personajePrincipal, "MI FAMILIA CUANTO ANTES!")
-		
-		
 	}
+
 }
+
 class Nivel1 {
-	
-	method iniciar(){
+
+	method iniciar() {
 		self.agregarEnemigos()
 		self.agregarBarrasDeVidaEnemigos()
 		game.addVisual(personajePrincipal) // el MC ultimo en cargar así aparece sobre los demás objetos
@@ -45,74 +48,135 @@ class Nivel1 {
 		self.movimientoEnemigos()
 		self.agregarTPs()
 		ajustesIniciales.iniciar()
-		}
-	method agregarEnemigos(){}
-	method agregarBarrasDeVidaEnemigos(){}
+	}
 
-	method movimientoEnemigos(){}
-	method agregarBloqueos(){
+	method agregarEnemigos() {
 	}
-	method agregarTPs(){
-		
+
+	method agregarBarrasDeVidaEnemigos() {
 	}
+
+	method movimientoEnemigos() {
+	}
+
+	method agregarBloqueos() {
+	}
+
+	method agregarTPs() {
+	}
+
 }
 
-object pantalla1 inherits Nivel1{	
-	var property enemigos = [spectrum01]
-	override method iniciar(){
+object nivelDragon {
+
+	method iniciar() {
+		backGround.fondo("nivelDragon")
+	}
+
+}
+
+object pantalla1 inherits Nivel1 {
+
+	var property enemigos = [ spectrum01 ]
+
+	override method iniciar() {
 		backGround.fondo("nivel1_5")
 		game.addVisual(backGround)
-		game.addVisual(escotilla)
-		game.addVisual(escalera)
+		game.addVisual(escotilla01)
+		game.addVisual(escalera01)
 		super()
-		}
-	
-	override method agregarBloqueos(){
+	}
+
+	override method agregarBloqueos() {
 		game.addVisual(bloqueoIzquierdaArriba)
 		game.addVisual(bloqueoIzquierdaAbajo)
 		game.addVisual(bloqueoDerechaArriba)
 	}
-	override method agregarTPs(){
+
+	override method agregarTPs() {
 		game.addVisual(tpPantalla2)
 	}
-	override method agregarEnemigos(){
-		enemigos.forEach({enemigo => game.addVisual(enemigo)})
+
+	override method agregarEnemigos() {
+		enemigos.forEach({ enemigo => game.addVisual(enemigo)})
 	}
-	override method agregarBarrasDeVidaEnemigos(){
-		enemigos.forEach({enemigo => game.addVisual(enemigo.barraDeVida())})
+
+	override method agregarBarrasDeVidaEnemigos() {
+		enemigos.forEach({ enemigo => game.addVisual(enemigo.barraDeVida())})
 	}
 
 	override method movimientoEnemigos() {
-		enemigos.forEach({enemigo => enemigo.vigilarPiso()})
+		enemigos.forEach({ enemigo => enemigo.vigilarPiso()})
 	}
+
 }
-object pantalla2 inherits Nivel1{	
-	var property enemigos = [spectrum02,ogre01]
-	override method iniciar(){
+
+object pantalla2 inherits Nivel1 {
+
+	var property enemigos = [ spectrum02, ogre01 ]
+
+	override method iniciar() {
 		backGround.fondo("nivel1_6")
 		game.addVisual(backGround)
-		game.addVisual(escotilla)
-		game.addVisual(escalera)
+		game.addVisual(escotilla01)
+		game.addVisual(escalera01)
 		super()
-		}
-	
-	override method agregarTPs(){
+	}
+
+	override method agregarTPs() {
 		game.addVisual(tpRegresoPantalla1)
+		game.addVisual(tpPantalla3)
+//		game.addVisual(tpPantalla4)
+//		game.addVisual(tpBossAlternativo)
+	}
+
+	override method agregarEnemigos() {
+		enemigos.forEach({ enemigo => game.addVisual(enemigo)})
+	}
+
+	override method agregarBarrasDeVidaEnemigos() {
+		enemigos.forEach({ enemigo => game.addVisual(enemigo.barraDeVida())})
+	}
+
+	override method movimientoEnemigos() {
+		enemigos.forEach({ enemigo => enemigo.vigilarPiso()})
+	}
+
+}
+
+object pantalla3 inherits Nivel1 {
+
+	var property enemigos = [ dragon ]
+
+	override method iniciar() {
+		backGround.fondo("nivelDragon")
+		game.addVisual(backGround)
+//		game.addVisual(escotilla)
+//		game.addVisual(escalera)
+		super()
+	}
+
+	override method agregarTPs() {
+		game.addVisual(tpRegresoPantalla2)
 //		game.addVisual(tpPantalla3)
 //		game.addVisual(tpPantalla4)
 //		game.addVisual(tpBossAlternativo)
 	}
-	override method agregarEnemigos(){
-		enemigos.forEach({enemigo => game.addVisual(enemigo)})
+
+	override method agregarEnemigos() {
+		enemigos.forEach({ enemigo => game.addVisual(enemigo)})
 	}
-	override method agregarBarrasDeVidaEnemigos(){
-		enemigos.forEach({enemigo => game.addVisual(enemigo.barraDeVida())})
+
+	override method agregarBarrasDeVidaEnemigos() {
+		enemigos.forEach({ enemigo => game.addVisual(enemigo.barraDeVida())})
 	}
 
 	override method movimientoEnemigos() {
-		enemigos.forEach({enemigo => enemigo.vigilarPiso()})
+		enemigos.forEach({ enemigo => enemigo.vigilarPiso()})
 	}
+
 }
+
 object config {
 
 	method asignarTeclas() {
@@ -124,19 +188,27 @@ object config {
 		})
 		keyboard.j().onPressDo({ personajePrincipal.atacar()})
 		keyboard.k().onPressDo({ personajePrincipal.bloquear()})
-		keyboard.w().onPressDo({ personajePrincipal.subirPorEscalera()})
-		keyboard.s().onPressDo({ personajePrincipal.bajarPorEscotilla()})
+//		keyboard.w().onPressDo({ personajePrincipal.subirPorEscalera()})
+//		keyboard.s().onPressDo({ personajePrincipal.bajarPorEscotilla()})
 		keyboard.i().onPressDo({ personajePrincipal.decirPos()})
+		keyboard.w().onPressDo({ personajePrincipal.subirSiHayEscalera()})
+		keyboard.s().onPressDo({ personajePrincipal.bajarSiHayEscotilla()})
+		keyboard.r().onPressDo({ personajePrincipal.agarrarBalaOCargarCannon()})
+		keyboard.f().onPressDo({ personajePrincipal.dispararCannon()})
 	}
 
-	method recargaEnergia(){
-	game.onTick(1000, "recargaEnergia", { personajePrincipal.recargarEnergia()})
+	method recargaEnergia() {
+		game.onTick(1000, "recargaEnergia", { personajePrincipal.recargarEnergia()})
 	}
+
 	method configurarColisiones() {
 		game.onCollideDo(personajePrincipal, { objeto => objeto.teEncontro(personajePrincipal)})
+//		game.onCollideDo(dragon, { objeto => objeto.teEncontro(dragon)})
 	}
+
 	method agregarGravedad() {
 		game.onTick(300, "GRAVEDAD", { personajePrincipal.caerSiNoEstasEnPiso()})
 	}
+
 }
 

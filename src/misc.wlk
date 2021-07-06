@@ -4,40 +4,126 @@ import nivelesycfg.*
 import wollok.game.*
 import clases.*
 
-object escalera {
+/* object escalera {
 
-	var property position = new MiPosicion(x = 13, y = 1)
+ * 	var property position = new MiPosicion(x = 13, y = 1)
+
+ * 	method image() {
+ * 		return "escalera.png"
+ * 	}
+
+ * 	method teEncontro(personaje) {
+ * 	}
+
+ * 	method recibirAtaque() {
+ * 	}
+
+ * 	method recibirAtaque(danio) {
+ * 	}
+
+ * }
+
+ * object escotilla {
+
+ * 	var property position = new MiPosicion(x = 13, y = 5)
+
+ * 	method image() {
+ * 		return "escotilla.png"
+ * 	}
+
+ * 	method teEncontro(personaje) {
+ * 	}
+
+ * 	method recibirAtaque() {
+ * 	}
+
+ * 	method recibirAtaque(danio) {
+ * 	}
+
+ * }
+ * 
+ * 
+ */
+class Escalera {
+
+	var property position
 
 	method image() {
 		return "escalera.png"
 	}
 
-	method teEncontro(personaje) {
-	}
-
-	method recibirAtaque() {
-	}
-
 	method recibirAtaque(danio) {
+	}
+
+	method esEscalera() {
+		return true
+	}
+
+	method esEscotilla() {
+		return false
+	}
+
+	method pisosQueSube() {
+		return 4
+	}
+
+	method esCannon() {
+		return false
+	}
+
+	method teEncontro(objeto) {
 	}
 
 }
 
-object escotilla {
+class EscaleraChica inherits Escalera {
 
-	var property position = new MiPosicion(x = 13, y = 5)
+	override method image() {
+		return "escaleraChica.png"
+	}
+
+	override method pisosQueSube() {
+		return 3
+	}
+
+}
+
+class Escotilla {
+
+	var property position
 
 	method image() {
 		return "escotilla.png"
 	}
 
-	method teEncontro(personaje) {
-	}
-
-	method recibirAtaque() {
-	}
-
 	method recibirAtaque(danio) {
+	}
+
+	method esEscotilla() {
+		return true
+	}
+
+	method esEscalera() {
+		return false
+	}
+
+	method pisosQueBaja() {
+		return 4
+	}
+
+	method esCannon() {
+		return false
+	}
+
+	method teEncontro(objeto) {
+	}
+
+}
+
+class EscotillaChica inherits Escotilla {
+
+	override method pisosQueBaja() {
+		return 3
 	}
 
 }
@@ -60,6 +146,101 @@ class PocionDeVida {
 	method spawn(enemigo) {
 		self.position(enemigo.position())
 		game.addVisual(self)
+	}
+
+	method recibirAtaque() {
+	}
+
+	method recibirAtaque(danio) {
+	}
+
+}
+
+class Cannon {
+
+	var property image = "cannonUnloaded.png"
+	var property estaCargado = false
+	var property position
+
+	method cargar() {
+		game.say(self, "cargando...")
+		personajePrincipal.tieneBala(false)
+		personajePrincipal.actualizarImagen()
+		game.schedule(3000, { =>
+			self.estaCargado(true)
+			self.image("cannonLoaded.png")
+			game.say(self, "listo para disparar")
+		})
+	}
+
+	method disparar() {
+		if (self.estaCargado()) {
+			cannonBall.lanzar(self)
+			game.sound("cannonShot.mp3").play()
+			self.descargar()
+			self.image("cannonUnloaded.png")
+		} else {
+			game.say(personajePrincipal, "el cañon no esta cargado")
+		}
+	}
+
+	method descargar() {
+		self.estaCargado(false)
+	}
+
+	method cargarSiTieneBala() {
+		if (personajePrincipal.tieneBala()) {
+			self.cargar()
+		} else {
+			game.say(personajePrincipal, "no tengo bala para cargar")
+		}
+	}
+
+	method teEncontro(objeto) {
+	}
+
+	method esCannon() {
+		return true
+	}
+
+	method esEscalera() {
+		return false
+	}
+
+	method esEscotilla() {
+		return false
+	}
+
+	method recibirAtaque() {
+	}
+
+	method recibirAtaque(danio) {
+	}
+
+	method recibirDanio() {
+	}
+
+	method recibirDanio(cantidad) {
+	}
+
+}
+
+object cajaDeBalas {
+
+	var property image = "void.png"
+	var property position = new MiPosicion(x = 1, y = 7)
+
+	method teEncontro(objeto) {
+	}
+
+	method recibirDanio() {
+	}
+
+	method recibirDanio(cantidad) {
+	}
+
+	method esCannon() {
+		return false
 	}
 
 	method recibirAtaque() {
@@ -138,4 +319,8 @@ const barraDeVidaMC = new BarraDeVidaMC(personaje = personajePrincipal)
 const pocionDeVida01 = new PocionDeVida(vidaQueRecupera = 25)
 
 const pocionDeVida02 = new PocionDeVida(vidaQueRecupera = 25)
+
+const escalera01 = new Escalera(position = new MiPosicion(x = 13, y = 1))
+
+const escotilla01 = new Escotilla(position = new MiPosicion(x = 13, y = 5))
 
