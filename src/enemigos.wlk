@@ -329,6 +329,7 @@ class Ogre inherits Enemies {
 	}
 
 	method recargarBallesta() {
+		game.sound("CrossbowReload.mp3").play()
 		self.reloadMode().accion(self, self.direccion())
 	}
 
@@ -422,6 +423,7 @@ class Wolf inherits Enemies {
 			self.ponerseActivo()
 		}
 		self.dieMode().accion(self, self.direccion())
+		game.sound("wolfDeath.mp3").play()
 		game.schedule(2000, { => self.quitarDeLaPantalla()})
 		game.schedule(2000, { => pocionDeVidaAsignada.spawn(self)})
 	}
@@ -722,6 +724,7 @@ object fuego inherits Proyectiles {
 
 	override method lanzar(enemigo) {
 		super(enemigo)
+		game.sound("fireballSound.mp3").play()
 		game.onTick(200, "desplazamiento bola de fuego", {=> self.desplazar()})
 		game.schedule(1399, { => game.removeTickEvent("desplazamiento bola de fuego")})
 		game.schedule(1399, { => self.removeVisualSiYaExiste()})
@@ -734,6 +737,7 @@ object flecha inherits Proyectiles {
 	override method lanzar(enemigo) {
 		super(enemigo)
 		enemigo.recargarBallesta()
+		game.sound("arrowSound.mp3").play()
 		game.onTick(100, "desplazamiento flecha", {=> self.desplazar()})
 		game.schedule(1400, { => game.removeTickEvent("desplazamiento flecha")})
 		game.schedule(1400, { => self.removeVisualSiYaExiste()})
