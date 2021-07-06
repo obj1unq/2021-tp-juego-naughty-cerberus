@@ -809,7 +809,7 @@ const spectrum02 = new Spectrum(pantalla = pantalla2, vida = 500, vidaInicial = 
 const ogre01 = new Ogre(pantalla = pantalla2, vida = 700, vidaInicial = 700, ataque = 20, defensa = 20, direccion = right, position = new MiPosicion(x = 2, y = 5), nombre = "Ogre", image = right.imagenPersonajeStand("ogre"), pocionDeVidaAsignada = pocionDeVida01)
 
 //pantalla 3
-const dragon = new Dragon(pantalla = pantalla3, vida = 700, vidaInicial = 700, ataque = 200, defensa = 300, direccion = down, position = new MiPosicion(x = 17, y = 1), nombre = "DragonStanding", image = down.imagenPersonajeStand("dragonStanding"), pocionDeVidaAsignada = pocionDeVida01)
+const dragon = new Dragon(pantalla = pantalla3, vida = 700, vidaInicial = 700, ataque = 100, defensa = 300, direccion = down, position = new MiPosicion(x = 17, y = 1), nombre = "DragonStanding", image = down.imagenPersonajeStand("dragonStanding"), pocionDeVidaAsignada = pocionDeVida01)
 
 ////Pantalla 3
 //const wolf01 = new Wolf(pantalla = pantalla3,vida = 500,vidaInicial = 500, ataque = 35, defensa = 0, direccion = left, position = new MiPosicion(x = 12, y = 1), nombre = "wolf", image = left.imagenPersonajeStand("wolf"), pocionDeVidaAsignada = pocionDeVida02)
