@@ -79,12 +79,13 @@ object controles{
 	method image(){return "controles.png"}
 	
 	method iniciar(){
-		rayo1.quitarAnimacion()
-		rayo2.quitarAnimacion()
-	//	game.addVisual(la pantalla de controles)
+	    game.addVisual(menuControles)
+	    
+	 
 	}
 	method close(){
-	//	game.removeVisual(pantalla de controles)
+		game.removeVisual(menuControles)
+		
 	}
 }
 object salir{	
@@ -107,6 +108,11 @@ class Lightning{
 	method animacion(){
 		return new Mode(accion = "Falling", speedFrame = 35, totalImg = 10, time = 0)
 	}
+}
+object menuControles {
+	const property position = new MiPosicion(x = 0, y = 0)
+	method image(){return "background_controles.png"}
+	
 }
 
 object selectorEspada{
@@ -162,7 +168,6 @@ object yes{
 		personajePrincipal.actualizarImagen()
 		personajePrincipal.vida(100)
 		eventNivel0.iniciar()
-		
 		//TODO: REINICIAR ENEMIGOS
 		
 	}
