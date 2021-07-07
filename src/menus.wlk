@@ -11,7 +11,7 @@ object mainMenu {
 	method iniciar(){
 		backGround.fondo("mainMenu")
 		game.addVisual(backGround)
-		self.reproducirMusica()            //No se detiene la musica por algun motivo...
+		self.reproducirMusica()           
 		game.addVisual(iniciarJuego)
 		game.addVisual(controles)
 		game.addVisual(salir)
@@ -35,7 +35,7 @@ object mainMenu {
 		keyboard.enter().onPressDo({selector.seleccion().iniciar()})
 	}
 	method reproducirMusica() {
-		game.schedule(2000, { => soundMainMenu.play() })
+		game.schedule(1000, { => soundMainMenu.play() })
 	}
 	method detenerMusica(){
 		soundMainMenu.stop()
@@ -71,7 +71,8 @@ object iniciarJuego{
 	method iniciar(){
 			mainMenu.detenerMusica()
 			game.clear()
-			eventNivel0.iniciar()
+			eventHistoria.iniciar()
+	//		eventNivel0.iniciar()
 	}
 }
 object controles{
