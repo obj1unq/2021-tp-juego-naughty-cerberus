@@ -34,8 +34,8 @@ object runModeL inherits Mode(accion = "Run", speedFrame = 30, totalImg = 4, tim
 
 	override method timeLapse(objeto) {
 		time += 1
-		left.move(objeto,0.25)
-		//objeto.position().x(objeto.position().x() - 0.25)
+		left.move(objeto, 0.25)
+	// objeto.position().x(objeto.position().x() - 0.25)
 	}
 
 }
@@ -44,9 +44,8 @@ object runModeR inherits Mode(accion = "Run", speedFrame = 30, totalImg = 4, tim
 
 	override method timeLapse(objeto) {
 		time += 1
-		right.move(objeto,0.25)
-	//	objeto.position().x(objeto.position().x() + 0.25)
-
+		right.move(objeto, 0.25)
+	// objeto.position().x(objeto.position().x() + 0.25)
 	}
 
 }
@@ -55,7 +54,7 @@ object runModeWolfL inherits Mode(accion = "Run", speedFrame = 45, totalImg = 4,
 
 	override method timeLapse(objeto) {
 		time += 1
-		left.move(objeto,0.25)
+		left.move(objeto, 0.25)
 	}
 
 }
@@ -64,7 +63,7 @@ object runModeWolfR inherits Mode(accion = "Run", speedFrame = 45, totalImg = 4,
 
 	override method timeLapse(objeto) {
 		time += 1
-		right.move(objeto,0.25)
+		right.move(objeto, 0.25)
 	}
 
 }
@@ -118,7 +117,6 @@ const attackMode = new AttackMC(accion = "Attack", speedFrame = 65, totalImg = 3
 //const enemigoAtacarADistancia = new Mode(accion = "AttackDistance",speedFrame = 65, totalImg = 3, time=0)
 //const enemigoAtacarAAMelee = new Mode(accion = "AttackMelee",speedFrame = 65, totalImg = 3, time=0)
 //const dodgeMode = new Mode(accion = "Dodge", speedFrame = 65, totalImg = 3, time = 0)
-
 const dieModeMC = new Mode(accion = "Die", speedFrame = 60, totalImg = 3, time = 0)
 
 class MiPosicion {
@@ -148,70 +146,101 @@ class MiPosicion {
 
 }
 
-class Teleport{
+class Teleport {
+
 	var property xTP
 	var property yTP
 	var property pantallaNueva = pantalla1
-	var property posX 
-	var property posY 
+	var property posX
+	var property posY
 	var property image = "void.png"
-	
+
 	method position() = new Position(x = xTP, y = yTP)
-	method teEncontro(personaje){
+
+	method teEncontro(personaje) {
 		game.clear()
 		pantallaNueva.iniciar()
-		self.cambiarPosicion(personaje) 
-		}
-	
-	method cambiarPosicion(personaje){
-		
+		self.cambiarPosicion(personaje)
+	}
+
+	method cambiarPosicion(personaje) {
 		personaje.position().x(posX)
 		personaje.position().y(posY)
 	}
+
 	method recibirAtaque() {
 	}
 
 	method recibirAtaque(danio) {
 	}
+
 }
 
-class Muro inherits Teleport{
-	
-	override method teEncontro(personaje){
+class Muro inherits Teleport {
+
+	override method teEncontro(personaje) {
 		self.cambiarPosicion(personaje)
 	}
-	override method cambiarPosicion(personaje){
+
+	override method cambiarPosicion(personaje) {
 		super(personaje)
 		self.darLaVuelta(personaje)
 		personaje.actualizarImagen()
 	}
-	method darLaVuelta(personaje){
-		if(personaje.direccion() == right)	{personaje.direccion(left)} //En un futuro se puede cambiar este if por un opuestoDireccion(objeto) en el cual le mandas un msj a los objetos right o left y estos se encargan de devolver el opuesto o directamente cambiar la direccion del objeto dado.
-		else								{personaje.direccion(right)} // Esto implicaria tambien cambiar varias partes del código donde se usa una estructura similar,asi que por cuestiones de tiempo lo dejamos para el final si nos sobra tiempo.
+
+	method darLaVuelta(personaje) {
+		if (personaje.direccion() == right) {
+			personaje.direccion(left)
+		} // En un futuro se puede cambiar este if por un opuestoDireccion(objeto) en el cual le mandas un msj a los objetos right o left y estos se encargan de devolver el opuesto o directamente cambiar la direccion del objeto dado.
+		else {
+			personaje.direccion(right)
+		} // Esto implicaria tambien cambiar varias partes del código donde se usa una estructura similar,asi que por cuestiones de tiempo lo dejamos para el final si nos sobra tiempo.
 	}
+
 }
 
 const tpTunelAbajo = new Teleport(xTP = 12, yTP = 1, pantallaNueva = pantalla1, posX = 4, posY = 9)
 
 const bloqueoIzquierdaArriba = new Muro(xTP = -1, yTP = 5, posX = 0, posY = 5)
+
 const bloqueoIzquierdaAbajo = new Muro(xTP = -1, yTP = 1, posX = 0, posY = 1)
+
 const bloqueoDerechaArriba = new Muro(xTP = 20, yTP = 5, posX = 19, posY = 5)
-const bloqueoDerechaAbajo = new Muro(xTP = 20, yTP = 1, posX = 19,  posY = 1)
+
+const bloqueoDerechaAbajo = new Muro(xTP = 20, yTP = 1, posX = 19, posY = 1)
+
+
+const bloqueoIzquierdaMedioPantalla3 = new Muro(xTP = -1, yTP = 4, posX = 0, posY = 4)
+
+const bloqueoIzquierdaAbajoPantalla3 = new Muro(xTP = -1, yTP = 0, posX = 0, posY = 0)
+
+const bloqueoDerechaArribaPantalla3 = new Muro(xTP = 20, yTP = 8, posX = 19, posY = 8)
+
+const bloqueoDerechaMedioPantalla3 = new Muro(xTP = 20, yTP = 4, posX = 19, posY = 4)
 
 const bloqueoDerechaArribaDragon = new Muro(xTP = -1, yTP = 7, posX = 0, posY = 7)
+
 const bloqueoDerechaMedioDragon = new Muro(xTP = -1, yTP = 4, posX = 0, posY = 4)
+
 const bloqueoEnElDragon = new Muro(xTP = 18, yTP = 1, posX = 17, posY = 1)
+
 const bloqueoBordeCannon03 = new Muro(xTP = 10, yTP = 7, posX = 9, posY = 7)
+
 const bloqueoBordeCannon02 = new Muro(xTP = 10, yTP = 4, posX = 9, posY = 4)
 
-const tpPantalla2 = new Teleport(xTP = 20, yTP = 1, pantallaNueva = pantalla2, posX = 0,  posY = 5)
-const tpPantalla3 = new Teleport(xTP = 20, yTP = 1, pantallaNueva = pantalla3, posX = 0,  posY = 8)
-const tpPantalla4 = new Teleport(xTP = 20, yTP = 0, pantallaNueva = pantalla4, posX = 0,  posY = 1)
+const tpPantalla2 = new Teleport(xTP = 20, yTP = 1, pantallaNueva = pantalla2, posX = 0, posY = 5)
+
+const tpPantalla3 = new Teleport(xTP = 20, yTP = 1, pantallaNueva = pantalla3, posX = 0, posY = 8)
+
+const tpPantalla4 = new Teleport(xTP = 20, yTP = 0, pantallaNueva = pantalla4, posX = 0, posY = 1)
+
 const tpRegresoPantalla3 = new Teleport(xTP = -1, yTP = 1, pantallaNueva = pantalla3, posX = 19, posY = 1)
+
 const tpRegresoPantalla2 = new Teleport(xTP = -1, yTP = 8, pantallaNueva = pantalla2, posX = 19, posY = 1)
-const tpRegresoPantalla1 = new Teleport(xTP = -1, yTP = 5, pantallaNueva = pantalla1, posX = 19,  posY = 1)
+
+const tpRegresoPantalla1 = new Teleport(xTP = -1, yTP = 5, pantallaNueva = pantalla1, posX = 19, posY = 1)
+
 const tpWulgrym = new Teleport(xTP = -1, yTP = 1, pantallaNueva = wulgrymEncuentro, posX = 19, posY = 1)
+
 const tpWulgrymRegresoPantalla2 = new Teleport(xTP = 20, yTP = 1, pantallaNueva = pantalla2, posX = 0, posY = 1)
-
-
 

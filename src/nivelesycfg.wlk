@@ -170,6 +170,7 @@ object pantalla2 inherits Nivel1 {
 	override method agregarTPs() {
 		game.addVisual(tpRegresoPantalla1)
 		game.addVisual(tpPantalla3)
+		game.addVisual(bloqueoDerechaArriba)
 //		game.addVisual(tpPantalla4)
 		game.addVisual(tpWulgrym)
 	}
@@ -224,6 +225,10 @@ object pantalla3 inherits Nivel1 {
 	override method agregarTPs() {
 		game.addVisual(tpRegresoPantalla2)
 		game.addVisual(tpPantalla4)
+		game.addVisual(bloqueoIzquierdaMedioPantalla3)
+		game.addVisual(bloqueoIzquierdaAbajoPantalla3)
+		game.addVisual(bloqueoDerechaArribaPantalla3)
+		game.addVisual(bloqueoDerechaMedioPantalla3)		
 //		game.addVisual(tpPantalla4)
 //		game.addVisual(tpBossAlternativo)
 	}
