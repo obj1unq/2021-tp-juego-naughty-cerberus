@@ -40,7 +40,7 @@ object eventHistoria {
 		keyboard.enter().onPressDo({ self.close()})
 	}
 	method reproducirMusica(){
-		game.schedule(50, { => soundHistoria.play() })
+		game.schedule(50, { => 	soundHistoria.play()})
 	}
 	method detenerMusica() {
 		soundHistoria.stop()
@@ -63,7 +63,9 @@ object eventNivel0 {
 		self.reproducirMusica()
 	}
 	method reproducirMusica(){
-		game.schedule(50, { => soundGameplay.play() })
+		game.schedule(50, { => 	soundGameplay.play()
+								soundGameplay.shouldLoop(true)
+		})
 	}
 	method detenerMusica() {
 		soundGameplay.stop()
@@ -251,6 +253,7 @@ object pantalla4 inherits Nivel1 {
 //		game.addVisual(escotilla)
 //		game.addVisual(escalera)
 		super()
+		self.reproducirMusica()
 //		config.configurarColisionesDragon()
 	}
 
@@ -276,7 +279,59 @@ object pantalla4 inherits Nivel1 {
 	override method movimientoEnemigos() {
 		enemigos.forEach({ enemigo => enemigo.vigilarPiso()})
 	}
+	method reproducirMusica(){
+		game.schedule(50, { => 	if(soundGameplay.played()){eventNivel0.detenerMusica()}
+								soundBoss.play()
+								soundBoss.shouldLoop(true)
+		})
+	}
+	method detenerMusica() {
+		soundBoss.stop()
+	}
+}
 
+object eventFinal{
+	
+	method iniciar(){
+		self.reproducirMusica()
+		game.addVisual(firstWhisperDialog)
+		firstWhisperDialog.configurarDialogo()
+	}
+	method reproducirMusica(){
+		game.schedule(25, { => 	soundWhispers.play()
+								if(soundBoss.played()){pantalla4.detenerMusica()}
+		})
+	}
+	method detenerMusica() {
+		soundWhispers.stop()
+	}
+}
+
+object firstWhisperDialog{
+	
+	var property position = new MiPosicion(x = 0, y = 0)
+	
+	method image() {
+		return "dialog_MC_final.png"
+	}
+	method configurarDialogo(){
+		keyboard.enter().onPressDo({credits.iniciar()})
+	}
+	method teEncontro(objeto) {}
+	method recibirAtaque() {}
+	method recibirAtaque(danio) {}
+	method recibirDanio() {}
+	method recibirDanio(cantidad) {}
+}
+
+object credits{
+	
+	method iniciar(){
+		game.clear()
+		backGround.fondo("creditos")
+		game.addVisual(backGround)
+		game.schedule(10000, {=> game.stop()})
+	}
 }
 
 object config {

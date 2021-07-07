@@ -240,7 +240,8 @@ object barraDeVidaMC {
 
 	method recibirAtaque(danio) {
 	}
-
+	method teEncontro(objeto) {
+	}
 }
 
 class BarraDeVidaEnemigo {

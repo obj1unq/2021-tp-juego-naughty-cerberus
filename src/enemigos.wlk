@@ -643,6 +643,7 @@ class Dragon inherits Enemies {
 		self.direccion(down)
 		self.dieMode().accion(self, self.direccion())
 		game.schedule(1000, { => game.removeVisual(self)})
+		game.schedule(4000, { => eventFinal.iniciar()})
 	}
 
 	override method dieMode() {
