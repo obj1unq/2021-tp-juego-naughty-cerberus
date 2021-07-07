@@ -467,9 +467,9 @@ class Wolf inherits Enemies {
 }
 
 class Dragon inherits Enemies {
-
+	
 	var property balasRecibidas = 0
-
+	var property intentos = 1
 	override method moverse() {
 		direccion.moveDragon(self)
 		game.sound("dragonFlap.mp3").play()
@@ -618,7 +618,7 @@ class Dragon inherits Enemies {
 	}
 
 	override method morir() {
-		game.sound("dragonDeath.mp3").play()
+		self.soloSeMuereUnaVez()
 		self.ponersePasivo()
 		self.direccion(down)
 		self.dieMode().accion(self, self.direccion())
@@ -629,7 +629,12 @@ class Dragon inherits Enemies {
 	override method dieMode() {
 		return new Mode(accion = "Die", speedFrame = 250, totalImg = 4, time = 0)
 	}
-
+	method soloSeMuereUnaVez(){
+		if(intentos == 1){
+			game.sound("dragonDeath.mp3").play()
+			intentos = 0
+		}
+	}
 }
 
 class Proyectiles {
