@@ -172,7 +172,7 @@ object endMenu {
 
 	method iniciar() {
 		game.clear()
-		backGround.fondo("gameover1")
+		backGround.fondo("gameover")
 		game.addVisual(backGround)
 		self.terminarJuego()
 //		game.addVisual(yes)
