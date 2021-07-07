@@ -87,7 +87,7 @@ class Enemies {
 	}
 
 	method vigilarPiso() {
-		self.ponersePasivo()
+		game.schedule(100, { => self.ponersePasivo()})
 		game.onTick(750, self.toString() + "recorre el piso hasta encontrar al MC", { => self.patrullarYCazarMC()})
 	}
 
@@ -407,12 +407,10 @@ class Wolf inherits Enemies {
 
 	override method verificarQueSigaEnMiNivel() {
 		if (!self.mcEnMiNivel()) {
-			game.schedule(80, { =>
-				self.salirModoRabioso()
-				self.vigilarPiso()
-			})
-			self.salirModoRabioso()
-			self.vigilarPiso()
+			game.schedule(120, { => self.salirModoRabioso()})
+			game.schedule(240, { => self.vigilarPiso()})
+//			self.salirModoRabioso()
+//			self.vigilarPiso()
 		}
 	}
 

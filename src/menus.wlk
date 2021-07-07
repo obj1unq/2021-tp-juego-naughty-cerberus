@@ -7,11 +7,11 @@ import nivelesycfg.*
 import musica.*
 
 object mainMenu {
-	
-	method iniciar(){
+
+	method iniciar() {
 		backGround.fondo("mainMenu")
 		game.addVisual(backGround)
-		self.reproducirMusica()           
+		self.reproducirMusica()
 		game.addVisual(iniciarJuego)
 		game.addVisual(controles)
 		game.addVisual(salir)
@@ -20,52 +20,61 @@ object mainMenu {
 		rayo1.iniciar()
 		game.addVisual(rayo2)
 		rayo2.iniciar()
-		self.controles()		
+		self.controles()
 	}
-	method controles(){
-		keyboard.w().onPressDo({selector.subir()})
-		keyboard.s().onPressDo({selector.bajar()})
-		keyboard.del().onPressDo({controles.close() 
+
+	method controles() {
+		keyboard.w().onPressDo({ selector.subir()})
+		keyboard.s().onPressDo({ selector.bajar()})
+		keyboard.del().onPressDo({ controles.close()
 		/* Para hacer en un futuro:
 		 * La idea es crear luego un objeto que se encargue de manejar el abrir y cerrar ventanas de los menus y dialogos de NPCs y MC, la idea
 		 * es hacer una lista que actue como una pila de ventanas a ir cerrando,la ultima que se abrio es la primera 
 		 * en cerrarse al darle la orden de cerrar. Cuando se abre una opcion del menu o dialogo este se agrega a la pila el objeto 
 		 */
 		})
-		keyboard.enter().onPressDo({selector.seleccion().iniciar()})
+		keyboard.enter().onPressDo({ selector.seleccion().iniciar()})
 	}
+
 	method reproducirMusica() {
-		game.schedule(1000, { => soundMainMenu.play() })
+		game.schedule(1000, { => soundMainMenu.play()})
 	}
-	method detenerMusica(){
+
+	method detenerMusica() {
 		soundMainMenu.stop()
 	}
+
 }
 
-object selector{
-	var opciones = [iniciarJuego,controles,salir]
-	
+object selector {
+
+	var opciones = [ iniciarJuego, controles, salir ]
 	const property image = "selector.png"
+
 	method position() {
-		return new MiPosicion(x = self.seleccion().position().x() , y = self.seleccion().position().y())
-		
-		}
+		return new MiPosicion(x = self.seleccion().position().x(), y = self.seleccion().position().y())
+	}
+
 	method seleccion() = opciones.head()
-	
-	method bajar(){
+
+	method bajar() {
 		const seleccionActual = self.seleccion()
 		opciones.remove(seleccionActual)
 		opciones.add(seleccionActual)
 	}
-	method subir(){
+
+	method subir() {
 		const ultimaSeleccion = opciones.last()
 		opciones.remove(ultimaSeleccion)
-		opciones = [ultimaSeleccion] + opciones		
+		opciones = [ ultimaSeleccion ] + opciones
 	}
+
 }
 
-object iniciarJuego{
+object iniciarJuego {
+
 	const property position = new MiPosicion(x = 7, y = 3)
+
 	method image(){return "iniciarJuego.png"}
 	
 	method iniciar(){
@@ -74,43 +83,57 @@ object iniciarJuego{
 			eventHistoria.iniciar()
 	}
 }
-object controles{
+
+object controles {
+
 	const property position = new MiPosicion(x = 7, y = 2)
 	method image(){return "controles.png"}
 	
 	method iniciar(){
 	    game.addVisual(menuControles)
 	}
-	method close(){
+
+	method close() {
 		game.removeVisual(menuControles)
 	}
+
 }
-object salir{	
+
+object salir {
+
 	const property position = new MiPosicion(x = 7, y = 1)
-	method image(){return "salir.png"}
-	method iniciar(){game.stop()}
+
+	method image() {
+		return "salir.png"
+	}
+
+	method iniciar() {
+		game.stop()
+	}
+
 }
-class Lightning{
+
+class Lightning {
+
 	var property direccion = right
 	var property image = "void.png"
 	var property position
 	var property nombre = "lightning"
 
-	method iniciar(){
+	method iniciar() {
 		game.onTick(4000, self.toString(), { self.animacion().accion(self, self.direccion())})
 	}
-	method quitarAnimacion(){
+
+	method quitarAnimacion() {
 		game.removeTickEvent(self.toString())
 	}
-	method animacion(){
+
+	method animacion() {
 		return new Mode(accion = "Falling", speedFrame = 35, totalImg = 10, time = 0)
 	}
+
 }
-object menuControles {
-	const property position = new MiPosicion(x = 0, y = 0)
-	method image(){return "background_controles.png"}
-	
-}
+
 
 //object selectorEspada{
 //	var opciones = [yes,no]
@@ -135,10 +158,19 @@ object menuControles {
 //		opciones = [ultimaSeleccion] + opciones		
 //	}
 //}
+object menuControles {
 
-object endMenu{
-	
-	method iniciar(){
+	const property position = new MiPosicion(x = 0, y = 0)
+
+	method image() {
+		return "background_controles.png"
+	}
+
+}
+
+object endMenu {
+
+	method iniciar() {
 		game.clear()
 		backGround.fondo("gameover1")
 		game.addVisual(backGround)
@@ -148,6 +180,7 @@ object endMenu{
 //		game.addVisual(selectorEspada)
 //		self.controles()
 	}
+
 	method terminarJuego(){
 		game.schedule(3000, {=> game.stop()})
 	}
@@ -156,6 +189,7 @@ object endMenu{
 //		keyboard.right().onPressDo({selectorEspada.derecha()})
 //		keyboard.enter().onPressDo({selectorEspada.seleccion().iniciar()})
 //	}
+
 }
 //object yes{
 //	const property position = new MiPosicion(x = 8, y = 3)
@@ -182,6 +216,7 @@ object endMenu{
 //	}
 //}
 
-
 const rayo1 = new Lightning(position = new MiPosicion(x = 17, y = 2))
+
 const rayo2 = new Lightning(position = new MiPosicion(x = 0, y = 2))
+

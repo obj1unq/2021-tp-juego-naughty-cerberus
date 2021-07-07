@@ -298,16 +298,26 @@ const escalera02 = new Escalera(position = new MiPosicion(x = 11, y = 1))
 
 const escotilla02 = new Escotilla(position = new MiPosicion(x = 11, y = 5))
 
+//pantalla 3
+
+const escalera03 = new Escalera(position = new MiPosicion(x = 15, y = 4))
+
+const escotilla03 = new Escotilla(position = new MiPosicion(x = 15, y = 8))
+
+const escalera04 = new Escalera(position = new MiPosicion(x = 3, y = 0))
+
+const escotilla04 = new Escotilla(position = new MiPosicion(x = 3, y = 4))
+
 
 //pantalla dragon
 
-const escalera03 = new EscaleraChica(position = new MiPosicion(x = 5, y = 1))
+const escalera05 = new EscaleraChica(position = new MiPosicion(x = 5, y = 1))
 
-const escalera04 = new EscaleraChica(position = new MiPosicion(x = 3, y = 4))
+const escalera06 = new EscaleraChica(position = new MiPosicion(x = 3, y = 4))
 
-const escotilla03 = new EscotillaChica(position = new MiPosicion(x = 5, y = 4))
+const escotilla05 = new EscotillaChica(position = new MiPosicion(x = 5, y = 4))
 
-const escotilla04 = new EscotillaChica(position = new MiPosicion(x = 3, y = 7))
+const escotilla06 = new EscotillaChica(position = new MiPosicion(x = 3, y = 7))
 
 const cannon01 = new Cannon(position = new MiPosicion(x = 7, y = 1))
 

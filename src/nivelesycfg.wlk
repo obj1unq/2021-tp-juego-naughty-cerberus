@@ -21,28 +21,31 @@ object ajustesIniciales {
 
 }
 
-object eventHistoria{
-	
-	method iniciar(){
+object eventHistoria {
+
+	method iniciar() {
 		backGround.fondo("historia")
 		game.addVisual(backGround)
 		self.teclaContinuar()
 		self.reproducirMusica()
 	}
-	method close(){
+
+	method close() {
 		self.detenerMusica()
 		game.clear()
 		eventNivel0.iniciar()
 	}
-	method teclaContinuar(){
+
+	method teclaContinuar() {
 		keyboard.enter().onPressDo({ self.close()})
 	}
 	method reproducirMusica(){
 		game.schedule(50, { => soundHistoria.play() })
 	}
-	method detenerMusica(){
+	method detenerMusica() {
 		soundHistoria.stop()
 	}
+
 }
 
 object eventNivel0 {
@@ -75,11 +78,20 @@ class Nivel1 {
 		ajustesIniciales.iniciar()
 	}
 
-	method agregarEnemigos() {}
-	method agregarBarrasDeVidaEnemigos() {}
-	method movimientoEnemigos() {}
-	method agregarBloqueos() {}
-	method agregarTPs() {}
+	method agregarEnemigos() {
+	}
+
+	method agregarBarrasDeVidaEnemigos() {
+	}
+
+	method movimientoEnemigos() {
+	}
+
+	method agregarBloqueos() {
+	}
+
+	method agregarTPs() {
+	}
 
 }
 
@@ -163,15 +175,50 @@ object pantalla2 inherits Nivel1 {
 
 object pantalla3 inherits Nivel1 {
 
-	var property enemigos = [ dragon ]
+	var property enemigos = []
 
 	override method iniciar() {
-		backGround.fondo("nivelDragon")
+		backGround.fondo("nivel1_7")
 		game.addVisual(backGround)
 		game.addVisual(escalera03)
 		game.addVisual(escalera04)
 		game.addVisual(escotilla03)
 		game.addVisual(escotilla04)
+		super()
+	}
+
+	override method agregarTPs() {
+		game.addVisual(tpRegresoPantalla2)
+		game.addVisual(tpPantalla4)
+//		game.addVisual(tpPantalla4)
+//		game.addVisual(tpBossAlternativo)
+	}
+
+	override method agregarEnemigos() {
+		enemigos.forEach({ enemigo => game.addVisual(enemigo)})
+	}
+
+	override method agregarBarrasDeVidaEnemigos() {
+		enemigos.forEach({ enemigo => game.addVisual(enemigo.barraDeVida())})
+	}
+
+	override method movimientoEnemigos() {
+		enemigos.forEach({ enemigo => enemigo.vigilarPiso()})
+	}
+
+}
+
+object pantalla4 inherits Nivel1 {
+
+	var property enemigos = [ dragon ]
+
+	override method iniciar() {
+		backGround.fondo("nivelDragon")
+		game.addVisual(backGround)
+		game.addVisual(escalera05)
+		game.addVisual(escalera06)
+		game.addVisual(escotilla05)
+		game.addVisual(escotilla06)
 		game.addVisual(cannon01)
 		game.addVisual(cannon02)
 		game.addVisual(cannon03)
@@ -185,7 +232,7 @@ object pantalla3 inherits Nivel1 {
 	}
 
 	override method agregarTPs() {
-		game.addVisual(tpRegresoPantalla2)
+		game.addVisual(tpRegresoPantalla3)
 		game.addVisual(bloqueoBordeCannon02)
 		game.addVisual(bloqueoBordeCannon03)
 		game.addVisual(bloqueoEnElDragon)
