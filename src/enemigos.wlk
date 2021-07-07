@@ -394,7 +394,7 @@ class Wolf inherits Enemies {
 	override method verificarQueSigaEnMiNivel() {
 		if (!self.mcEnMiNivel()) {
 			game.schedule(40, { => self.salirModoRabioso()})
-			game.schedule(320, { => self.vigilarPiso()})
+			game.schedule(400, { => self.vigilarPiso()})
 		}
 	}
 
