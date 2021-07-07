@@ -60,6 +60,13 @@ object eventNivel0 {
 			// game.say(personajePrincipal, "DEBO SALVAR A MI FAMILIA CUANTO ANTES!")
 		game.say(personajePrincipal, "DEBO SALVAR A MI")
 		game.say(personajePrincipal, "FAMILIA CUANTO ANTES!")
+		self.reproducirMusica()
+	}
+	method reproducirMusica(){
+		game.schedule(50, { => soundGameplay.play() })
+	}
+	method detenerMusica() {
+		soundGameplay.stop()
 	}
 
 }
@@ -156,7 +163,7 @@ object pantalla2 inherits Nivel1 {
 		game.addVisual(tpRegresoPantalla1)
 		game.addVisual(tpPantalla3)
 //		game.addVisual(tpPantalla4)
-//		game.addVisual(tpBossAlternativo)
+		game.addVisual(tpWulgrym)
 	}
 
 	override method agregarEnemigos() {
@@ -171,6 +178,22 @@ object pantalla2 inherits Nivel1 {
 		enemigos.forEach({ enemigo => enemigo.vigilarPiso()})
 	}
 
+}
+
+object wulgrymEncuentro inherits Nivel1{
+	
+	override method iniciar(){
+		backGround.fondo("nivel1_1")
+		game.addVisual(backGround)
+		game.addVisual(wulgrym)
+		super()
+	}
+	override method agregarTPs(){
+		game.addVisual(tpWulgrymRegresoPantalla2)
+	}
+	override method agregarBloqueos(){
+		game.addVisual(bloqueoIzquierdaAbajo)
+	}
 }
 
 object pantalla3 inherits Nivel1 {
@@ -232,7 +255,7 @@ object pantalla4 inherits Nivel1 {
 	}
 
 	override method agregarTPs() {
-		game.addVisual(tpRegresoPantalla3)
+		//game.addVisual(tpRegresoPantalla3)  este tp es mejor que no esté asi no pueden salir de la sala del boss
 		game.addVisual(bloqueoBordeCannon02)
 		game.addVisual(bloqueoBordeCannon03)
 		game.addVisual(bloqueoEnElDragon)
@@ -267,8 +290,6 @@ object config {
 		})
 		keyboard.j().onPressDo({ personajePrincipal.atacar()})
 		keyboard.k().onPressDo({ personajePrincipal.bloquear()})
-//		keyboard.w().onPressDo({ personajePrincipal.subirPorEscalera()})
-//		keyboard.s().onPressDo({ personajePrincipal.bajarPorEscotilla()})
 		keyboard.i().onPressDo({ personajePrincipal.decirPos()})
 		keyboard.w().onPressDo({ personajePrincipal.subirSiHayEscalera()})
 		keyboard.s().onPressDo({ personajePrincipal.bajarSiHayEscotilla()})

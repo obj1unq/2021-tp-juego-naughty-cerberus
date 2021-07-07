@@ -464,6 +464,51 @@ object down {
 
 }
 
+object wulgrym{//En un futuro,de continuarse el juego,el seria nuestro mercader
+	
+	var property position = new MiPosicion(x = 3, y = 1)
+	var intentos = 1
+	
+	method image() {
+		return "wulgrym.png"
+	}
+	method teEncontro(objeto) {
+		
+		if(intentos == 1){
+			game.addVisual(wulgrymDialog)
+			self.configurarDialogo()
+			intentos -= 1
+			}
+	}
+	method configurarDialogo(){
+		keyboard.enter().onPressDo({wulgrymDialog.siguienteDialogo()})
+	}
+	method recibirAtaque() {}
+
+	method recibirAtaque(danio) {}
+
+	method recibirDanio() {}
+
+	method recibirDanio(cantidad) {}
+} 
+object wulgrymDialog{
+	var numeroDialogo = 1
+	var property position = new MiPosicion(x = 0, y = 0)
+	
+	method image() {
+		return "wulgrym_dialog_" + numeroDialogo.toString() + ".png"
+	}
+	
+	method siguienteDialogo(){
+		numeroDialogo = (numeroDialogo + 1).min(4)
+	}
+	method teEncontro(objeto) {}
+	method recibirAtaque() {}
+	method recibirAtaque(danio) {}
+	method recibirDanio() {}
+	method recibirDanio(cantidad) {}
+}
+
 object imageNameConversor {
 
 	method getImgName(objeto, accion, direccion, num) {

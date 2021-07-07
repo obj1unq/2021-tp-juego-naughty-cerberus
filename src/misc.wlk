@@ -217,15 +217,15 @@ object cajaDeBalas {
 
 }
 
-class BarraDeVidaMC {
+object barraDeVidaMC {
 
-	const personaje
+	const personaje = personajePrincipal
 
 	method position() = new MiPosicion(x = personaje.position().x(), y = personaje.position().y() + 1)
 
 	method image() {
 		return if (personaje.vida() > 0) {
-			"vida_" + "personajePrincipal" + self.cantDeVida().toString() + ".png"
+			"vida_" + personaje.toString() + self.cantDeVida().toString() + ".png"
 		} else {
 			"void.png"
 		}
@@ -280,7 +280,6 @@ class BarraDeVidaEnemigo {
 
 }
 
-const barraDeVidaMC = new BarraDeVidaMC(personaje = personajePrincipal)
 
 const pocionDeVida01 = new PocionDeVida(vidaQueRecupera = 25)
 
