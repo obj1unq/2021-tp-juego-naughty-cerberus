@@ -228,7 +228,8 @@ object pantalla3 inherits Nivel1 {
 		game.addVisual(bloqueoIzquierdaMedioPantalla3)
 		game.addVisual(bloqueoIzquierdaAbajoPantalla3)
 		game.addVisual(bloqueoDerechaArribaPantalla3)
-		game.addVisual(bloqueoDerechaMedioPantalla3)		
+		game.addVisual(bloqueoDerechaMedioPantalla3)
+		game.addVisual(bloqueoEntradaDragon)	
 //		game.addVisual(tpPantalla4)
 //		game.addVisual(tpBossAlternativo)
 	}
