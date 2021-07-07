@@ -630,7 +630,7 @@ class Dragon inherits Enemies {
 	}
 
 	override method estaCercaDelMC() {
-		return ((self.position().x() - personajePrincipal.position().x()).abs()) < 13
+		return ((self.position().x() - personajePrincipal.position().x()).abs()) < 16
 	}
 
 	method recibirBala() {

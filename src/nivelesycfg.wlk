@@ -39,9 +39,11 @@ object eventHistoria {
 	method teclaContinuar() {
 		keyboard.enter().onPressDo({ self.close()})
 	}
-	method reproducirMusica(){
-		game.schedule(50, { => 	soundHistoria.play()})
+
+	method reproducirMusica() {
+		game.schedule(50, { => soundHistoria.play()})
 	}
+
 	method detenerMusica() {
 		soundHistoria.stop()
 	}
@@ -62,11 +64,14 @@ object eventNivel0 {
 		game.say(personajePrincipal, "FAMILIA CUANTO ANTES!")
 		self.reproducirMusica()
 	}
-	method reproducirMusica(){
-		game.schedule(50, { => 	soundGameplay.play()
-								soundGameplay.shouldLoop(true)
+
+	method reproducirMusica() {
+		game.schedule(50, { =>
+			soundGameplay.play()
+			soundGameplay.shouldLoop(true)
 		})
 	}
+
 	method detenerMusica() {
 		soundGameplay.stop()
 	}
@@ -182,20 +187,23 @@ object pantalla2 inherits Nivel1 {
 
 }
 
-object wulgrymEncuentro inherits Nivel1{
-	
-	override method iniciar(){
+object wulgrymEncuentro inherits Nivel1 {
+
+	override method iniciar() {
 		backGround.fondo("nivel1_1")
 		game.addVisual(backGround)
 		game.addVisual(wulgrym)
 		super()
 	}
-	override method agregarTPs(){
+
+	override method agregarTPs() {
 		game.addVisual(tpWulgrymRegresoPantalla2)
 	}
-	override method agregarBloqueos(){
+
+	override method agregarBloqueos() {
 		game.addVisual(bloqueoIzquierdaAbajo)
 	}
+
 }
 
 object pantalla3 inherits Nivel1 {
@@ -250,6 +258,8 @@ object pantalla4 inherits Nivel1 {
 		game.addVisual(cajaDeBalas)
 		game.addVisual(bloqueoDerechaArribaDragon)
 		game.addVisual(bloqueoDerechaMedioDragon)
+		game.addVisual(errorReporter)
+		game.errorReporter(errorReporter)
 //		game.addVisual(escotilla)
 //		game.addVisual(escalera)
 		super()
@@ -258,7 +268,7 @@ object pantalla4 inherits Nivel1 {
 	}
 
 	override method agregarTPs() {
-		//game.addVisual(tpRegresoPantalla3)  este tp es mejor que no esté asi no pueden salir de la sala del boss
+		// game.addVisual(tpRegresoPantalla3)  este tp es mejor que no esté asi no pueden salir de la sala del boss
 		game.addVisual(bloqueoBordeCannon02)
 		game.addVisual(bloqueoBordeCannon03)
 		game.addVisual(bloqueoEnElDragon)
@@ -279,59 +289,84 @@ object pantalla4 inherits Nivel1 {
 	override method movimientoEnemigos() {
 		enemigos.forEach({ enemigo => enemigo.vigilarPiso()})
 	}
-	method reproducirMusica(){
-		game.schedule(50, { => 	if(soundGameplay.played()){eventNivel0.detenerMusica()}
-								soundBoss.play()
-								soundBoss.shouldLoop(true)
+
+	method reproducirMusica() {
+		game.schedule(50, { =>
+			if (soundGameplay.played()) {
+				eventNivel0.detenerMusica()
+			}
+			soundBoss.play()
+			soundBoss.shouldLoop(true)
 		})
 	}
+
 	method detenerMusica() {
 		soundBoss.stop()
 	}
+
 }
 
-object eventFinal{
-	
-	method iniciar(){
+object eventFinal {
+
+	method iniciar() {
 		self.reproducirMusica()
 		game.addVisual(firstWhisperDialog)
 		firstWhisperDialog.configurarDialogo()
 	}
-	method reproducirMusica(){
-		game.schedule(25, { => 	soundWhispers.play()
-								if(soundBoss.played()){pantalla4.detenerMusica()}
+
+	method reproducirMusica() {
+		game.schedule(25, { =>
+			soundWhispers.play()
+			if (soundBoss.played()) {
+				pantalla4.detenerMusica()
+			}
 		})
 	}
+
 	method detenerMusica() {
 		soundWhispers.stop()
 	}
+
 }
 
-object firstWhisperDialog{
-	
+object firstWhisperDialog {
+
 	var property position = new MiPosicion(x = 0, y = 0)
-	
+
 	method image() {
 		return "dialog_MC_final.png"
 	}
-	method configurarDialogo(){
-		keyboard.enter().onPressDo({credits.iniciar()})
+
+	method configurarDialogo() {
+		keyboard.enter().onPressDo({ credits.iniciar()})
 	}
-	method teEncontro(objeto) {}
-	method recibirAtaque() {}
-	method recibirAtaque(danio) {}
-	method recibirDanio() {}
-	method recibirDanio(cantidad) {}
+
+	method teEncontro(objeto) {
+	}
+
+	method recibirAtaque() {
+	}
+
+	method recibirAtaque(danio) {
+	}
+
+	method recibirDanio() {
+	}
+
+	method recibirDanio(cantidad) {
+	}
+
 }
 
-object credits{
-	
-	method iniciar(){
+object credits {
+
+	method iniciar() {
 		game.clear()
 		backGround.fondo("creditos")
 		game.addVisual(backGround)
 		game.schedule(10000, {=> game.stop()})
 	}
+
 }
 
 object config {

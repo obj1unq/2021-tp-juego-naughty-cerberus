@@ -252,13 +252,17 @@ object personajePrincipal {
 
 	method verificarQueElCannonEstaDescargado() {
 		if (self.cannonPresente().estaCargado()) {
-			game.error("el cañon ya esta cargado")
+//			game.error("el cañon ya esta cargado")
+			game.say(self, "este cañon ya esta cargado")
+			game.error("")
 		}
 	}
 
 	method verificarQueTengoBala() {
 		if (!self.tieneBala()) {
-			game.error("no tengo bala para cargar")
+//			game.error("no tengo bala para cargar")
+			game.say(self, "no tengo bala para cargar")
+			game.error("")
 		}
 	}
 
@@ -273,7 +277,9 @@ object personajePrincipal {
 
 	method verificarQueEstaEnUnCannon() {
 		if (!self.estaSobreUnCannon()) {
-			game.error("no estoy sobre un cañon")
+//			game.error("no estoy sobre un cañon")
+			game.say(self, "no estoy sobre un cañon")
+			game.error("")
 		}
 	}
 
@@ -464,49 +470,69 @@ object down {
 
 }
 
-object wulgrym{//En un futuro,de continuarse el juego,el seria nuestro mercader
-	
+object wulgrym { //En un futuro,de continuarse el juego,el seria nuestro mercader
+
 	var property position = new MiPosicion(x = 3, y = 1)
 	var intentos = 1
-	
+
 	method image() {
 		return "wulgrym.png"
 	}
+
 	method teEncontro(objeto) {
-		
-		if(intentos == 1){
+		if (intentos == 1) {
 			game.addVisual(wulgrymDialog)
 			self.configurarDialogo()
 			intentos -= 1
-			}
+		}
 	}
-	method configurarDialogo(){
-		keyboard.enter().onPressDo({wulgrymDialog.siguienteDialogo()})
+
+	method configurarDialogo() {
+		keyboard.enter().onPressDo({ wulgrymDialog.siguienteDialogo()})
 	}
-	method recibirAtaque() {}
 
-	method recibirAtaque(danio) {}
+	method recibirAtaque() {
+	}
 
-	method recibirDanio() {}
+	method recibirAtaque(danio) {
+	}
 
-	method recibirDanio(cantidad) {}
-} 
-object wulgrymDialog{
+	method recibirDanio() {
+	}
+
+	method recibirDanio(cantidad) {
+	}
+
+}
+
+object wulgrymDialog {
+
 	var numeroDialogo = 1
 	var property position = new MiPosicion(x = 0, y = 0)
-	
+
 	method image() {
 		return "wulgrym_dialog_" + numeroDialogo.toString() + ".png"
 	}
-	
-	method siguienteDialogo(){
+
+	method siguienteDialogo() {
 		numeroDialogo = (numeroDialogo + 1).min(4)
 	}
-	method teEncontro(objeto) {}
-	method recibirAtaque() {}
-	method recibirAtaque(danio) {}
-	method recibirDanio() {}
-	method recibirDanio(cantidad) {}
+
+	method teEncontro(objeto) {
+	}
+
+	method recibirAtaque() {
+	}
+
+	method recibirAtaque(danio) {
+	}
+
+	method recibirDanio() {
+	}
+
+	method recibirDanio(cantidad) {
+	}
+
 }
 
 object imageNameConversor {

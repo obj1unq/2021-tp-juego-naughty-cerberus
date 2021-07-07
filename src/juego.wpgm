@@ -12,6 +12,7 @@ program juego {
 	game.cellSize(50)
 	game.boardGround("background_black.png")
 	mainMenu.iniciar()
-	//pantalla4.iniciar()
+//	pantalla4.iniciar()
+//	wulgrymEncuentro.iniciar()
 	game.start()
 }

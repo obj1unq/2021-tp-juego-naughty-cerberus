@@ -281,6 +281,11 @@ class BarraDeVidaEnemigo {
 
 }
 
+object errorReporter {
+	var property position = new MiPosicion(x = 22, y = 12)
+	var property image = "void.png"
+}
+
 
 const pocionDeVida01 = new PocionDeVida(vidaQueRecupera = 25)
 
