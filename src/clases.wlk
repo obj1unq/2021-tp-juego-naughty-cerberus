@@ -204,7 +204,9 @@ const bloqueoBordeCannon03 = new Muro(xTP = 10, yTP = 7, posX = 9, posY = 7)
 const bloqueoBordeCannon02 = new Muro(xTP = 10, yTP = 4, posX = 9, posY = 4)
 
 const tpPantalla2 = new Teleport(xTP = 20, yTP = 1, pantallaNueva = pantalla2, posX = 0,  posY = 5)
-const tpPantalla3 = new Teleport(xTP = 20, yTP = 1, pantallaNueva = pantalla3, posX = 0,  posY = 1)
+const tpPantalla3 = new Teleport(xTP = 20, yTP = 1, pantallaNueva = pantalla3, posX = 0,  posY = 8)
+const tpPantalla4 = new Teleport(xTP = 20, yTP = 1, pantallaNueva = pantalla4, posX = 0,  posY = 1)
+const tpRegresoPantalla3 = new Teleport(xTP = -1, yTP = 1, pantallaNueva = pantalla3, posX = 19, posY = 1)
 const tpRegresoPantalla2 = new Teleport(xTP = -1, yTP = 1, pantallaNueva = pantalla2, posX = 19, posY = 1)
 const tpRegresoPantalla1 = new Teleport(xTP = -1, yTP = 5, pantallaNueva = pantalla1, posX = 19,  posY = 1)
 
