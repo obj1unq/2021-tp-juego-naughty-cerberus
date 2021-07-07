@@ -336,9 +336,12 @@ class Ogre inherits Enemies {
 }
 
 class Wolf inherits Enemies {
-
+	
+	var property perdidaDeAtaque = ataque
+	
 	override method ponerseActivo() {
 		nombre = "wolfAct"
+		ataque = perdidaDeAtaque
 		super()
 	}
 
@@ -404,6 +407,7 @@ class Wolf inherits Enemies {
 		} else {
 			self.ponerseActivo()
 		}
+		ataque = 0
 		self.dieMode().accion(self, self.direccion())
 		game.sound("wolfDeath.mp3").play()
 		game.schedule(2000, { => self.quitarDeLaPantalla()})
@@ -413,6 +417,8 @@ class Wolf inherits Enemies {
 	override method teEncontro(objeto) {
 		if (objeto == personajePrincipal and personajePrincipal.blockStance()) {
 			self.aturdirseBrevemente()
+			perdidaDeAtaque = ataque
+			ataque = 0
 		} else {
 			objeto.recibirAtaque(ataque)
 		}
@@ -433,6 +439,7 @@ class Wolf inherits Enemies {
 	method modoAturdido() {
 		nombre = "wolfStunned"
 		self.actualizarImagen()
+		
 	}
 
 	method estaAturdido() {
