@@ -286,9 +286,20 @@ const pocionDeVida01 = new PocionDeVida(vidaQueRecupera = 25)
 
 const pocionDeVida02 = new PocionDeVida(vidaQueRecupera = 25)
 
-const escalera01 = new Escalera(position = new MiPosicion(x = 13, y = 1))
+//pantalla 1
 
-const escotilla01 = new Escotilla(position = new MiPosicion(x = 13, y = 5))
+const escalera01 = new Escalera(position = new MiPosicion(x = 15, y = 1))
+
+const escotilla01 = new Escotilla(position = new MiPosicion(x = 15, y = 5))
+
+//pantalla 2
+
+const escalera02 = new Escalera(position = new MiPosicion(x = 11, y = 1))
+
+const escotilla02 = new Escotilla(position = new MiPosicion(x = 11, y = 5))
+
+
+//pantalla dragon
 
 const escalera03 = new EscaleraChica(position = new MiPosicion(x = 5, y = 1))
 

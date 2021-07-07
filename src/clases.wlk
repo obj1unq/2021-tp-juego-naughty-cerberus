@@ -197,14 +197,16 @@ const bloqueoIzquierdaArriba = new Muro(xTP = -1, yTP = 5, posX = 0, posY = 5)
 const bloqueoIzquierdaAbajo = new Muro(xTP = -1, yTP = 1, posX = 0, posY = 1)
 const bloqueoDerechaArriba = new Muro(xTP = 20, yTP = 5, posX = 19, posY = 5)
 const bloqueoDerechaAbajo = new Muro(xTP = 20, yTP = 1, posX = 19,  posY = 1)
+const bloqueoDerechaArribaDragon = new Muro(xTP = -1, yTP = 7, posX = 0, posY = 7)
+const bloqueoDerechaMedioDragon = new Muro(xTP = -1, yTP = 4, posX = 0, posY = 4)
 const bloqueoEnElDragon = new Muro(xTP = 18, yTP = 1, posX = 17, posY = 1)
 const bloqueoBordeCannon03 = new Muro(xTP = 10, yTP = 7, posX = 9, posY = 7)
 const bloqueoBordeCannon02 = new Muro(xTP = 10, yTP = 4, posX = 9, posY = 4)
 
-const tpPantalla2 = new Teleport(xTP = 20, yTP = 1, pantallaNueva = pantalla2, posX = 0,  posY = 1)
+const tpPantalla2 = new Teleport(xTP = 20, yTP = 1, pantallaNueva = pantalla2, posX = 0,  posY = 5)
 const tpPantalla3 = new Teleport(xTP = 20, yTP = 1, pantallaNueva = pantalla3, posX = 0,  posY = 1)
 const tpRegresoPantalla2 = new Teleport(xTP = -1, yTP = 1, pantallaNueva = pantalla2, posX = 19, posY = 1)
-const tpRegresoPantalla1 = new Teleport(xTP = -1, yTP = 1, pantallaNueva = pantalla1, posX = 19,  posY = 1)
+const tpRegresoPantalla1 = new Teleport(xTP = -1, yTP = 5, pantallaNueva = pantalla1, posX = 19,  posY = 1)
 
 
 

@@ -119,8 +119,8 @@ object pantalla2 inherits Nivel1 {
 	override method iniciar() {
 		backGround.fondo("nivel1_6")
 		game.addVisual(backGround)
-		game.addVisual(escotilla01)
-		game.addVisual(escalera01)
+		game.addVisual(escotilla02)
+		game.addVisual(escalera02)
 		super()
 	}
 
@@ -160,6 +160,8 @@ object pantalla3 inherits Nivel1 {
 		game.addVisual(cannon02)
 		game.addVisual(cannon03)
 		game.addVisual(cajaDeBalas)
+		game.addVisual(bloqueoDerechaArribaDragon)
+		game.addVisual(bloqueoDerechaMedioDragon)
 //		game.addVisual(escotilla)
 //		game.addVisual(escalera)
 		super()
