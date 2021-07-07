@@ -87,7 +87,7 @@ class Enemies {
 	}
 
 	method vigilarPiso() {
-		self.ponersePasivo()
+		game.schedule(100, { => self.ponersePasivo()})
 		game.onTick(750, self.toString() + "recorre el piso hasta encontrar al MC", { => self.patrullarYCazarMC()})
 	}
 
