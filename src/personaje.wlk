@@ -32,9 +32,9 @@ object personajePrincipal {
 		position = nuevaPosicion
 	}
 
-	method decirPos() {
-		self.error("PosX = " + self.position().x().toString() + ", PosY = " + self.position().y().toString())
-	}
+//	method decirPos() {
+//		self.error("PosX = " + self.position().x().toString() + ", PosY = " + self.position().y().toString())
+//	}
 
 	method moverse() {
 		if (not self.blockStance()) {
