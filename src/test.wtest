@@ -14,6 +14,7 @@ describe "valores iniciales" {
 	const escotillaGrande = new Escotilla(position = new MiPosicion(x = 5, y = 5))
 	const escotillita = new EscotillaChica(position = new MiPosicion(x = 10, y = 4))
 	const cannon = new Cannon(position = new MiPosicion(x = 15, y = 1))
+	const wolf01 = new Wolf(pantalla = pantalla1, vida = 500, vidaInicial = 500, ataque = 20, defensa = 10, direccion = left, position = new MiPosicion(x = 10, y = 5), nombre = "Wolf", image = left.imagenPersonajeStand("Wolf"), pocionDeVidaAsignada = pocionDe25)
 
 	fixture {
 		game.addVisual(escaleragrande)
@@ -22,6 +23,7 @@ describe "valores iniciales" {
 		game.addVisual(escotillita)
 		game.addVisual(cannon)
 		game.addVisual(cajaDeBalas)
+		game.addVisual(wolf01)
 		cajaDeBalas.position(new MiPosicion(x = 20, y = 1))
 		game.addVisual(personajePrincipal)
 	}
@@ -66,7 +68,7 @@ describe "valores iniciales" {
 		assert.throwsException{ => personajePrincipal.agarrarBalaOCargarCannon()}
 	}
 
-	test "personaje sobre cañon sin bala, no puede disparar, error" {
+	test "personaje sobre cañon sin cargar, no puede disparar, error" {
 		assert.notThat(cannon.estaCargado())
 		personajePrincipal.position(new MiPosicion(x = 15, y = 1))
 		assert.throwsException{ => personajePrincipal.dispararCannon()}
@@ -75,6 +77,14 @@ describe "valores iniciales" {
 	test "personaje no esta sobre caja de balas ni sobre cañon, error" {
 		assert.throwsException{ => personajePrincipal.agarrarBalaOCargarCannon()}
 	}
+	
+	test "aumenta la defensa del personaje al bloquear" {
+		assert.equals(20, personajePrincipal.defensa())
+		personajePrincipal.bloquear() 
+		assert.equals(100, personajePrincipal.defensa())
+	}
+
+
 
 }
 

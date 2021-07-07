@@ -28,12 +28,10 @@ object personajePrincipal {
 		self.image(direccion.imagenPersonajeStand(nombre.toString()))
 	}
 
-//	method nombre() = "personaje"
 	method actualizarPosicion(nuevaPosicion) {
 		position = nuevaPosicion
 	}
 
-// borrar este metodo despues de probar
 	method decirPos() {
 		self.error("PosX = " + self.position().x().toString() + ", PosY = " + self.position().y().toString())
 	}
@@ -72,7 +70,6 @@ object personajePrincipal {
 	}
 
 	method recargarEnergia() {
-		// recarga 10 de energia (la idea es que sea cada segundo)
 		energia = (energia + 10).min(100)
 	}
 
@@ -95,8 +92,7 @@ object personajePrincipal {
 		if (self.blockStance()) {
 			game.sound("shieldBlock.mp3").play()
 		}
-	} // la formula actual es: ATK(del MC en este caso) *  (1 - DEF / (100 + DEF))  
-	//
+	}
 
 	method calculoDeDanio(danio) {
 		return danio * (1 - self.defensa() / (100 + self.defensa()))
@@ -123,36 +119,6 @@ object personajePrincipal {
 		direccion.objetivos(#{})
 	}
 
-	/*	method subirPorEscalera() {
-	 * 		if (self.hayEscalera()) {
-	 * 			self.irAlPisoDeArriba()
-	 * 		} else {
-	 * 			game.say(self, "no hay escalera para subir")
-	 * 		}
-	 * 	}
-
-	 * 	method bajarPorEscotilla() {
-	 * 		if (self.hayEscotilla()) {
-	 * 			self.irAlPisoDeAbajo()
-	 * 		} else {
-	 * 			game.say(self, "no hay escotilla para bajar")
-	 * 		}
-	 * 	}
-	 * 
-	 * 	
-	 * 	
-	 * 	
-
-	 * 	method hayEscalera() {
-	 * 		return game.colliders(self).contains(escalera)
-	 * 	}
-
-	 * 	method hayEscotilla() {
-	 * 		return game.colliders(self).contains(escotilla)
-	 * 	}
-	 * 
-	 * 
-	 */
 	method subirSiHayEscalera() {
 		self.verificarQueHayaEscalera()
 		self.irAlPisoDeArriba()
@@ -255,7 +221,6 @@ object personajePrincipal {
 
 	method verificarQueElCannonEstaDescargado() {
 		if (self.cannonPresente().estaCargado()) {
-//			game.error("el cañon ya esta cargado")
 			game.say(self, "este cañon ya esta cargado")
 			game.error("")
 		}
@@ -263,7 +228,6 @@ object personajePrincipal {
 
 	method verificarQueTengoBala() {
 		if (!self.tieneBala()) {
-//			game.error("no tengo bala para cargar")
 			game.say(self, "no tengo bala para cargar")
 			game.error("")
 		}
@@ -280,12 +244,11 @@ object personajePrincipal {
 
 	method verificarQueEstaEnUnCannon() {
 		if (!self.estaSobreUnCannon()) {
-//			game.error("no estoy sobre un cañon")
 			game.say(self, "no estoy sobre un cañon")
 			game.error("")
 		}
 	}
-	
+
 	method esCannon() {
 		return false
 	}
@@ -294,7 +257,6 @@ object personajePrincipal {
 
 object espadaMC {
 
-	// const portador = personajePrincipal
 	var image = "sword_void.png"
 
 	method image() = image
@@ -349,7 +311,6 @@ object left {
 	// if(!doubleTap){ // Un pequeño retraso para no spamear botones de movilidad(y hacer más valioso el esquivar)			
 	// game.schedule(1, { => doubleTap = true})
 		runModeL.accion(personajePrincipal, personajePrincipal.direccion())
-	// game.schedule(100, { => doubleTap = false})
 	// }// Esta parte se podria reemplazar por una animacion continua de moverse pero no veo forma de hacerlo viable.
 	}
 
@@ -374,12 +335,6 @@ object left {
 		return objeto + "_Block_left.png"
 	}
 
-//	method atacarMC() {
-//		if (not doubleTap and not personajePrincipal.blockStance()) {
-//			game.schedule(1, { => doubleTap = true})
-//			attackMode.accion(espadaMC, personajePrincipal.direccion())
-//			game.schedule(1000, { => doubleTap = false})
-//		}}
 	method obtenerObjetosParaAtacar(objeto, distancia) {
 		var numero = distancia + 1
 		var posicion
@@ -390,7 +345,6 @@ object left {
 		})
 	}
 
-// si llega a haber problemas de rendimiento por atacar muy rapido lo mejor será hacer el ataque de la espada por separado
 }
 
 object right {
@@ -427,12 +381,6 @@ object right {
 		return objeto + "_Block_right.png"
 	}
 
-//	method atacarMC() {
-//		if (not doubleTap and not personajePrincipal.blockStance()) {
-//			game.schedule(1, { => doubleTap = true})
-//			attackMode.accion(espadaMC, personajePrincipal.direccion())
-//			game.schedule(1000, { => doubleTap = false})
-//		}}
 	method obtenerObjetosParaAtacar(objeto, distancia) {
 		var numero = distancia + 1
 		var posicion

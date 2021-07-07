@@ -323,8 +323,6 @@ object errorReporter {
 
 }
 
-//const pocionDeVida01 = new PocionDeVida(vidaQueRecupera = 25)
-//const pocionDeVida02 = new PocionDeVida(vidaQueRecupera = 25)
 const pocionDe15 = new PocionDeVida(vidaQueRecupera = 15)
 
 const pocionDe20 = new PocionDeVida(vidaQueRecupera = 20)

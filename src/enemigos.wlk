@@ -14,7 +14,7 @@ class Enemies {
 	var property position = new MiPosicion(x = 0, y = 0)
 	var property nombre
 	var property pocionDeVidaAsignada
-	const property vidaInicial = 500 // la vida maxima con la empieza un enemigo(sin modificarse)
+	const property vidaInicial = 500
 	var property barraDeVida = new BarraDeVidaEnemigo(enemigo = self)
 	var image
 
@@ -62,10 +62,9 @@ class Enemies {
 	}
 
 	method recibirAtaque(danio) {
-	} // method vacio para evitar errores,y que a su vez los enemigos no se maten entre si(ya que si todos entendieran el mismo msj se matarian xD)
+	}
 
 	method morir() {
-//		self.dejarDeAtacar()
 		game.schedule(1, { => self.dejarDeAtacar()})
 		self.dieMode().accion(self, self.direccion())
 	}
@@ -129,11 +128,9 @@ class Enemies {
 		if (direccion == right) {
 			self.direccion(left)
 			self.actualizarImagen()
-//			self.moverse()
 		} else {
 			self.direccion(right)
 			self.actualizarImagen()
-//			self.moverse()
 		}
 	}
 
@@ -272,7 +269,6 @@ class Spectrum inherits Enemies {
 	}
 
 	override method morir() {
-//		self.ponerseActivo()
 		super()
 		game.schedule(799, { => self.quitarDeLaPantalla()})
 		game.schedule(800, { => pocionDeVidaAsignada.spawn(self)})
@@ -355,16 +351,6 @@ class Wolf inherits Enemies {
 		direccion.moveWolf(self)
 	}
 
-	/*override method atacarSiSeAcerca() {
-	 * 	self.mirarAlMC()
-	 * 	self.ponerseActivo()
-	 * 	if (self.estaCercaDelMC()) {
-	 * 		self.dejaDePatrullar()
-	 * 		self.modoRabioso()
-	 * 		game.sound("wolfActive-sfx.mp3").play()
-	 * 	}
-	 * }
-	 */
 	override method atacarSiSeAcerca() {
 		self.mirarAlMC()
 		self.ponerseActivo()
@@ -409,7 +395,6 @@ class Wolf inherits Enemies {
 		if (!self.mcEnMiNivel()) {
 			game.schedule(40, { => self.salirModoRabioso()})
 			game.schedule(320, { => self.vigilarPiso()})
-
 		}
 	}
 
@@ -436,11 +421,7 @@ class Wolf inherits Enemies {
 	method aturdirseBrevemente() {
 		game.sound("shieldBlock.mp3").play()
 		game.schedule(40, { => self.salirModoRabioso()})
-//	self.salirModoRabioso()
-//		game.schedule(160, { => self.ponersePasivo()})
 		game.schedule(500, { => self.modoAturdido()})
-//		self.ponerseActivo()
-//		self.modoAturdido()
 		game.schedule(1850, { =>
 			if (self.estaVivo()) {
 				self.ponerseActivo()
@@ -450,15 +431,10 @@ class Wolf inherits Enemies {
 	}
 
 	method modoAturdido() {
-//		self.salirModoRabioso()	
 		nombre = "wolfStunned"
 		self.actualizarImagen()
 	}
 
-	/* 	method stunnedMode() {
-	 * 		return new Mode(accion = "stunned", speedFrame = 100, totalImg = 4, time = 0)
-	 * 	}
-	 */
 	method estaAturdido() {
 		return nombre == "wolfStunned"
 	}
@@ -487,9 +463,6 @@ class Dragon inherits Enemies {
 
 	var property balasRecibidas = 0
 
-//	override method actualizarImagen() {
-//		self.image()
-//	}
 	override method moverse() {
 		direccion.moveDragon(self)
 		game.sound("dragonFlap.mp3").play()
@@ -524,9 +497,7 @@ class Dragon inherits Enemies {
 
 	override method atacar() {
 		if (self.estaVivo()) {
-			game.schedule(500, { => fuegoDeDragon.lanzar(self) // self.moverseDosPisos()
-//			self.moverse()
-			})
+			game.schedule(500, { => fuegoDeDragon.lanzar(self)})
 			game.onTick(3000, self.toString() + "ataca y cambia de piso", { => self.atacarYCambiarDePiso()})
 		}
 	}
@@ -664,8 +635,6 @@ class Proyectiles {
 
 	method lanzar(enemigo) {
 		self.enemigoUtilizandolo(enemigo)
-//		self.removeVisualSiYaExiste()
-//		self.verificarQueSigaVivo(enemigo)
 		self.verificarQueElMCEsteEnElPisoYEstaCerca(enemigo)
 		enemigo.mirarAlMC()
 		self.position(new MiPosicion(x = enemigo.position().x(), y = enemigo.position().y()))
@@ -753,9 +722,6 @@ object fuegoDeDragon inherits Proyectiles {
 
 	override method lanzar(enemigo) {
 		self.removeVisualSiYaExiste()
-//		self.verificarQueSigaVivo(enemigo)
-//		self.verificarQueElMCEsteEnElPisoYEstaCerca(enemigo)
-//		enemigo.mirarAlMC()
 		self.position(new MiPosicion(x = enemigo.position().x(), y = enemigo.position().y()))
 		self.direccion(left)
 		self.image()
@@ -824,12 +790,3 @@ const wolf03 = new Wolf(pantalla = pantalla3, vida = 500, vidaInicial = 500, ata
 //pantalla 4
 const dragon = new Dragon(pantalla = pantalla4, vida = 700, vidaInicial = 700, ataque = 100, defensa = 300, direccion = down, position = new MiPosicion(x = 17, y = 1), nombre = "Dragon", image = down.imagenPersonajeStand("dragon"), pocionDeVidaAsignada = pocionDe30)
 
-////Pantalla 3
-//const wolf01 = new Wolf(pantalla = pantalla3,vida = 500,vidaInicial = 500, ataque = 35, defensa = 0, direccion = left, position = new MiPosicion(x = 12, y = 1), nombre = "wolf", image = left.imagenPersonajeStand("wolf"), pocionDeVidaAsignada = pocionDeVida02)
-////Pantalla 4
-//const wolf02 = new Wolf(pantalla = pantalla4,vida = 500,vidaInicial = 500, ataque = 35, defensa = 0, direccion = left, position = new MiPosicion(x = 12, y = 1), nombre = "wolf", image = left.imagenPersonajeStand("wolf"), pocionDeVidaAsignada = pocionDeVida02)
-//const wolf03 = new Wolf(pantalla = pantalla4,vida = 500,vidaInicial = 500, ataque = 35, defensa = 0, direccion = left, position = new MiPosicion(x = 12, y = 1), nombre = "wolf", image = left.imagenPersonajeStand("wolf"), pocionDeVidaAsignada = pocionDeVida02)
-////Pantalla 5
-//const spectrum03 = new Spectrum(pantalla = pantalla5,vida = 500,vidaInicial = 500, ataque = 20, defensa = 10, direccion = left, position = new MiPosicion(x = 2, y = 5), nombre = "Spectrum", image = left.imagenPersonajeStand("spectrum"), pocionDeVidaAsignada = pocionDeVida01)
-//const ogre02 = new Ogre(pantalla = pantalla5,vida = 800,vidaInicial = 800, ataque = 30, defensa = 20, direccion = right, position = new MiPosicion(x = 2, y = 5), nombre = "Ogre", image = right.imagenPersonajeStand("ogre"), pocionDeVidaAsignada = pocionDeVida01)
-//const wolf04 = new Wolf(pantalla = pantalla5,vida = 500,vidaInicial = 500, ataque = 35, defensa = 0, direccion = left, position = new MiPosicion(x = 12, y = 1), nombre = "wolf", image = left.imagenPersonajeStand("wolf"), pocionDeVidaAsignada = pocionDeVida02)
