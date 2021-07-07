@@ -357,12 +357,6 @@ object firstWhisperDialog {
 	method recibirAtaque(danio) {
 	}
 
-	method recibirDanio() {
-	}
-
-	method recibirDanio(cantidad) {
-	}
-
 }
 
 object credits {

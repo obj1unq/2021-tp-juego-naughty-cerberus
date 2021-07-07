@@ -452,12 +452,6 @@ object wulgrym { //En un futuro,de continuarse el juego,el seria nuestro mercade
 	method recibirAtaque(danio) {
 	}
 
-	method recibirDanio() {
-	}
-
-	method recibirDanio(cantidad) {
-	}
-
 }
 
 object wulgrymDialog {
@@ -482,11 +476,6 @@ object wulgrymDialog {
 	method recibirAtaque(danio) {
 	}
 
-	method recibirDanio() {
-	}
-
-	method recibirDanio(cantidad) {
-	}
 
 }
 

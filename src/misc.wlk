@@ -187,12 +187,6 @@ class Cannon {
 	method recibirAtaque(danio) {
 	}
 
-	method recibirDanio() {
-	}
-
-	method recibirDanio(cantidad) {
-	}
-
 }
 
 object cajaDeBalas {
@@ -201,12 +195,6 @@ object cajaDeBalas {
 	var property position = new MiPosicion(x = 1, y = 7)
 
 	method teEncontro(objeto) {
-	}
-
-	method recibirDanio() {
-	}
-
-	method recibirDanio(cantidad) {
 	}
 
 	method esCannon() {
