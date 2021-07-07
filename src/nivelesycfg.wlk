@@ -4,6 +4,7 @@ import enemigos.*
 import misc.*
 import background.*
 import clases.*
+import musica.*
 
 object ajustesIniciales {
 
@@ -18,6 +19,30 @@ object ajustesIniciales {
 		config.configurarColisiones()
 	}
 
+}
+
+object eventHistoria{
+	
+	method iniciar(){
+		backGround.fondo("historia")
+		game.addVisual(backGround)
+		self.teclaContinuar()
+		self.reproducirMusica()
+	}
+	method close(){
+		self.detenerMusica()
+		game.clear()
+		eventNivel0.iniciar()
+	}
+	method teclaContinuar(){
+		keyboard.enter().onPressDo({ self.close()})
+	}
+	method reproducirMusica(){
+		game.schedule(300, { => soundHistoria.play() })
+	}
+	method detenerMusica(){
+		soundHistoria.stop()
+	}
 }
 
 object eventNivel0 {
@@ -50,20 +75,11 @@ class Nivel1 {
 		ajustesIniciales.iniciar()
 	}
 
-	method agregarEnemigos() {
-	}
-
-	method agregarBarrasDeVidaEnemigos() {
-	}
-
-	method movimientoEnemigos() {
-	}
-
-	method agregarBloqueos() {
-	}
-
-	method agregarTPs() {
-	}
+	method agregarEnemigos() {}
+	method agregarBarrasDeVidaEnemigos() {}
+	method movimientoEnemigos() {}
+	method agregarBloqueos() {}
+	method agregarTPs() {}
 
 }
 

@@ -4,13 +4,14 @@ import background.*
 import personaje.*
 import enemigos.*
 import nivelesycfg.*
+import musica.*
 
 object mainMenu {
 	
 	method iniciar(){
 		backGround.fondo("mainMenu")
 		game.addVisual(backGround)
-//		self.reproducirMusica()            //No se detiene la musica por algun motivo...
+		self.reproducirMusica()           
 		game.addVisual(iniciarJuego)
 		game.addVisual(controles)
 		game.addVisual(salir)
@@ -22,8 +23,8 @@ object mainMenu {
 		self.controles()		
 	}
 	method controles(){
-		keyboard.up().onPressDo({selector.subir()})
-		keyboard.down().onPressDo({selector.bajar()})
+		keyboard.w().onPressDo({selector.subir()})
+		keyboard.s().onPressDo({selector.bajar()})
 		keyboard.del().onPressDo({controles.close() 
 		/* Para hacer en un futuro:
 		 * La idea es crear luego un objeto que se encargue de manejar el abrir y cerrar ventanas de los menus y dialogos de NPCs y MC, la idea
@@ -34,10 +35,10 @@ object mainMenu {
 		keyboard.enter().onPressDo({selector.seleccion().iniciar()})
 	}
 	method reproducirMusica() {
-		game.schedule(3000, { => game.sound("sound-MainMenu.mp3").play() })
+		game.schedule(1000, { => soundMainMenu.play() })
 	}
 	method detenerMusica(){
-		game.schedule(1, { => game.sound("sound-MainMenu.mp3").stop() })
+		soundMainMenu.stop()
 	}
 }
 
@@ -68,9 +69,10 @@ object iniciarJuego{
 	method image(){return "iniciarJuego.png"}
 	
 	method iniciar(){
+			mainMenu.detenerMusica()
 			game.clear()
-		//	mainMenu.detenerMusica()
-			eventNivel0.iniciar()
+			eventHistoria.iniciar()
+	//		eventNivel0.iniciar()
 	}
 }
 object controles{
@@ -78,12 +80,13 @@ object controles{
 	method image(){return "controles.png"}
 	
 	method iniciar(){
-		rayo1.quitarAnimacion()
-		rayo2.quitarAnimacion()
-	//	game.addVisual(la pantalla de controles)
+	    game.addVisual(menuControles)
+	    
+	 
 	}
 	method close(){
-	//	game.removeVisual(pantalla de controles)
+		game.removeVisual(menuControles)
+		
 	}
 }
 object salir{	
@@ -106,6 +109,11 @@ class Lightning{
 	method animacion(){
 		return new Mode(accion = "Falling", speedFrame = 35, totalImg = 10, time = 0)
 	}
+}
+object menuControles {
+	const property position = new MiPosicion(x = 0, y = 0)
+	method image(){return "background_controles.png"}
+	
 }
 
 object selectorEspada{
@@ -161,7 +169,6 @@ object yes{
 		personajePrincipal.actualizarImagen()
 		personajePrincipal.vida(100)
 		eventNivel0.iniciar()
-		
 		//TODO: REINICIAR ENEMIGOS
 		
 	}
