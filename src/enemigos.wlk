@@ -666,7 +666,7 @@ class Proyectiles {
 
 	method lanzar(enemigo) {
 		self.enemigoUtilizandolo(enemigo)
-		self.removeVisualSiYaExiste()
+//		self.removeVisualSiYaExiste()
 //		self.verificarQueSigaVivo(enemigo)
 		self.verificarQueElMCEsteEnElPisoYEstaCerca(enemigo)
 		enemigo.mirarAlMC()
@@ -805,7 +805,7 @@ object cannonBall inherits Proyectiles {
 // Enemigos:
 //Nivel 1
 //Pantalla 1
-const wolf01 = new Wolf(pantalla = pantalla1, vida = 500, vidaInicial = 500, ataque = 20, defensa = 10, direccion = left, position = new MiPosicion(x = 13, y = 5), nombre = "Wolf", image = left.imagenPersonajeStand("Wolf"), pocionDeVidaAsignada = pocionDe15)
+const wolf01 = new Wolf(pantalla = pantalla1, vida = 500, vidaInicial = 500, ataque = 20, defensa = 10, direccion = left, position = new MiPosicion(x = 13, y = 5), nombre = "Wolf", image = left.imagenPersonajeStand("Wolf"), pocionDeVidaAsignada = pocionDe25)
 
 const spectrum01 = new Spectrum(pantalla = pantalla1, vida = 500, vidaInicial = 500, ataque = 20, defensa = 10, direccion = left, position = new MiPosicion(x = 2, y = 1), nombre = "Spectrum", image = left.imagenPersonajeStand("spectrum"), pocionDeVidaAsignada = pocionDe20)
 

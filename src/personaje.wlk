@@ -92,6 +92,9 @@ object personajePrincipal {
 	method recibirAtaque(danio) {
 		self.validarVida(danio)
 		vida = vida - self.calculoDeDanio(danio)
+		if (self.blockStance()) {
+			game.sound("shieldBlock.mp3").play()
+		}
 	} // la formula actual es: ATK(del MC en este caso) *  (1 - DEF / (100 + DEF))  
 	//
 
