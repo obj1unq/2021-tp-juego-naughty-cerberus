@@ -240,8 +240,10 @@ object barraDeVidaMC {
 
 	method recibirAtaque(danio) {
 	}
+
 	method teEncontro(objeto) {
 	}
+
 }
 
 class BarraDeVidaEnemigo {
@@ -282,29 +284,33 @@ class BarraDeVidaEnemigo {
 }
 
 object errorReporter {
+
 	var property position = new MiPosicion(x = 22, y = 12)
 	var property image = "void.png"
+
 }
 
+//const pocionDeVida01 = new PocionDeVida(vidaQueRecupera = 25)
+//const pocionDeVida02 = new PocionDeVida(vidaQueRecupera = 25)
+const pocionDe15 = new PocionDeVida(vidaQueRecupera = 15)
 
-const pocionDeVida01 = new PocionDeVida(vidaQueRecupera = 25)
+const pocionDe20 = new PocionDeVida(vidaQueRecupera = 20)
 
-const pocionDeVida02 = new PocionDeVida(vidaQueRecupera = 25)
+const pocionDe25 = new PocionDeVida(vidaQueRecupera = 25)
+
+const pocionDe30 = new PocionDeVida(vidaQueRecupera = 30)
 
 //pantalla 1
-
 const escalera01 = new Escalera(position = new MiPosicion(x = 15, y = 1))
 
 const escotilla01 = new Escotilla(position = new MiPosicion(x = 15, y = 5))
 
 //pantalla 2
-
 const escalera02 = new Escalera(position = new MiPosicion(x = 11, y = 1))
 
 const escotilla02 = new Escotilla(position = new MiPosicion(x = 11, y = 5))
 
 //pantalla 3
-
 const escalera03 = new Escalera(position = new MiPosicion(x = 15, y = 4))
 
 const escotilla03 = new Escotilla(position = new MiPosicion(x = 15, y = 8))
@@ -313,9 +319,7 @@ const escalera04 = new Escalera(position = new MiPosicion(x = 3, y = 0))
 
 const escotilla04 = new Escotilla(position = new MiPosicion(x = 3, y = 4))
 
-
 //pantalla dragon
-
 const escalera05 = new EscaleraChica(position = new MiPosicion(x = 5, y = 1))
 
 const escalera06 = new EscaleraChica(position = new MiPosicion(x = 3, y = 4))

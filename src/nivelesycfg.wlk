@@ -208,7 +208,7 @@ object wulgrymEncuentro inherits Nivel1 {
 
 object pantalla3 inherits Nivel1 {
 
-	var property enemigos = []
+	var property enemigos = [ wolf02, spectrum03 ]
 
 	override method iniciar() {
 		backGround.fondo("nivel1_7")
