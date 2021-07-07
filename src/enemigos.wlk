@@ -407,10 +407,9 @@ class Wolf inherits Enemies {
 
 	override method verificarQueSigaEnMiNivel() {
 		if (!self.mcEnMiNivel()) {
-			game.schedule(120, { => self.salirModoRabioso()})
-			game.schedule(240, { => self.vigilarPiso()})
-//			self.salirModoRabioso()
-//			self.vigilarPiso()
+			game.schedule(40, { => self.salirModoRabioso()})
+			game.schedule(320, { => self.vigilarPiso()})
+
 		}
 	}
 
@@ -428,7 +427,6 @@ class Wolf inherits Enemies {
 
 	override method teEncontro(objeto) {
 		if (objeto == personajePrincipal and personajePrincipal.blockStance()) {
-			
 			self.aturdirseBrevemente()
 		} else {
 			objeto.recibirAtaque(ataque)
@@ -452,7 +450,7 @@ class Wolf inherits Enemies {
 	}
 
 	method modoAturdido() {
-//		self.salirModoRabioso()
+//		self.salirModoRabioso()	
 		nombre = "wolfStunned"
 		self.actualizarImagen()
 	}
@@ -733,7 +731,7 @@ object fuego inherits Proyectiles {
 		game.sound("fireballSound.mp3").play()
 		game.onTick(200, "desplazamiento bola de fuego", {=> self.desplazar()})
 		game.schedule(1399, { => game.removeTickEvent("desplazamiento bola de fuego")})
-		game.schedule(1399, { => self.removeVisualSiYaExiste()})
+		game.schedule(1300, { => self.removeVisualSiYaExiste()})
 	}
 
 }
