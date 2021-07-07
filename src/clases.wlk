@@ -223,6 +223,7 @@ const bloqueoDerechaArribaDragon = new Muro(xTP = -1, yTP = 7, posX = 0, posY = 
 const bloqueoDerechaMedioDragon = new Muro(xTP = -1, yTP = 4, posX = 0, posY = 4)
 
 const bloqueoEnElDragon = new Muro(xTP = 18, yTP = 1, posX = 17, posY = 1)
+const bloqueoEntradaDragon = new Muro (xTP = -1, yTP = 1, posX = 0, posY = 1)
 
 const bloqueoBordeCannon03 = new Muro(xTP = 10, yTP = 7, posX = 9, posY = 7)
 
