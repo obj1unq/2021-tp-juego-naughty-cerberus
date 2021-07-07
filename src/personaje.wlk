@@ -46,7 +46,7 @@ object personajePrincipal {
 
 	method bloquear() {
 		self.verificarEnergia()
-		energia -= 25
+		energia -= 20
 		self.modoBloqueo()
 		game.schedule(500, { => self.salirDeModoBloqueo()})
 	}
@@ -66,7 +66,7 @@ object personajePrincipal {
 	}
 
 	method verificarEnergia() {
-		if (energia < 25) {
+		if (energia < 20) {
 			self.error("No tengo energia para bloquear")
 		}
 	}

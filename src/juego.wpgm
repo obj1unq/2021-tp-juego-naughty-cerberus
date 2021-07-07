@@ -16,3 +16,4 @@ program juego {
 //	wulgrymEncuentro.iniciar()
 	game.start()
 }
+

@@ -246,6 +246,35 @@ object barraDeVidaMC {
 
 }
 
+object barraDeEnergiaMC {
+
+	const personaje = personajePrincipal
+
+	method position() = new MiPosicion(x = personaje.position().x(), y = personaje.position().y() + 1)
+
+	method image() {
+		return if (personaje.energia() > 0) {
+			"energia_" + personaje.toString() + self.cantDeVida().toString() + ".png"
+		} else {
+			"energia_personajePrincipal0.png"
+		}
+	}
+
+	method cantDeVida() {
+		return ((personaje.energia() / 100).roundUp(1) * 100).max(0)
+	}
+
+	method recibirAtaque() {
+	}
+
+	method recibirAtaque(danio) {
+	}
+
+	method teEncontro(objeto) {
+	}
+
+}
+
 class BarraDeVidaEnemigo {
 
 	const property enemigo

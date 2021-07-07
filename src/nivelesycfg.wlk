@@ -85,6 +85,7 @@ class Nivel1 {
 		self.agregarBarrasDeVidaEnemigos()
 		game.addVisual(personajePrincipal) // el MC ultimo en cargar así aparece sobre los demás objetos
 		game.addVisual(barraDeVidaMC)
+		game.addVisual(barraDeEnergiaMC)
 		game.addVisual(espadaMC)
 		self.agregarBloqueos()
 		self.movimientoEnemigos()
@@ -208,7 +209,7 @@ object wulgrymEncuentro inherits Nivel1 {
 
 object pantalla3 inherits Nivel1 {
 
-	var property enemigos = [ wolf02, spectrum03 ]
+	var property enemigos = [ wolf02, spectrum03, ogre02, wolf03 ]
 
 	override method iniciar() {
 		backGround.fondo("nivel1_7")
