@@ -11,7 +11,7 @@ program juego {
 	game.height(10)
 	game.cellSize(50)
 	game.boardGround("background_black.png")
-	mainMenu.iniciar() //Intercambiar entre mainMenu y iniciarJuego segun se necesite.(solo comentar la linea que no nos interese)
-	//iniciarJuego.iniciar()  // Se usa "iniciarJuego.iniciar()" para saltearnos directamente al escenario con el MC
+	mainMenu.iniciar() // Intercambiar entre mainMenu y iniciarJuego segun se necesite.(solo comentar la linea que no nos interese)
+		// iniciarJuego.iniciar()  // Se usa "iniciarJuego.iniciar()" para saltearnos directamente al escenario con el MC
 	game.start()
 }
