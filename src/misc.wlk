@@ -140,13 +140,17 @@ class Cannon {
 	}
 
 	method disparar() {
-		if (self.estaCargado()) {
-			cannonBall.lanzar(self)
-			game.sound("cannonShot.mp3").play()
-			self.descargar()
-			self.image("cannonUnloaded.png")
-		} else {
+		self.verificarQueEstaCargado()
+		cannonBall.lanzar(self)
+		game.sound("cannonShot.mp3").play()
+		self.descargar()
+		self.image("cannonUnloaded.png")
+	}
+
+	method verificarQueEstaCargado() {
+		if (!self.estaCargado()) {
 			game.say(personajePrincipal, "el cañon no esta cargado")
+			game.error("")
 		}
 	}
 

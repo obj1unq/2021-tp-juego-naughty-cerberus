@@ -285,6 +285,10 @@ object personajePrincipal {
 			game.error("")
 		}
 	}
+	
+	method esCannon() {
+		return false
+	}
 
 }
 

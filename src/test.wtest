@@ -7,15 +7,74 @@ import menus.*
 import misc.*
 import clases.*
 
-//describe "Test de valores iniciales" {
+describe "valores iniciales" {
 
-//	fixture {
-//		
-//	}
-	
-	
-//	test "testX" {
-//	}
-//
-//
-//}
+	const escaleragrande = new Escalera(position = new MiPosicion(x = 5, y = 1))
+	const escalerita = new EscaleraChica(position = new MiPosicion(x = 10, y = 1))
+	const escotillaGrande = new Escotilla(position = new MiPosicion(x = 5, y = 5))
+	const escotillita = new EscotillaChica(position = new MiPosicion(x = 10, y = 4))
+	const cannon = new Cannon(position = new MiPosicion(x = 15, y = 1))
+
+	fixture {
+		game.addVisual(escaleragrande)
+		game.addVisual(escalerita)
+		game.addVisual(escotillaGrande)
+		game.addVisual(escotillita)
+		game.addVisual(cannon)
+		game.addVisual(cajaDeBalas)
+		cajaDeBalas.position(new MiPosicion(x = 20, y = 1))
+		game.addVisual(personajePrincipal)
+	}
+
+	test "test personaje sobre escalera grande, sube 4 pisos" {
+		personajePrincipal.position(new MiPosicion(x = 5, y = 1))
+		personajePrincipal.subirSiHayEscalera()
+		assert.equals(5, personajePrincipal.position().y())
+	}
+
+	test "test personaje sobre escalera chica, sube 3 pisos" {
+		personajePrincipal.position(new MiPosicion(x = 10, y = 1))
+		personajePrincipal.subirSiHayEscalera()
+		assert.equals(4, personajePrincipal.position().y())
+	}
+
+	test "personaje sobre ninguna escalera, error" {
+		assert.throwsException{ => personajePrincipal.subirSiHayEscalera()}
+	}
+
+	test "personaje sobre escotilla grande, baja 4 pisos" {
+		personajePrincipal.position(new MiPosicion(x = 5, y = 5))
+		personajePrincipal.bajarSiHayEscotilla()
+		assert.equals(1, personajePrincipal.position().y())
+	}
+
+	test "personaje sobre escotilla chica, baja 3 pisos" {
+		personajePrincipal.position(new MiPosicion(x = 10, y = 4))
+		personajePrincipal.bajarSiHayEscotilla()
+		assert.equals(1, personajePrincipal.position().y())
+	}
+
+	test "personaje sobre caja de balas, agarra una bala" {
+		assert.notThat(personajePrincipal.tieneBala())
+		personajePrincipal.position(new MiPosicion(x = 20, y = 1))
+		personajePrincipal.agarrarBalaOCargarCannon()
+		assert.that(personajePrincipal.tieneBala())
+	}
+
+	test "personaje sobre cañon sin bala, no puede recargar, error" {
+		personajePrincipal.position(new MiPosicion(x = 15, y = 1))
+		assert.throwsException{ => personajePrincipal.agarrarBalaOCargarCannon()}
+	}
+
+	test "personaje sobre cañon sin bala, no puede disparar, error" {
+		assert.notThat(cannon.estaCargado())
+		personajePrincipal.position(new MiPosicion(x = 15, y = 1))
+		assert.throwsException{ => personajePrincipal.dispararCannon()}
+	}
+
+	test "personaje no esta sobre caja de balas ni sobre cañon, error" {
+		assert.throwsException{ => personajePrincipal.agarrarBalaOCargarCannon()}
+	}
+
+}
+
