@@ -300,13 +300,13 @@ const escotilla02 = new Escotilla(position = new MiPosicion(x = 11, y = 5))
 
 //pantalla 3
 
-const escalera03 = new Escalera(position = new MiPosicion(x = 11, y = 1))
+const escalera03 = new Escalera(position = new MiPosicion(x = 15, y = 4))
 
-const escotilla03 = new Escotilla(position = new MiPosicion(x = 11, y = 5))
+const escotilla03 = new Escotilla(position = new MiPosicion(x = 15, y = 8))
 
-const escalera04 = new Escalera(position = new MiPosicion(x = 11, y = 1))
+const escalera04 = new Escalera(position = new MiPosicion(x = 3, y = 0))
 
-const escotilla04 = new Escotilla(position = new MiPosicion(x = 11, y = 5))
+const escotilla04 = new Escotilla(position = new MiPosicion(x = 3, y = 4))
 
 
 //pantalla dragon

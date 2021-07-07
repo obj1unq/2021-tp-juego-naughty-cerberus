@@ -21,28 +21,33 @@ object ajustesIniciales {
 
 }
 
-object eventHistoria{
-	
-	method iniciar(){
+object eventHistoria {
+
+	method iniciar() {
 		backGround.fondo("historia")
 		game.addVisual(backGround)
 		self.teclaContinuar()
 		self.reproducirMusica()
 	}
-	method close(){
+
+	method close() {
 		self.detenerMusica()
 		game.clear()
 		eventNivel0.iniciar()
 	}
-	method teclaContinuar(){
+
+	method teclaContinuar() {
 		keyboard.enter().onPressDo({ self.close()})
 	}
-	method reproducirMusica(){
-		game.schedule(300, { => soundHistoria.play() })
+
+	method reproducirMusica() {
+		game.schedule(300, { => soundHistoria.play()})
 	}
-	method detenerMusica(){
+
+	method detenerMusica() {
 		soundHistoria.stop()
 	}
+
 }
 
 object eventNivel0 {
@@ -75,11 +80,20 @@ class Nivel1 {
 		ajustesIniciales.iniciar()
 	}
 
-	method agregarEnemigos() {}
-	method agregarBarrasDeVidaEnemigos() {}
-	method movimientoEnemigos() {}
-	method agregarBloqueos() {}
-	method agregarTPs() {}
+	method agregarEnemigos() {
+	}
+
+	method agregarBarrasDeVidaEnemigos() {
+	}
+
+	method movimientoEnemigos() {
+	}
+
+	method agregarBloqueos() {
+	}
+
+	method agregarTPs() {
+	}
 
 }
 
@@ -174,6 +188,10 @@ object pantalla3 inherits Nivel1 {
 	override method agregarTPs() {
 		game.addVisual(tpRegresoPantalla2)
 		game.addVisual(tpPantalla4)
+		game.addVisual(escalera03)
+		game.addVisual(escalera04)
+		game.addVisual(escotilla03)
+		game.addVisual(escotilla04)
 //		game.addVisual(tpPantalla4)
 //		game.addVisual(tpBossAlternativo)
 	}
@@ -191,12 +209,6 @@ object pantalla3 inherits Nivel1 {
 	}
 
 }
-
-
-
-
-
-
 
 object pantalla4 inherits Nivel1 {
 
