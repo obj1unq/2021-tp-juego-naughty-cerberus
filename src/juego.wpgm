@@ -13,7 +13,6 @@ program juego {
 	game.boardGround("background_black.png")
 	mainMenu.iniciar()
 //	pantalla4.iniciar()
-//	wulgrymEncuentro.iniciar()
 	game.start()
 }
 
