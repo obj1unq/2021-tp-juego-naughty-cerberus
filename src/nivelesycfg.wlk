@@ -182,16 +182,16 @@ object pantalla3 inherits Nivel1 {
 	override method iniciar() {
 		backGround.fondo("nivel1_7")
 		game.addVisual(backGround)
+		game.addVisual(escalera03)
+		game.addVisual(escalera04)
+		game.addVisual(escotilla03)
+		game.addVisual(escotilla04)
 		super()
 	}
 
 	override method agregarTPs() {
 		game.addVisual(tpRegresoPantalla2)
 		game.addVisual(tpPantalla4)
-		game.addVisual(escalera03)
-		game.addVisual(escalera04)
-		game.addVisual(escotilla03)
-		game.addVisual(escotilla04)
 //		game.addVisual(tpPantalla4)
 //		game.addVisual(tpBossAlternativo)
 	}
