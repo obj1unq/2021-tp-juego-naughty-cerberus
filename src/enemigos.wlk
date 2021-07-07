@@ -800,5 +800,5 @@ const ogre02 = new Ogre(pantalla = pantalla3, vida = 700, vidaInicial = 700, ata
 const wolf03 = new Wolf(pantalla = pantalla3, vida = 500, vidaInicial = 500, ataque = 25, defensa = 10, direccion = left, position = new MiPosicion(x = 14, y = 0), nombre = "Wolf", image = left.imagenPersonajeStand("Wolf"), pocionDeVidaAsignada = pocionDe30)
 
 //pantalla 4
-const dragon = new Dragon(pantalla = pantalla4, vida = 700, vidaInicial = 700, ataque = 100, defensa = 300, direccion = down, position = new MiPosicion(x = 17, y = 1), nombre = "Dragon", image = down.imagenPersonajeStand("dragon"), pocionDeVidaAsignada = pocionDe30)
+const dragon = new Dragon(pantalla = pantalla4, vida = 800, vidaInicial = 800, ataque = 100, defensa = 300, direccion = down, position = new MiPosicion(x = 17, y = 1), nombre = "Dragon", image = down.imagenPersonajeStand("dragon"), pocionDeVidaAsignada = pocionDe30)
 

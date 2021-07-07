@@ -306,7 +306,7 @@ class BarraDeVidaEnemigo {
 
 object errorReporter {
 
-	var property position = new MiPosicion(x = 22, y = 12)
+	var property position = new MiPosicion(x = 22, y = 20)
 	var property image = "void.png"
 
 }
