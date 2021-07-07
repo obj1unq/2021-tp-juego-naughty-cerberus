@@ -5,6 +5,7 @@ import personaje.*
 import enemigos.*
 import nivelesycfg.*
 import musica.*
+import misc.*
 
 object mainMenu {
 
@@ -20,6 +21,8 @@ object mainMenu {
 		rayo1.iniciar()
 		game.addVisual(rayo2)
 		rayo2.iniciar()
+		game.addVisual(errorReporter)
+		game.errorReporter(errorReporter)
 		self.controles()
 	}
 
@@ -75,22 +78,30 @@ object iniciarJuego {
 
 	const property position = new MiPosicion(x = 7, y = 3)
 
-	method image(){return "iniciarJuego.png"}
-	
-	method iniciar(){
-			mainMenu.detenerMusica()
-			game.clear()
-			eventHistoria.iniciar()
+	method image() {
+		return "iniciarJuego.png"
 	}
+
+	method iniciar() {
+		mainMenu.detenerMusica()
+		game.clear()
+		eventHistoria.iniciar()
+	}
+
 }
 
 object controles {
 
 	const property position = new MiPosicion(x = 7, y = 2)
-	method image(){return "controles.png"}
-	
-	method iniciar(){
-	    game.addVisual(menuControles)
+
+	method image() {
+		return "controles.png"
+	}
+
+	method iniciar() {
+		game.addVisual(menuControles)
+		game.addVisual(errorReporter)
+		game.errorReporter(errorReporter)
 	}
 
 	method close() {
@@ -133,7 +144,6 @@ class Lightning {
 	}
 
 }
-
 
 //object selectorEspada{
 //	var opciones = [yes,no]
@@ -181,16 +191,17 @@ object endMenu {
 //		self.controles()
 	}
 
-	method terminarJuego(){
+	method terminarJuego() {
 		game.schedule(3000, {=> game.stop()})
 	}
+
 //	method controles(){
 //		keyboard.left().onPressDo({selectorEspada.izquierda()})
 //		keyboard.right().onPressDo({selectorEspada.derecha()})
 //		keyboard.enter().onPressDo({selectorEspada.seleccion().iniciar()})
 //	}
-
 }
+
 //object yes{
 //	const property position = new MiPosicion(x = 8, y = 3)
 //	method image(){return "yes.png"}
@@ -215,7 +226,6 @@ object endMenu {
 //		game.stop()
 //	}
 //}
-
 const rayo1 = new Lightning(position = new MiPosicion(x = 17, y = 2))
 
 const rayo2 = new Lightning(position = new MiPosicion(x = 0, y = 2))
