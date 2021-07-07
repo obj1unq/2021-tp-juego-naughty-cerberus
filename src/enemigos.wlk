@@ -774,16 +774,16 @@ const wolf01 = new Wolf(pantalla = pantalla1, vida = 500, vidaInicial = 500, ata
 const spectrum01 = new Spectrum(pantalla = pantalla1, vida = 500, vidaInicial = 500, ataque = 20, defensa = 10, direccion = left, position = new MiPosicion(x = 2, y = 1), nombre = "Spectrum", image = left.imagenPersonajeStand("spectrum"), pocionDeVidaAsignada = pocionDe20)
 
 //Pantalla 2
-const spectrum02 = new Spectrum(pantalla = pantalla2, vida = 500, vidaInicial = 500, ataque = 20, defensa = 10, direccion = left, position = new MiPosicion(x = 16, y = 5), nombre = "Spectrum", image = left.imagenPersonajeStand("spectrum"), pocionDeVidaAsignada = pocionDe20)
+const spectrum02 = new Spectrum(pantalla = pantalla2, vida = 500, vidaInicial = 500, ataque = 20, defensa = 10, direccion = left, position = new MiPosicion(x = 16, y = 5), nombre = "Spectrum", image = left.imagenPersonajeStand("spectrum"), pocionDeVidaAsignada = pocionDe30)
 
 const ogre01 = new Ogre(pantalla = pantalla2, vida = 700, vidaInicial = 700, ataque = 20, defensa = 20, direccion = left, position = new MiPosicion(x = 18, y = 1), nombre = "Ogre", image = left.imagenPersonajeStand("ogre"), pocionDeVidaAsignada = pocionDe25)
 
 //pantalla 3
 const wolf02 = new Wolf(pantalla = pantalla3, vida = 500, vidaInicial = 500, ataque = 25, defensa = 10, direccion = left, position = new MiPosicion(x = 11, y = 8), nombre = "Wolf", image = left.imagenPersonajeStand("Wolf"), pocionDeVidaAsignada = pocionDe15)
 
-const spectrum03 = new Spectrum(pantalla = pantalla3, vida = 500, vidaInicial = 500, ataque = 30, defensa = 25, direccion = right, position = new MiPosicion(x = 8, y = 4), nombre = "spectrum", image = right.imagenPersonajeStand("Spectrum"), pocionDeVidaAsignada = pocionDe20)
+const spectrum03 = new Spectrum(pantalla = pantalla3, vida = 500, vidaInicial = 500, ataque = 30, defensa = 20, direccion = right, position = new MiPosicion(x = 8, y = 4), nombre = "spectrum", image = right.imagenPersonajeStand("Spectrum"), pocionDeVidaAsignada = pocionDe20)
 
-const ogre02 = new Ogre(pantalla = pantalla3, vida = 700, vidaInicial = 700, ataque = 25, defensa = 30, direccion = right, position = new MiPosicion(x = 5, y = 4), nombre = "Ogre", image = right.imagenPersonajeStand("ogre"), pocionDeVidaAsignada = pocionDe25)
+const ogre02 = new Ogre(pantalla = pantalla3, vida = 700, vidaInicial = 700, ataque = 15, defensa = 30, direccion = right, position = new MiPosicion(x = 5, y = 4), nombre = "Ogre", image = right.imagenPersonajeStand("ogre"), pocionDeVidaAsignada = pocionDe25)
 
 const wolf03 = new Wolf(pantalla = pantalla3, vida = 500, vidaInicial = 500, ataque = 25, defensa = 10, direccion = left, position = new MiPosicion(x = 14, y = 0), nombre = "Wolf", image = left.imagenPersonajeStand("Wolf"), pocionDeVidaAsignada = pocionDe30)
 
