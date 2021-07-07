@@ -110,6 +110,7 @@ object personajePrincipal {
 
 	method morir() {
 		game.removeVisual(self)
+		game.removeVisual(espadaMC)
 		endMenu.iniciar()
 	}
 

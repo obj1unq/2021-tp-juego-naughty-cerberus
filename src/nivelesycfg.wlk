@@ -38,7 +38,7 @@ object eventHistoria{
 		keyboard.enter().onPressDo({ self.close()})
 	}
 	method reproducirMusica(){
-		game.schedule(300, { => soundHistoria.play() })
+		game.schedule(50, { => soundHistoria.play() })
 	}
 	method detenerMusica(){
 		soundHistoria.stop()
@@ -56,7 +56,7 @@ object eventNivel0 {
 		game.schedule(2000, { => 12.times({ i => personajePrincipal.moverse()})})
 			// game.say(personajePrincipal, "DEBO SALVAR A MI FAMILIA CUANTO ANTES!")
 		game.say(personajePrincipal, "DEBO SALVAR A MI")
-		game.say(personajePrincipal, "MI FAMILIA CUANTO ANTES!")
+		game.say(personajePrincipal, "FAMILIA CUANTO ANTES!")
 	}
 
 }

@@ -72,7 +72,6 @@ object iniciarJuego{
 			mainMenu.detenerMusica()
 			game.clear()
 			eventHistoria.iniciar()
-	//		eventNivel0.iniciar()
 	}
 }
 object controles{
@@ -81,12 +80,9 @@ object controles{
 	
 	method iniciar(){
 	    game.addVisual(menuControles)
-	    
-	 
 	}
 	method close(){
 		game.removeVisual(menuControles)
-		
 	}
 }
 object salir{	
@@ -116,29 +112,29 @@ object menuControles {
 	
 }
 
-object selectorEspada{
-	var opciones = [yes,no]
-	
-	const property image = "sel_espada.png"
-	
-	method position() {
-		return new MiPosicion(x = self.seleccion().position().x()-1 , y = self.seleccion().position().y())		
-		}
-		
-	method seleccion() = opciones.head()
-	
-	method derecha(){
-		const seleccionActual = self.seleccion()
-		opciones.remove(seleccionActual)
-		opciones.add(seleccionActual)
-		
-		}
-	method izquierda(){
-		const ultimaSeleccion = opciones.last()
-		opciones.remove(ultimaSeleccion)
-		opciones = [ultimaSeleccion] + opciones		
-	}
-}
+//object selectorEspada{
+//	var opciones = [yes,no]
+//	
+//	const property image = "sel_espada.png"
+//	
+//	method position() {
+//		return new MiPosicion(x = self.seleccion().position().x()-1 , y = self.seleccion().position().y())		
+//		}
+//		
+//	method seleccion() = opciones.head()
+//	
+//	method derecha(){
+//		const seleccionActual = self.seleccion()
+//		opciones.remove(seleccionActual)
+//		opciones.add(seleccionActual)
+//		
+//		}
+//	method izquierda(){
+//		const ultimaSeleccion = opciones.last()
+//		opciones.remove(ultimaSeleccion)
+//		opciones = [ultimaSeleccion] + opciones		
+//	}
+//}
 
 object endMenu{
 	
@@ -146,42 +142,45 @@ object endMenu{
 		game.clear()
 		backGround.fondo("gameover1")
 		game.addVisual(backGround)
-		game.addVisual(yes)
-		game.addVisual(no)
-		game.addVisual(selectorEspada)
-		self.controles()
+		self.terminarJuego()
+//		game.addVisual(yes)
+//		game.addVisual(no)
+//		game.addVisual(selectorEspada)
+//		self.controles()
 	}
-	
-	method controles(){
-		keyboard.left().onPressDo({selectorEspada.izquierda()})
-		keyboard.right().onPressDo({selectorEspada.derecha()})
-		keyboard.enter().onPressDo({selectorEspada.seleccion().iniciar()})
+	method terminarJuego(){
+		game.schedule(3000, {=> game.stop()})
 	}
+//	method controles(){
+//		keyboard.left().onPressDo({selectorEspada.izquierda()})
+//		keyboard.right().onPressDo({selectorEspada.derecha()})
+//		keyboard.enter().onPressDo({selectorEspada.seleccion().iniciar()})
+//	}
 }
-object yes{
-	const property position = new MiPosicion(x = 8, y = 3)
-	method image(){return "yes.png"}
-	
-	method iniciar(){
-		game.clear()
-		personajePrincipal.actualizarPosicion(new MiPosicion(x = 0, y = 1))
-		personajePrincipal.direccion(right)
-		personajePrincipal.actualizarImagen()
-		personajePrincipal.vida(100)
-		eventNivel0.iniciar()
-		//TODO: REINICIAR ENEMIGOS
-		
-	}
-}
-
-object no{
-	const property position = new MiPosicion(x = 11, y = 3)
-	method image(){return "no.png"}
-	
-	method iniciar(){
-		game.stop()
-	}
-}
+//object yes{
+//	const property position = new MiPosicion(x = 8, y = 3)
+//	method image(){return "yes.png"}
+//	
+//	method iniciar(){
+//		game.clear()
+//		personajePrincipal.actualizarPosicion(new MiPosicion(x = 0, y = 1))
+//		personajePrincipal.direccion(right)
+//		personajePrincipal.actualizarImagen()
+//		personajePrincipal.vida(100)
+//		eventNivel0.iniciar()
+//		//TODO: REINICIAR ENEMIGOS
+//		
+//	}
+//}
+//
+//object no{
+//	const property position = new MiPosicion(x = 11, y = 3)
+//	method image(){return "no.png"}
+//	
+//	method iniciar(){
+//		game.stop()
+//	}
+//}
 
 
 const rayo1 = new Lightning(position = new MiPosicion(x = 17, y = 2))
