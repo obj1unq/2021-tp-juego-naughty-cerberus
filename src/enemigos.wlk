@@ -428,6 +428,7 @@ class Wolf inherits Enemies {
 
 	override method teEncontro(objeto) {
 		if (objeto == personajePrincipal and personajePrincipal.blockStance()) {
+			
 			self.aturdirseBrevemente()
 		} else {
 			objeto.recibirAtaque(ataque)
@@ -435,8 +436,11 @@ class Wolf inherits Enemies {
 	}
 
 	method aturdirseBrevemente() {
-		self.salirModoRabioso()
-		game.schedule(280, { => self.modoAturdido()})
+		game.sound("shieldBlock.mp3").play()
+		game.schedule(40, { => self.salirModoRabioso()})
+//	self.salirModoRabioso()
+//		game.schedule(160, { => self.ponersePasivo()})
+		game.schedule(500, { => self.modoAturdido()})
 //		self.ponerseActivo()
 //		self.modoAturdido()
 		game.schedule(1850, { =>
@@ -818,7 +822,6 @@ const spectrum03 = new Spectrum(pantalla = pantalla3, vida = 500, vidaInicial = 
 const ogre02 = new Ogre(pantalla = pantalla3, vida = 700, vidaInicial = 700, ataque = 25, defensa = 30, direccion = right, position = new MiPosicion(x = 5, y = 4), nombre = "Ogre", image = right.imagenPersonajeStand("ogre"), pocionDeVidaAsignada = pocionDe25)
 
 const wolf03 = new Wolf(pantalla = pantalla3, vida = 500, vidaInicial = 500, ataque = 25, defensa = 10, direccion = left, position = new MiPosicion(x = 14, y = 0), nombre = "Wolf", image = left.imagenPersonajeStand("Wolf"), pocionDeVidaAsignada = pocionDe30)
-
 
 //pantalla 4
 const dragon = new Dragon(pantalla = pantalla4, vida = 700, vidaInicial = 700, ataque = 100, defensa = 300, direccion = down, position = new MiPosicion(x = 17, y = 1), nombre = "Dragon", image = down.imagenPersonajeStand("dragon"), pocionDeVidaAsignada = pocionDe30)
