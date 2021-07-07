@@ -387,7 +387,7 @@ object config {
 		})
 		keyboard.j().onPressDo({ personajePrincipal.atacar()})
 		keyboard.k().onPressDo({ personajePrincipal.bloquear()})
-		keyboard.i().onPressDo({ personajePrincipal.decirPos()})
+	//	keyboard.i().onPressDo({ personajePrincipal.decirPos()})
 		keyboard.w().onPressDo({ personajePrincipal.subirSiHayEscalera()})
 		keyboard.s().onPressDo({ personajePrincipal.bajarSiHayEscotilla()})
 		keyboard.r().onPressDo({ personajePrincipal.agarrarBalaOCargarCannon()})
