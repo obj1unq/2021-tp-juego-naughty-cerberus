@@ -11,14 +11,17 @@ class Mode {
 	var property accion // el tipo de accion que realizará: (Run,Die,Attack,Dodge)
 
 	method realizarAccion(objeto, direccion) {
+		objeto.sigueEnAccion(true)
 		self.timeLapse(objeto)
 		imageNameConversor.getImgName(objeto, accion, direccion, self.time().toString()) // direccion(derecha o izquierda) hacia donde hará la animacion
 		if (self.time() == totalImg) {
 			game.removeTickEvent(accion)
 			time = 0
-			game.schedule(500, { => objeto.image(direccion.imagenPersonajeStand(objeto.nombre()))})
+			objeto.sigueEnAccion(false)
+			game.schedule(500, { => objeto.standPositionImage()})
 		}
-	}
+	} 
+	
 
 	method accion(objeto, direccion) { // el llamado principal (el q comienza a ejecutar el resto de metodos de animacion)
 		game.onTick(speedFrame, accion, {=> self.realizarAccion(objeto, direccion)})
@@ -29,44 +32,56 @@ class Mode {
 	}
 
 }
-
-object runModeL inherits Mode(accion = "Run", speedFrame = 30, totalImg = 4, time = 0) {
-
+// Se podria unificar los runMode del MC y el lobo creando una clase Run que herede Mode y que el movimiento lo haga segun direccion.Move(),y que segun la direccion dada se moviera para donde quisiera donde instancies
+class Run inherits Mode {
 	override method timeLapse(objeto) {
 		time += 1
-		left.move(objeto, 0.25)
-	// objeto.position().x(objeto.position().x() - 0.25)
+		objeto.direccion().move(objeto, 0.25)
 	}
 
 }
+const runModeMC = new Run(accion = "Run", speedFrame = 30, totalImg = 4, time = 0)
+const runModeWolf = new Run(accion = "Run", speedFrame = 45, totalImg = 4, time = 0)
 
-object runModeR inherits Mode(accion = "Run", speedFrame = 30, totalImg = 4, time = 0) {
-
-	override method timeLapse(objeto) {
-		time += 1
-		right.move(objeto, 0.25)
-	// objeto.position().x(objeto.position().x() + 0.25)
-	}
-
-}
-
-object runModeWolfL inherits Mode(accion = "Run", speedFrame = 45, totalImg = 4, time = 0) {
-
-	override method timeLapse(objeto) {
-		time += 1
-		left.move(objeto, 0.25)
-	}
-
-}
-
-object runModeWolfR inherits Mode(accion = "Run", speedFrame = 45, totalImg = 4, time = 0) {
-
-	override method timeLapse(objeto) {
-		time += 1
-		right.move(objeto, 0.25)
-	}
-
-}
+/*
+//object runModeL inherits Mode(accion = "Run", speedFrame = 30, totalImg = 4, time = 0) {
+//
+//	override method timeLapse(objeto) {
+//		time += 1
+//		left.move(objeto, 0.25)
+//	// objeto.position().x(objeto.position().x() - 0.25)
+//	}
+//
+//}
+//
+//object runModeR inherits Mode(accion = "Run", speedFrame = 30, totalImg = 4, time = 0) {
+//
+//	override method timeLapse(objeto) {
+//		time += 1
+//		right.move(objeto, 0.25)
+//	// objeto.position().x(objeto.position().x() + 0.25)
+//	}
+//
+//}
+//
+//object runModeWolfL inherits Mode(accion = "Run", speedFrame = 45, totalImg = 4, time = 0) {
+//
+//	override method timeLapse(objeto) {
+//		time += 1
+//		left.move(objeto, 0.25)
+//	}
+//
+//}
+//
+//object runModeWolfR inherits Mode(accion = "Run", speedFrame = 45, totalImg = 4, time = 0) {
+//
+//	override method timeLapse(objeto) {
+//		time += 1
+//		right.move(objeto, 0.25)
+//	}
+//
+//}
+ */
 
 object runModeDragonU inherits Mode(accion = "flight", speedFrame = 50, totalImg = 4, time = 0) {
 
@@ -189,14 +204,8 @@ class Muro inherits Teleport {
 	}
 
 	method darLaVuelta(personaje) {
-		if (personaje.direccion() == right) {
-			personaje.direccion(left)
-		} // En un futuro se puede cambiar este if por un opuestoDireccion(objeto) en el cual le mandas un msj a los objetos right o left y estos se encargan de devolver el opuesto o directamente cambiar la direccion del objeto dado.
-		else {
-			personaje.direccion(right)
-		} // Esto implicaria tambien cambiar varias partes del código donde se usa una estructura similar,asi que por cuestiones de tiempo lo dejamos para el final si nos sobra tiempo.
-	}
-
+		personaje.direccion().darLaVuelta(personaje)
+		}
 }
 
 const tpTunelAbajo = new Teleport(xTP = 12, yTP = 1, pantallaNueva = pantalla1, posX = 4, posY = 9)

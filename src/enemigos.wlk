@@ -14,6 +14,7 @@ class Enemies {
 	var property position = new MiPosicion(x = 0, y = 0)
 	var property nombre
 	var property pocionDeVidaAsignada
+	var property sigueEnAccion = false
 	const property vidaInicial = 500
 	var property barraDeVida = new BarraDeVidaEnemigo(enemigo = self)
 	var image
@@ -35,7 +36,11 @@ class Enemies {
 	method moverse() {
 		direccion.move(self, 1)
 	}
-
+	method standPositionImage(){
+		if(!self.sigueEnAccion()){
+			self.image(direccion.imagenPersonajeStand(self.nombre()))
+		}
+	}
 	method atacar() {
 		self.dejaDeAcercarseAlMC()
 		self.mirarAlMC()
@@ -125,13 +130,15 @@ class Enemies {
 	}
 
 	method darLaVuelta() {
-		if (direccion == right) {
-			self.direccion(left)
+//		if (direccion == right) {
+//			self.direccion(left)
+//			self.actualizarImagen()
+//		} else {
+//			self.direccion(right)
+//			self.actualizarImagen()}
+			self.direccion().darLaVuelta(self)
 			self.actualizarImagen()
-		} else {
-			self.direccion(right)
-			self.actualizarImagen()
-		}
+		
 	}
 
 	method perseguirMC() {
@@ -351,7 +358,8 @@ class Wolf inherits Enemies {
 	}
 
 	override method moverse() {
-		direccion.moveWolf(self)
+		runModeWolf.accion(self,self.direccion())
+	//	direccion.moveWolf(self)
 	}
 
 	override method atacarSiSeAcerca() {
@@ -538,13 +546,13 @@ class Dragon inherits Enemies {
 		game.schedule(1000, {=> self.moverse()})
 	}
 
-	override method darLaVuelta() {
-		if (direccion == up) {
-			direccion = down
-		} else {
-			direccion = up
-		}
-	}
+//	override method darLaVuelta() {
+//		if (direccion == up) {
+//			direccion = down
+//		} else {
+//			direccion = up
+//		}
+//	}
 
 	method estaEnElSueloOEnElTecho() {
 		return self.position().y() <= 1 or self.position().y() >= 7
@@ -638,12 +646,12 @@ class Dragon inherits Enemies {
 }
 
 class Proyectiles {
-
-	var property position
-	var property image
-	var property direccion
-	var property danioBase = 50
-	var property enemigoUtilizandolo
+//Inicializadas variables en null para que el IDE no tire error sin sentido(ya que las variables se inicializan al crear un objeto nuevo)
+    var property position = null;
+    var property image = null;
+    var property direccion = null;
+    var property danioBase = 50
+    var property enemigoUtilizandolo = null;
 
 	method lanzar(enemigo) {
 		self.enemigoUtilizandolo(enemigo)

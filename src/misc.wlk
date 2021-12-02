@@ -194,6 +194,8 @@ object cajaDeBalas {
 	var property image = "void.png"
 	var property position = new MiPosicion(x = 1, y = 7)
 
+	method interactuar(){}
+	
 	method teEncontro(objeto) {
 	}
 
@@ -301,7 +303,6 @@ class BarraDeVidaEnemigo {
 
 	method teEncontro(personaje) {
 	}
-
 }
 
 object errorReporter {
@@ -352,4 +353,3 @@ const cannon01 = new Cannon(position = new MiPosicion(x = 7, y = 1))
 const cannon02 = new Cannon(position = new MiPosicion(x = 7, y = 4))
 
 const cannon03 = new Cannon(position = new MiPosicion(x = 7, y = 7))
-

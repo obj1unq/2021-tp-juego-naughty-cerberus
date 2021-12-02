@@ -16,8 +16,9 @@ object personajePrincipal {
 	var property blockStance = false
 	var property doubleTap = false
 	var property tieneBala = false
+	var property sigueEnAccion = false
 	var image = direccion.imagenPersonajeStand(self.nombre())
-
+	
 	method image() = image
 
 	method image(imagen) {
@@ -35,10 +36,15 @@ object personajePrincipal {
 //	method decirPos() {
 //		self.error("PosX = " + self.position().x().toString() + ", PosY = " + self.position().y().toString())
 //	}
-
+	method standPositionImage(){
+		if(!self.sigueEnAccion()){
+			self.image(direccion.imagenPersonajeStand(self.nombre()))
+		}
+	}
 	method moverse() {
 		if (not self.blockStance()) {
-			direccion.moveMC()
+			runModeMC.accion(self,self.direccion())
+	//		direccion.moveMC()
 		}
 	}
 
@@ -169,6 +175,12 @@ object personajePrincipal {
 			self.position().y(self.position().y() - 1)
 		}
 	}
+
+// agregado interactuar que con el/los objeto que colisiona le da la orden
+//	method interactuar(){
+//		game.colliders(self).interactuar()
+//	}
+
 
 	method estaEnElPiso() {
 		return self.position().y() == 1 or self.position().y() == 5
@@ -305,19 +317,23 @@ object espadaMC {
 object left {
 
 	var property objetivos = #{}
+	
+// Con los cambios a los metodos de movimientos de los personajes, por ahora no es más necesario esto.
+//	// var doubleTap = false
+//	method moveMC() { // Mov izquierda del MainCharacter (personaje principal)	
+//	// if(!doubleTap){ // Un pequeño retraso para no spamear botones de movilidad(y hacer más valioso el esquivar)			
+//	// game.schedule(1, { => doubleTap = true})
+//		runModeL.accion(personajePrincipal, personajePrincipal.direccion())
+//	// }// Esta parte se podria reemplazar por una animacion continua de moverse pero no veo forma de hacerlo viable.
+//	}
+//
+//	method moveWolf(lobo) {
+//		runModeWolfL.accion(lobo, lobo.direccion())
+//	}
 
-	// var doubleTap = false
-	method moveMC() { // Mov izquierda del MainCharacter (personaje principal)	
-	// if(!doubleTap){ // Un pequeño retraso para no spamear botones de movilidad(y hacer más valioso el esquivar)			
-	// game.schedule(1, { => doubleTap = true})
-		runModeL.accion(personajePrincipal, personajePrincipal.direccion())
-	// }// Esta parte se podria reemplazar por una animacion continua de moverse pero no veo forma de hacerlo viable.
+	method darLaVuelta(objeto){
+		objeto.direccion(right)
 	}
-
-	method moveWolf(lobo) {
-		runModeWolfL.accion(lobo, lobo.direccion())
-	}
-
 	method move(objeto, num) { // general para cualquier objecto, pensado para usarse en los enemigos
 	// objeto.actualizarPosicion(objeto.position().left(num)) // todos los objetos que se muevan deben entender el metodo "actualizarPosicion"
 		objeto.position().x(objeto.position().x() - num)
@@ -351,19 +367,21 @@ object right {
 
 	// var doubleTap = false
 	var property objetivos = #{}
-
-	method moveMC() { // Mov derecha del MainCharacter (personaje principal)	
-	// if(!doubleTap){ // Un pequeño retraso para no spamear botones de movilidad(y hacer más valioso el esquivar)	(desactivado por ahora mientras se resuelven bugs)		
-	// game.schedule(1, { => doubleTap = true})
-		runModeR.accion(personajePrincipal, personajePrincipal.direccion())
-	// game.schedule(100, { => doubleTap = false})
-	// }// Esta parte se podria reemplazar por una animacion continua de moverse pero no veo forma de hacerlo viable.
+// Con los cambios a los metodos de movimientos de los personajes, por ahora no es más necesario esto.
+//	method moveMC() { // Mov derecha del MainCharacter (personaje principal)	
+//	// if(!doubleTap){ // Un pequeño retraso para no spamear botones de movilidad(y hacer más valioso el esquivar)	(desactivado por ahora mientras se resuelven bugs)		
+//	// game.schedule(1, { => doubleTap = true})
+//		runModeR.accion(personajePrincipal, personajePrincipal.direccion())
+//	// game.schedule(100, { => doubleTap = false})
+//	// }// Esta parte se podria reemplazar por una animacion continua de moverse pero no veo forma de hacerlo viable.
+//	}
+//
+//	method moveWolf(lobo) {
+//		runModeWolfR.accion(lobo, lobo.direccion())
+//	}
+	method darLaVuelta(objeto){
+		objeto.direccion(left)
 	}
-
-	method moveWolf(lobo) {
-		runModeWolfR.accion(lobo, lobo.direccion())
-	}
-
 	method move(objeto, num) { // general para cualquier objecto, pensado para usarse en los enemigos
 		objeto.position().x(objeto.position().x() + num)
 	// objeto.actualizarPosicion(objeto.position().right(num)) // todos los objetos que se muevan deben entender el metodo "actualizarPosicion"
@@ -400,11 +418,14 @@ object up {
 	}
 
 	method move(objeto, num) { // general para cualquier objecto, pensado para usarse en los enemigos
-		objeto.position().x(objeto.position().y() + num)
+		objeto.position().y(objeto.position().y() + num)
 	}
 
 	method imagenPersonajeStand(objeto) {
 		return objeto + "_Stand_up.png"
+	}
+	method darLaVuelta(objeto){
+		objeto.direccion(down)
 	}
 
 }
@@ -416,11 +437,14 @@ object down {
 	}
 
 	method move(objeto, num) { // general para cualquier objecto, pensado para usarse en los enemigos
-		objeto.position().x(objeto.position().y() - num)
+		objeto.position().y(objeto.position().y() - num)
 	}
 
 	method imagenPersonajeStand(objeto) {
 		return objeto + "_Stand_up.png"
+	}
+	method darLaVuelta(objeto){
+		objeto.direccion(up)
 	}
 
 }

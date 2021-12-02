@@ -9,16 +9,8 @@ object backGround {
 	method image() {
 		return "background_" + fondo + ".png"
 	}
+	
+	method teEncontro(objeto){}
 
 }
 
-//object backGround {
-//	const property position = new MiPosicion(x = 0, y = 0)
-//	var property image = self.nombreBackground()
-//	var property fondo = "fondo"
-//
-//	method actualizarImagen(){
-//		image = self.nombreBackground()
-//	}
-//	method nombreBackground(){return "background_" + fondo + ".png"}
-//}

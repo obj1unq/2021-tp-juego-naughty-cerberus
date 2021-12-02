@@ -13,6 +13,8 @@ object mainMenu {
 		backGround.fondo("mainMenu")
 		game.addVisual(backGround)
 		self.reproducirMusica()
+		//game.addVisual(raining)
+		//raining.iniciar()
 		game.addVisual(iniciarJuego)
 		game.addVisual(controles)
 		game.addVisual(salir)
@@ -130,6 +132,7 @@ class Lightning {
 	var property image = "void.png"
 	var property position
 	var property nombre = "lightning"
+	var property sigueEnAccion = false
 
 	method iniciar() {
 		game.onTick(4000, self.toString(), { self.animacion().accion(self, self.direccion())})
@@ -142,7 +145,28 @@ class Lightning {
 	method animacion() {
 		return new Mode(accion = "Falling", speedFrame = 35, totalImg = 10, time = 0)
 	}
+	method standPositionImage(){
+		return "void.png"
+	}
+}
 
+object raining {
+	var property direccion = right
+	var property image = "void.png"
+	var property position = new MiPosicion(x = 0, y = 0)
+	var property nombre = "raining"
+	
+	method iniciar() {
+		game.schedule(3000, {=> game.onTick(905, self.toString(), { self.animacion().accion(self, self.direccion())})})
+	}
+
+	method quitarAnimacion() {
+		game.removeTickEvent(self.toString())
+	}
+
+	method animacion() {
+		return new Mode(accion = "Falling", speedFrame = 100, totalImg = 9, time = 0)
+	}
 }
 
 //object selectorEspada{
@@ -229,4 +253,5 @@ object endMenu {
 const rayo1 = new Lightning(position = new MiPosicion(x = 17, y = 2))
 
 const rayo2 = new Lightning(position = new MiPosicion(x = 0, y = 2))
+
 
