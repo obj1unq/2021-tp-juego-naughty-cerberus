@@ -15,7 +15,7 @@ describe "valores iniciales" {
 	const escotillita = new EscotillaChica(position = new MiPosicion(x = 10, y = 4))
 	const cannon = new Cannon(position = new MiPosicion(x = 15, y = 1))
 	const wolf01 = new Wolf(pantalla = pantalla1, vida = 500, vidaInicial = 500, ataque = 20, defensa = 10, direccion = left, position = new MiPosicion(x = 10, y = 5), nombre = "Wolf", image = left.imagenPersonajeStand("Wolf"), pocionDeVidaAsignada = pocionDe25)
-
+//revisar
 	fixture {
 		game.addVisual(escaleragrande)
 		game.addVisual(escalerita)
