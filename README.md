@@ -1,5 +1,5 @@
 # Concurso Wollok Game 2021 - Presentacion de juego: Whispers in the Dark
-![menu inicio](assets/Screenshots/mainMenu.png)
+![menu inicio](assets/Screenshots/mainMenu1.png)
  
 # Introducción
 
