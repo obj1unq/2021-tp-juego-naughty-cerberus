@@ -151,21 +151,17 @@ object personajePrincipal inherits ObjetosInteractuables{
 		return game.colliders(self)
 	}
 
-	method escaleraPresente() {
-		return self.colisiones().find{ objeto => objeto.esEscalera() }
-	}
-
-	method escotillaPresente() {
-		return self.colisiones().find{ objeto => objeto.esEscotilla() }
-	}
+//	method escaleraPresente() {
+//		return self.colisiones().find{ objeto => objeto.esEscalera() }
+//	}
+//
+//	method escotillaPresente() {
+//		return self.colisiones().find{ objeto => objeto.esEscotilla() }
+//	}
 
 	override method teEncontro(objeto) {
 		objeto.encontrasteAlMC(self);
 	}
-
-
-
-
 
 	method caerSiNoEstasEnPiso() {
 		if (not self.estaEnElPiso()) {
@@ -183,13 +179,13 @@ object personajePrincipal inherits ObjetosInteractuables{
 		return self.position().y() == 1 or self.position().y() == 5
 	}
 
-	method estaSobreUnCannon() {
-		return game.colliders(self).any{ objeto => objeto.esCannon() }
-	}
-
-	method estaSobreUnaCajaDeBalas() {
-		return game.colliders(self).contains(cajaDeBalas)
-	}
+//	method estaSobreUnCannon() {
+//		return game.colliders(self).any{ objeto => objeto.esCannon() }
+//	}
+//
+//	method estaSobreUnaCajaDeBalas() {
+//		return game.colliders(self).contains(cajaDeBalas)
+//	}
 
 //	method agarrarBalaOCargarCannon() {
 //		self.verificarQueEstaEnUnaCajaOUnCannon()

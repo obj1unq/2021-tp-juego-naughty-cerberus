@@ -22,20 +22,20 @@ Para mover al personaje utilizamos las teclas:
 
 Para realizar las acciones con nuestro personaje:
 
-- _Tecla J_ El personaje ataca.
-- _Tecla I_ El personaje interactúa con el objeto.
-- _Tecla K_ El personaje bloquea con el escudo.
-- _Tecla L_ El personaje realiza una accion especial (Aún no implementada).
+- _Tecla J:_ El personaje ataca.
+- _Tecla I:_ El personaje interactúa con el/los objeto/s que se encuentra/n en su posición.
+- _Tecla K:_ El personaje bloquea con su escudo.
+- _Tecla L:_ El personaje realiza una accion especial (Aún no implementada).
 
 Para recorrer los menus del juego:
 
-- _Tecla ENTER_ El personaje ataca.
-- _Tecla BACKSPACE_ El personaje interactúa con el objeto.
+- _Tecla ENTER:_ El personaje ataca.
+- _Tecla BACKSPACE:_ El personaje interactúa con el objeto.
 
 
 
 # Niveles
-El juego está separado por 3 niveles.
+El juego está separado por niveles, a su vez, estos niveles contienen distintas "pantallas" en la cual el personaje debe ir recorriendo, como si de un laberinto se tratase,hasta llegar a la sala del jefe y/o encontrar algo que en especifico. La idea de esto, es poder expandir casi sin limites la creatividad y los niveles mediante el agregado de zonas nuevas que contengan niveles y sus pantallas correspondientes.
 
 __Primer nivel:__ 
 [Insertar imagen nivel]
@@ -56,3 +56,5 @@ Todos estudiantes de programación de la misma comisión de Objetos I en la UNQ.
 Whispers in the Dark es un juego que fue desarrollado durante el primer cuatrimestre de 2020 por "Naughty Cerberus", nombre de grupo el cual fue elegido al comienzo para dar inicio al proyecto final de entrega necesario para aprobar la materia de Programacion Orientada a Objetos I de la Universidad Nacional de Quilmes. 
 Inspirados en la idea de desarrollar un juego estilo Metroid-vania (Nombre dado a este tipo de juegos), nos pusimos a pensar como aplicar nuestros conocimientos sobre la programacion orientada a objetos recientemente adquiridas para poder desarrollar un juego de este tipo. Vimos el potencial que podia tener Wollok para el desarrollo de un juego de este estilo, por lo cual nos decidimos a encarar nuestro proyecto en base a esa idea. 
 Tras la finalización de la cursada,nuestro grupo "Naughty Cerberus" abandonó el proyecto(Debido a que cumplió su objetivo de aprobacion como trabajo final para la materia), por lo cual todo el desarrollo posterior,correccion de errores,refactoring de código y postulación al concurso Wollok Gaming 2021 fue realizada por Braian Gabriel Lo Surdo, quien decidió continuar el proyecto por su cuenta, un poco más.
+
+La idea final del proyecto, es que cualquiera pueda jugar,modificar y expandir el juego.
