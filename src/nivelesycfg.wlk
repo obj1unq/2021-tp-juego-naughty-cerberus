@@ -377,8 +377,6 @@ object config {
 		keyboard.s().onPressDo({ personajePrincipal.bajarSiHayEscotilla()})
 //		keyboard.r().onPressDo({ personajePrincipal.agarrarBalaOCargarCannon()})
 //		keyboard.f().onPressDo({ personajePrincipal.dispararCannon()})
-		// crear un boton interactuar que haga las interacciones de agarrar la bola y cargar cañon y disparar, todo con la misma tecla
-		//(asi como hacer nuevos puzzles)
 	}
 
 	method recargaEnergia() {

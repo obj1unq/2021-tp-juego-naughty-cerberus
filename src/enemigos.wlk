@@ -16,7 +16,7 @@ class Enemies inherits ObjetosInteractuables{
 	var property pocionDeVidaAsignada
 	var property sigueEnAccion = false
 	const property vidaInicial = 500
-	var property barraDeVida = new BarraDeVidaEnemigo(enemigo = self)
+	var property barraDeVida = new BarraDeVidaEnemigo(usuario = self)
 	var image
 
 	method image() = image

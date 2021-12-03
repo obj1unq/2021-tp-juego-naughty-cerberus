@@ -175,72 +175,89 @@ object cajaDeBalas inherits ObjetosInteractuables{
 }
 
 
-//TODO: crear template method barraDe y hacer que las barras de vida,energia y de los enemigos sobreescriban los methodos especificos.
-object barraDeVidaMC inherits ObjetosInteractuables{
-
-	const personaje = personajePrincipal
-
-	method position() = new MiPosicion(x = personaje.position().x(), y = personaje.position().y() + 1)
+class  BarraDe inherits ObjetosInteractuables{
+	
+	const usuario = null
+	
+	method getUsuario(){
+		return usuario
+	}
+	method position() = new MiPosicion(x = self.getUsuario().position().x(), y = self.getUsuario().position().y() + 1)
 
 	method image() {
-		return if (personaje.vida() > 0) {
-			"vida_" + personaje.toString() + self.cantDeVida().toString() + ".png"
+		return if (self.condicionDeVida()) {
+			self.textoNombreConVida() + self.cantDeVida().toString() + ".png"
 		} else {
-			"void.png"
+			self.textoSinVida()
 		}
 	}
 
 	method cantDeVida() {
-		return ((personaje.vida() / 100).roundUp(1) * 100).max(0)
+		return ((self.getStat() / 100).roundUp(1) * 100).max(0)
 	}
-
-
-}
-
-object barraDeEnergiaMC inherits ObjetosInteractuables{
-
-	const personaje = personajePrincipal
-
-	method position() = new MiPosicion(x = personaje.position().x(), y = personaje.position().y() + 1)
-
-	method image() {
-		return if (personaje.energia() > 0) {
-			"energia_" + personaje.toString() + self.cantDeVida().toString() + ".png"
-		} else {
-			"energia_personajePrincipal0.png"
-		}
+	method getStat() {
+		return self.getUsuario().vida()
 	}
-
-	method cantDeVida() {
-		return ((personaje.energia() / 100).roundUp(1) * 100).max(0)
+	method textoSinVida() {
+		return "void.png"
+	}
+	method textoNombreConVida() {
+		return "vida_" + self.getUsuario().toString()
+	}
+	method condicionDeVida() {
+		return self.getUsuario().vida() > 0
 	}
 
 }
 
-class BarraDeVidaEnemigo inherits ObjetosInteractuables{
+object barraDeVidaMC inherits BarraDe{
 
-	const property enemigo
-
-	method position() = new MiPosicion(x = enemigo.position().x(), y = enemigo.position().y() + self.posicionExtra())
-
-	method image() { // corregir aca,el problema es que la vida del enemigo debe estar convertida en % y falta eso.
-		return if (enemigo.vida() > 0) {
-			"vida_enemigo_" + self.cantDeVida().toString() + ".png"
-		} else {
-			"void.png"
-		}
+	override method getUsuario(){
+		return personajePrincipal
 	}
 
-	method cantDeVida() { // hay que hacer que cantDeVida lo convierta en % y luego lo divida por 10
-		return ((enemigo.vida() / self.vidaInicial().max(1)).roundUp(1) * 100).max(0) / 10
+}
+
+object barraDeEnergiaMC inherits BarraDe{
+	
+	override method getUsuario(){
+		return personajePrincipal
+	}
+
+	override method textoSinVida() {
+		return "energia_personajePrincipal0.png"
+	}
+	override method textoNombreConVida() {
+		return "energia_" + self.getUsuario().toString()
+	}
+	override method condicionDeVida() {
+		return self.getUsuario().energia() > 0
+	}
+	override method cantDeVida() {
+		return ((self.getUsuario().energia() / 100).roundUp(1) * 100).max(0)
+	}
+
+}
+
+class BarraDeVidaEnemigo inherits BarraDe{
+
+
+	override method position() = new MiPosicion(x = self.getUsuario().position().x(), y = self.getUsuario().position().y() + self.posicionExtra())
+
+	override method textoNombreConVida() {
+		return "vida_enemigo_"
+	}
+	
+	override method cantDeVida() { // hay que hacer que cantDeVida lo convierta en % y luego lo divida por 10
+		return ((self.getUsuario().vida() / self.vidaInicial().max(1)).roundUp(1) * 100).max(0) / 10
 	}
 
 	method vidaInicial() {
-		return enemigo.vidaInicial()
+		return self.getUsuario().vidaInicial()
 	}
 
 	method posicionExtra() {
-		return enemigo.posicionBarra()
+		return self.getUsuario().posicionBarra()
 	}
 }
 
