@@ -4,18 +4,12 @@ import nivelesycfg.*
 import wollok.game.*
 import clases.*
 
-class Escalera {
+class Escalera inherits ObjetosInteractuables{
 
 	var property position
 
 	method image() {
 		return "escalera.png"
-	}
-
-	method recibirAtaque(danio) {
-	}
-
-	method recibirAtaque() {
 	}
 
 	method esEscalera() {
@@ -34,7 +28,11 @@ class Escalera {
 		return false
 	}
 
-	method teEncontro(objeto) {
+	override method subir(objeto){
+		self.irAlPisoDeArriba(objeto)
+	}
+	method irAlPisoDeArriba(objeto) {
+		objeto.actualizarPosicion(new MiPosicion(x = self.position().x(), y = self.position().y() + self.pisosQueSube()))
 	}
 
 }
@@ -51,7 +49,7 @@ class EscaleraChica inherits Escalera {
 
 }
 
-class Escotilla {
+class Escotilla inherits ObjetosInteractuables{
 
 	var property position
 
@@ -59,19 +57,6 @@ class Escotilla {
 		return "escotilla.png"
 	}
 
-	method recibirAtaque(danio) {
-	}
-
-	method recibirAtaque() {
-	}
-
-	method esEscotilla() {
-		return true
-	}
-
-	method esEscalera() {
-		return false
-	}
 
 	method pisosQueBaja() {
 		return 4
@@ -81,9 +66,13 @@ class Escotilla {
 		return false
 	}
 
-	method teEncontro(objeto) {
+	override method bajar(objeto){
+		self.irAlPisoDeAbajo(objeto)
 	}
-
+	
+	method irAlPisoDeAbajo(objeto) {
+		objeto.actualizarPosicion(new MiPosicion(x = self.position().x(), y = self.position().y() - self.pisosQueBaja()))
+	}
 }
 
 class EscotillaChica inherits Escotilla {
@@ -94,7 +83,7 @@ class EscotillaChica inherits Escotilla {
 
 }
 
-class PocionDeVida {
+class PocionDeVida inherits ObjetosInteractuables{
 
 	var property vidaQueRecupera
 	var property position = game.origin()
@@ -103,7 +92,7 @@ class PocionDeVida {
 		return "pocionDeVida.png"
 	}
 
-	method teEncontro(personaje) {
+	override method teEncontro(personaje) {
 		personaje.vida((personaje.vida() + vidaQueRecupera).min(100))
 		game.removeVisual(self)
 		game.sound("pocion-sfx.mp3").play()
@@ -114,15 +103,9 @@ class PocionDeVida {
 		game.addVisual(self)
 	}
 
-	method recibirAtaque() {
-	}
-
-	method recibirAtaque(danio) {
-	}
-
 }
 
-class Cannon {
+class Cannon inherits ObjetosInteractuables{
 
 	var property image = "cannonUnloaded.png"
 	var property estaCargado = false
@@ -161,57 +144,39 @@ class Cannon {
 	method cargarSiTieneBala() {
 		if (personajePrincipal.tieneBala()) {
 			self.cargar()
+			personajePrincipal.nombre("personaje")
+			personajePrincipal.actualizarImagen()
 		} else {
 			game.say(personajePrincipal, "no tengo bala para cargar")
 		}
 	}
 
-	method teEncontro(objeto) {
-	}
-
-	method esCannon() {
-		return true
-	}
-
-	method esEscalera() {
-		return false
-	}
-
-	method esEscotilla() {
-		return false
-	}
-
-	method recibirAtaque() {
-	}
-
-	method recibirAtaque(danio) {
+	override method interactuar(){
+		if(!self.estaCargado()){
+			self.cargarSiTieneBala()
+		}
+		else{
+			self.disparar()
+		}
+		
 	}
 
 }
 
-object cajaDeBalas {
+object cajaDeBalas inherits ObjetosInteractuables{
 
 	var property image = "void.png"
 	var property position = new MiPosicion(x = 1, y = 7)
 
-	method interactuar(){}
-	
-	method teEncontro(objeto) {
-	}
-
-	method esCannon() {
-		return false
-	}
-
-	method recibirAtaque() {
-	}
-
-	method recibirAtaque(danio) {
+	override method interactuar(){
+		personajePrincipal.agarrarBala()
 	}
 
 }
 
-object barraDeVidaMC {
+
+//TODO: crear template method barraDe y hacer que las barras de vida,energia y de los enemigos sobreescriban los methodos especificos.
+object barraDeVidaMC inherits ObjetosInteractuables{
 
 	const personaje = personajePrincipal
 
@@ -229,18 +194,10 @@ object barraDeVidaMC {
 		return ((personaje.vida() / 100).roundUp(1) * 100).max(0)
 	}
 
-	method recibirAtaque() {
-	}
-
-	method recibirAtaque(danio) {
-	}
-
-	method teEncontro(objeto) {
-	}
 
 }
 
-object barraDeEnergiaMC {
+object barraDeEnergiaMC inherits ObjetosInteractuables{
 
 	const personaje = personajePrincipal
 
@@ -258,18 +215,9 @@ object barraDeEnergiaMC {
 		return ((personaje.energia() / 100).roundUp(1) * 100).max(0)
 	}
 
-	method recibirAtaque() {
-	}
-
-	method recibirAtaque(danio) {
-	}
-
-	method teEncontro(objeto) {
-	}
-
 }
 
-class BarraDeVidaEnemigo {
+class BarraDeVidaEnemigo inherits ObjetosInteractuables{
 
 	const property enemigo
 
@@ -293,15 +241,6 @@ class BarraDeVidaEnemigo {
 
 	method posicionExtra() {
 		return enemigo.posicionBarra()
-	}
-
-	method recibirAtaque() {
-	}
-
-	method recibirAtaque(danio) {
-	}
-
-	method teEncontro(personaje) {
 	}
 }
 

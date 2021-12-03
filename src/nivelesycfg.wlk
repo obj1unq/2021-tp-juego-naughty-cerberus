@@ -336,7 +336,7 @@ object eventFinal {
 
 }
 
-object firstWhisperDialog {
+object firstWhisperDialog inherits ObjetosInteractuables{
 
 	var property position = new MiPosicion(x = 0, y = 0)
 
@@ -346,15 +346,6 @@ object firstWhisperDialog {
 
 	method configurarDialogo() {
 		keyboard.enter().onPressDo({ credits.iniciar()})
-	}
-
-	method teEncontro(objeto) {
-	}
-
-	method recibirAtaque() {
-	}
-
-	method recibirAtaque(danio) {
 	}
 
 }
@@ -381,11 +372,11 @@ object config {
 		})
 		keyboard.j().onPressDo({ personajePrincipal.atacar()})
 		keyboard.k().onPressDo({ personajePrincipal.bloquear()})
-	//	keyboard.i().onPressDo({ personajePrincipal.interactuar()})
+		keyboard.i().onPressDo({ personajePrincipal.interactuar()})
 		keyboard.w().onPressDo({ personajePrincipal.subirSiHayEscalera()})
 		keyboard.s().onPressDo({ personajePrincipal.bajarSiHayEscotilla()})
-		keyboard.r().onPressDo({ personajePrincipal.agarrarBalaOCargarCannon()})
-		keyboard.f().onPressDo({ personajePrincipal.dispararCannon()})
+//		keyboard.r().onPressDo({ personajePrincipal.agarrarBalaOCargarCannon()})
+//		keyboard.f().onPressDo({ personajePrincipal.dispararCannon()})
 		// crear un boton interactuar que haga las interacciones de agarrar la bola y cargar cañon y disparar, todo con la misma tecla
 		//(asi como hacer nuevos puzzles)
 	}

@@ -4,7 +4,7 @@ import personaje.*
 import misc.*
 import nivelesycfg.*
 
-class Enemies {
+class Enemies inherits ObjetosInteractuables{
 
 	var property pantalla
 	var property vida = 500
@@ -50,7 +50,7 @@ class Enemies {
 		game.removeTickEvent(self.toString() + "se acerca al MC")
 	}
 
-	method recibirAtaque() {
+	override method recibirAtaque() {
 		self.validarVida()
 		game.sound("espada-sfx.mp3").play()
 		vida = vida - self.calculoDeDanio()
@@ -66,8 +66,6 @@ class Enemies {
 		}
 	}
 
-	method recibirAtaque(danio) {
-	}
 
 	method morir() {
 		game.schedule(1, { => self.dejarDeAtacar()})
@@ -222,8 +220,6 @@ class Enemies {
 		return self.position().x() < personajePrincipal.position().x()
 	}
 
-	method teEncontro(personaje) {
-	}
 
 	method estaVivo() {
 		return game.allVisuals().contains(self) and self.vida() > 0
@@ -423,7 +419,7 @@ class Wolf inherits Enemies {
 	}
 
 	override method teEncontro(objeto) {
-		if (objeto == personajePrincipal and personajePrincipal.blockStance()) {
+		if (objeto.nombre() == "personaje" and personajePrincipal.blockStance()) {
 			self.aturdirseBrevemente()
 			perdidaDeAtaque = ataque
 			ataque = 0
@@ -645,7 +641,7 @@ class Dragon inherits Enemies {
 	}
 }
 
-class Proyectiles {
+class Proyectiles inherits ObjetosInteractuables{
 //Inicializadas variables en null para que el IDE no tire error sin sentido(ya que las variables se inicializan al crear un objeto nuevo)
     var property position = null;
     var property image = null;
@@ -694,9 +690,9 @@ class Proyectiles {
 		direccion.move(self, 1)
 	}
 
-	method teEncontro(objeto) {
+	override method teEncontro(objeto) {
 		objeto.recibirAtaque((self.danioBase() * self.enemigoUtilizandolo().ataque()) / 100)
-		if (objeto == personajePrincipal) {
+		if (objeto.nombre() == "personaje") {
 			game.removeVisual(self)
 		}
 	}
@@ -705,11 +701,6 @@ class Proyectiles {
 		position = nuevaPosicion
 	}
 
-	method recibirAtaque() {
-	}
-
-	method recibirAtaque(danio) {
-	}
 
 }
 

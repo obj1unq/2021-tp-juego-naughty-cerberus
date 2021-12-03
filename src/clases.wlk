@@ -161,7 +161,7 @@ class MiPosicion {
 
 }
 
-class Teleport {
+class Teleport inherits ObjetosInteractuables{
 
 	var property xTP
 	var property yTP
@@ -172,31 +172,25 @@ class Teleport {
 
 	method position() = new Position(x = xTP, y = yTP)
 
-	method teEncontro(personaje) {
+	override method teEncontro(personaje) {
 		game.clear()
 		pantallaNueva.iniciar()
 		self.cambiarPosicion(personaje)
 	}
-
+	
 	method cambiarPosicion(personaje) {
 		personaje.position().x(posX)
 		personaje.position().y(posY)
-	}
-
-	method recibirAtaque() {
-	}
-
-	method recibirAtaque(danio) {
 	}
 
 }
 
 class Muro inherits Teleport {
 
+
 	override method teEncontro(personaje) {
 		self.cambiarPosicion(personaje)
 	}
-
 	override method cambiarPosicion(personaje) {
 		super(personaje)
 		self.darLaVuelta(personaje)
@@ -207,6 +201,28 @@ class Muro inherits Teleport {
 		personaje.direccion().darLaVuelta(personaje)
 		}
 }
+
+// Para evitar andar repitiendo código en cada uno de los objetos que interactuan o se encuentran con el MC
+// Los objetos heredaran los mensajes polimorficos de esta clase.
+
+class ObjetosInteractuables{
+	
+	method recibirAtaque(danio) {}
+
+	method recibirAtaque() {}
+	
+	method teEncontro(objeto) {}
+
+	method encontrasteAlMC(objeto){}
+	
+	method interactuar() {}
+	
+	method subir(objeto){
+	}
+	method bajar(objeto){
+	}
+}
+
 
 const tpTunelAbajo = new Teleport(xTP = 12, yTP = 1, pantallaNueva = pantalla1, posX = 4, posY = 9)
 

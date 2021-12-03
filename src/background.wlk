@@ -1,7 +1,7 @@
 import wollok.game.*
 import clases.*
 
-object backGround {
+object backGround inherits ObjetosInteractuables{
 
 	const property position = new MiPosicion(x = 0, y = 0)
 	var property fondo = "fondo"
@@ -9,8 +9,6 @@ object backGround {
 	method image() {
 		return "background_" + fondo + ".png"
 	}
-	
-	method teEncontro(objeto){}
 
 }
 

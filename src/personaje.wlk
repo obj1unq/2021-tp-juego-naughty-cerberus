@@ -4,7 +4,7 @@ import enemigos.*
 import misc.*
 import menus.*
 
-object personajePrincipal {
+object personajePrincipal inherits ObjetosInteractuables{
 
 	var property vida = 100
 	var property energia = 100
@@ -92,7 +92,7 @@ object personajePrincipal {
 		game.schedule(500, { => doubleTap = false})
 	}
 
-	method recibirAtaque(danio) {
+	override method recibirAtaque(danio) {
 		self.validarVida(danio)
 		vida = vida - self.calculoDeDanio(danio)
 		if (self.blockStance()) {
@@ -110,8 +110,6 @@ object personajePrincipal {
 		}
 	}
 
-	method recibirAtaque() {
-	}
 
 	method morir() {
 		game.removeVisual(self)
@@ -126,26 +124,28 @@ object personajePrincipal {
 	}
 
 	method subirSiHayEscalera() {
-		self.verificarQueHayaEscalera()
-		self.irAlPisoDeArriba()
+		self.colisiones().forEach{ objeto => objeto.subir(self)}
+//		self.verificarQueHayaEscalera()
+//		self.irAlPisoDeArriba()
 	}
 
 	method bajarSiHayEscotilla() {
-		self.verificarQueHayaEscotilla()
-		self.irAlPisoDeAbajo()
+		self.colisiones().forEach{ objeto => objeto.bajar(self)}
+//		self.verificarQueHayaEscotilla()
+//		self.irAlPisoDeAbajo()
 	}
 
-	method verificarQueHayaEscotilla() {
-		if (not self.colisiones().any({ objeto => objeto.esEscotilla()})) {
-			self.error("no hay escotilla para bajar")
-		}
-	}
-
-	method verificarQueHayaEscalera() {
-		if (not self.colisiones().any({ objeto => objeto.esEscalera()})) {
-			self.error("no hay escalera para subir")
-		}
-	}
+//	method verificarQueHayaEscotilla() {
+//		if (not self.colisiones().any({ objeto => objeto.esEscotilla()})) {
+//			self.error("no hay escotilla para bajar")
+//		}
+//	}
+//
+//	method verificarQueHayaEscalera() {
+//		if (not self.colisiones().any({ objeto => objeto.esEscalera()})) {
+//			self.error("no hay escalera para subir")
+//		}
+//	}
 
 	method colisiones() {
 		return game.colliders(self)
@@ -159,16 +159,13 @@ object personajePrincipal {
 		return self.colisiones().find{ objeto => objeto.esEscotilla() }
 	}
 
-	method teEncontro(objeto) {
+	override method teEncontro(objeto) {
+		objeto.encontrasteAlMC(self);
 	}
 
-	method irAlPisoDeArriba() {
-		self.actualizarPosicion(new MiPosicion(x = self.position().x(), y = self.position().y() + self.escaleraPresente().pisosQueSube()))
-	}
 
-	method irAlPisoDeAbajo() {
-		self.actualizarPosicion(new MiPosicion(x = self.position().x(), y = self.position().y() - self.escotillaPresente().pisosQueBaja()))
-	}
+
+
 
 	method caerSiNoEstasEnPiso() {
 		if (not self.estaEnElPiso()) {
@@ -177,9 +174,9 @@ object personajePrincipal {
 	}
 
 // agregado interactuar que con el/los objeto que colisiona le da la orden
-//	method interactuar(){
-//		game.colliders(self).interactuar()
-//	}
+	override method interactuar(){
+		self.colisiones().forEach{ objeto => objeto.interactuar()}
+	}
 
 
 	method estaEnElPiso() {
@@ -194,80 +191,84 @@ object personajePrincipal {
 		return game.colliders(self).contains(cajaDeBalas)
 	}
 
-	method agarrarBalaOCargarCannon() {
-		self.verificarQueEstaEnUnaCajaOUnCannon()
-		if (self.estaSobreUnaCajaDeBalas()) {
-			self.agarrarBalaSiNoTiene()
-		} else {
-			self.cargarCannonSiEstaDescargado()
-		}
-	}
+//	method agarrarBalaOCargarCannon() {
+//		self.verificarQueEstaEnUnaCajaOUnCannon()
+//		if (self.estaSobreUnaCajaDeBalas()) {
+//			self.agarrarBalaSiNoTiene()
+//		} else {
+//			self.cargarCannonSiEstaDescargado()
+//		}
+//	}
 
-	method verificarQueEstaEnUnaCajaOUnCannon() {
-		if (!self.estaSobreUnCannon() and !self.estaSobreUnaCajaDeBalas()) {
-			game.error("no estoy sobre un cañon o caja")
-		}
-	}
-
-	method agarrarBalaSiNoTiene() {
-		self.verificarQueNoTieneBala()
+	method agarrarBala(){
 		self.tieneBala(true)
 		game.say(self, "tengo una bala")
 		self.nombre("personajeConBala")
 		self.actualizarImagen()
 	}
+//	method verificarQueEstaEnUnaCajaOUnCannon() {
+//		if (!self.estaSobreUnCannon() and !self.estaSobreUnaCajaDeBalas()) {
+//			game.error("no estoy sobre un cañon o caja")
+//		}
+//	}
+//
+//	method agarrarBalaSiNoTiene() {
+//		self.verificarQueNoTieneBala()
+//		self.tieneBala(true)
+//		game.say(self, "tengo una bala")
+//		self.nombre("personajeConBala")
+//		self.actualizarImagen()
+//	}
+//
+//	method verificarQueNoTieneBala() {
+//		if (self.tieneBala()) {
+//			game.error("ya tengo una bala")
+//		}
+//	}
 
-	method verificarQueNoTieneBala() {
-		if (self.tieneBala()) {
-			game.error("ya tengo una bala")
-		}
-	}
+//	method cargarCannonSiEstaDescargado() {
+//		self.verificarQueElCannonEstaDescargado()
+//		self.verificarQueTengoBala()
+//		self.cannonPresente().cargarSiTieneBala()
+//		self.nombre("personaje")
+//		self.actualizarImagen()
+//	}
 
-	method cargarCannonSiEstaDescargado() {
-		self.verificarQueElCannonEstaDescargado()
-		self.verificarQueTengoBala()
-		self.cannonPresente().cargarSiTieneBala()
-		self.nombre("personaje")
-		self.actualizarImagen()
-	}
+//	method verificarQueElCannonEstaDescargado() {
+//		if (self.cannonPresente().estaCargado()) {
+//			game.say(self, "este cañon ya esta cargado")
+//			game.error("")
+//		}
+//	}
 
-	method verificarQueElCannonEstaDescargado() {
-		if (self.cannonPresente().estaCargado()) {
-			game.say(self, "este cañon ya esta cargado")
-			game.error("")
-		}
-	}
 
-	method verificarQueTengoBala() {
-		if (!self.tieneBala()) {
-			game.say(self, "no tengo bala para cargar")
-			game.error("")
-		}
-	}
+//	method verificarQueTengoBala() {
+//		if (!self.tieneBala()) {
+//			game.say(self, "no tengo bala para cargar")
+//			game.error("")
+//		}
+//	}
 
-	method cannonPresente() {
-		return game.colliders(self).find{ objeto => objeto.esCannon() }
-	}
-
-	method dispararCannon() {
-		self.verificarQueEstaEnUnCannon()
-		self.cannonPresente().disparar()
-	}
-
-	method verificarQueEstaEnUnCannon() {
-		if (!self.estaSobreUnCannon()) {
-			game.say(self, "no estoy sobre un cañon")
-			game.error("")
-		}
-	}
-
-	method esCannon() {
-		return false
-	}
+//	method cannonPresente() {
+//		return game.colliders(self).find{ objeto => objeto.esCannon() }
+//	}
+//	
+//
+//	method dispararCannon() {
+//		self.verificarQueEstaEnUnCannon()
+//		self.cannonPresente().disparar()
+//	}
+//
+//	method verificarQueEstaEnUnCannon() {
+//		if (!self.estaSobreUnCannon()) {
+//			game.say(self, "no estoy sobre un cañon")
+//			game.error("")
+//		}
+//	}
 
 }
 
-object espadaMC {
+object espadaMC inherits ObjetosInteractuables{
 
 	var image = "sword_void.png"
 
@@ -287,21 +288,17 @@ object espadaMC {
 
 	method nombre() = "sword"
 
-	method teEncontro(personaje) {
-	}
 
-	method recibirAtaque() {
-	}
-
-	method recibirAtaque(danio) {
-	}
-
-	method mirarHacia() {
-		return if (self.direccion() == left) {
-			personajePrincipal.position().x() - 2
-		} else {
-			personajePrincipal.position().x()
-		}
+//	method mirarHacia() {
+//
+//		return if (self.direccion() == left) {
+//			personajePrincipal.position().x() - 2
+//		} else {
+//			personajePrincipal.position().x()
+//		}
+//	}
+	method mirarHacia(){
+		return self.direccion().mirarHacia(personajePrincipal)
 	}
 
 	method esEscalera() {
@@ -360,6 +357,9 @@ object left {
 			objetivos += game.getObjectsIn(posicion)
 		})
 	}
+	method mirarHacia(objeto){
+		return objeto.position().x() - 2
+	}
 
 }
 
@@ -408,7 +408,9 @@ object right {
 			objetivos += game.getObjectsIn(posicion)
 		})
 	}
-
+	method mirarHacia(objeto){
+		return objeto.position().x()
+	}
 }
 
 object up {
@@ -449,7 +451,7 @@ object down {
 
 }
 
-object wulgrym { //En un futuro,de continuarse el juego,el seria nuestro mercader
+object wulgrym inherits ObjetosInteractuables{ //En un futuro,de continuarse el juego,el seria nuestro mercader
 
 	var property position = new MiPosicion(x = 3, y = 1)
 	var intentos = 1
@@ -458,7 +460,7 @@ object wulgrym { //En un futuro,de continuarse el juego,el seria nuestro mercade
 		return "wulgrym.png"
 	}
 
-	method teEncontro(objeto) {
+	override method teEncontro(objeto) {
 		if (intentos == 1) {
 			game.addVisual(wulgrymDialog)
 			self.configurarDialogo()
@@ -470,15 +472,9 @@ object wulgrym { //En un futuro,de continuarse el juego,el seria nuestro mercade
 		keyboard.enter().onPressDo({ wulgrymDialog.siguienteDialogo()})
 	}
 
-	method recibirAtaque() {
-	}
-
-	method recibirAtaque(danio) {
-	}
-
 }
 
-object wulgrymDialog {
+object wulgrymDialog inherits ObjetosInteractuables{
 
 	var numeroDialogo = 1
 	var property position = new MiPosicion(x = 0, y = 0)
@@ -490,16 +486,6 @@ object wulgrymDialog {
 	method siguienteDialogo() {
 		numeroDialogo = (numeroDialogo + 1).min(4)
 	}
-
-	method teEncontro(objeto) {
-	}
-
-	method recibirAtaque() {
-	}
-
-	method recibirAtaque(danio) {
-	}
-
 
 }
 
