@@ -12,6 +12,8 @@ En este juego manejamos a _NombrePendiente_, nuestro personaje principal, el cua
 
 # Controles/Reglas del juego
 
+![controles](assets/Screenshots/controles.png)
+
 Para mover al personaje utilizamos las teclas:
 - _Tecla W:_ El personaje sube una escalera, o se desplaza hacia otra zona.
 - _Tecla S:_ El personaje baja una escalera, o se desplaza hacia otra zona.
