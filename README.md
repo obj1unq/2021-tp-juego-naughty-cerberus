@@ -46,13 +46,13 @@ __Jefe:__
 //TODO: desarrollar
 
 
-# Desarrolladores
+# Desarrolladores: 
 - Desarrollador principal: Lo Surdo, Braian Gabriel
 - Colaboradores: Lautaro Martin Villagra y Luciano Ruggeri
 
 Todos estudiantes de programación de la misma comisión de Objetos I en la UNQ.
 
-# Acerca de:
+# Acerca de
 Whispers in the Dark es un juego que fue desarrollado durante el primer cuatrimestre de 2020 por "Naughty Cerberus", nombre de grupo el cual fue elegido al comienzo para dar inicio al proyecto final de entrega necesario para aprobar la materia de Programacion Orientada a Objetos I de la Universidad Nacional de Quilmes. 
 Inspirados en la idea de desarrollar un juego estilo Metroid-vania (Nombre dado a este tipo de juegos), nos pusimos a pensar como aplicar nuestros conocimientos sobre la programacion orientada a objetos recientemente adquiridas para poder desarrollar un juego de este tipo. Vimos el potencial que podia tener Wollok para el desarrollo de un juego de este estilo, por lo cual nos decidimos a encarar nuestro proyecto en base a esa idea. 
 Tras la finalización de la cursada,nuestro grupo "Naughty Cerberus" abandonó el proyecto(Debido a que cumplió su objetivo de aprobacion como trabajo final para la materia), por lo cual todo el desarrollo posterior,correccion de errores,refactoring de código y postulación al concurso Wollok Gaming 2021 fue realizada por Braian Gabriel Lo Surdo, quien decidió continuar el proyecto por su cuenta, un poco más.
