@@ -1,5 +1,5 @@
 # Concurso Wollok Game 2021 - Presentacion de juego: Whispers in the Dark
-![menu inicio](assets/Screenshots/mainMenu1.png)
+![menu inicio](assets/Screenshots/mainMenu.png)
  
 # Introducción
 
@@ -11,14 +11,25 @@ En este juego manejamos a _NombrePendiente_, nuestro personaje principal, el cua
 
 
 # Controles/Reglas del juego
-Para mover al jugador utilizamos las teclas de dirección:
-- _Tecla W:_ El jugador sube una escalera, o se desplaza hacia otra zona.
-- _Tecla S:_ El jugador baja una escalera, o se desplaza hacia otra zona.
-- _Tecla A:_ El jugador se mueve hacia la izquierda.
-- _Tecla D:_ El jugador se mueve hacia la derecha.
 
-//TODO
-- _TeclasPendientes_ El jugador interactúa con el objeto.
+Para mover al personaje utilizamos las teclas:
+- _Tecla W:_ El personaje sube una escalera, o se desplaza hacia otra zona.
+- _Tecla S:_ El personaje baja una escalera, o se desplaza hacia otra zona.
+- _Tecla A:_ El personaje se mueve hacia la izquierda.
+- _Tecla D:_ El personaje se mueve hacia la derecha.
+
+Para realizar las acciones con nuestro personaje:
+
+- _Tecla J_ El personaje ataca.
+- _Tecla I_ El personaje interactúa con el objeto.
+- _Tecla K_ El personaje bloquea con el escudo.
+- _Tecla L_ El personaje realiza una accion especial (Aún no implementada).
+
+Para recorrer los menus del juego:
+
+- _Tecla ENTER_ El personaje ataca.
+- _Tecla BACKSPACE_ El personaje interactúa con el objeto.
+
 
 
 # Niveles

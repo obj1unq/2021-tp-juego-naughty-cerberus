@@ -19,6 +19,8 @@ object creadorDeTexto{
 object convertidorDeTextoALista{
 	// recibe un string y lo separa una lista de letras por separada 
 	// que luego serán re-creadas como objetos visualmente en la pantalla
+	//(deberia haber un maximo de letras disponible para mostrar en pantalla y
+	// que lo siguiente se muestre al apretar enter)
 	method convertir(texto){
 		
 	}
