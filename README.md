@@ -53,8 +53,8 @@ Para poder golpear al dragon de forma segura, deberás agarrar las bolas de cañ
 # Desarrolladores: 
 
 - Lo Surdo, Braian Gabriel
-- Lautaro Martin Villagra 
-- Luciano Ruggeri
+- Villagra, Lautaro Martin 
+- Ruggeri, Luciano
 
 Todos estudiantes de programación de la misma comisión de Objetos I en la UNQ.
 
