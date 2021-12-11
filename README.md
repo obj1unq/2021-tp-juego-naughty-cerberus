@@ -38,16 +38,21 @@ Para recorrer los menus del juego:
 El juego está separado por niveles, a su vez, estos niveles contienen distintas "pantallas" en la cual el personaje debe ir recorriendo, como si de un laberinto se tratase,hasta llegar a la sala del jefe y/o encontrar algo que en especifico. La idea de esto, es poder expandir casi sin limites la creatividad y los niveles mediante el agregado de zonas nuevas que contengan niveles y sus pantallas correspondientes.
 
 __Primer nivel:__ 
-[Insertar imagen nivel]
-//TODO: desarrollar
+![nivel1](assets/Screenshots/nivel1Pantalla1.png)
+
+Luego de las escenas introductorias de la historia, el MC deberá superar distintas pantallas dentro del nivel hasta llegar a la sala del jefe de dicho nivel. Para esto deberá ir avanzando, encontrando las salidas de dichas pantallas hacia las siguientes,y derrotando a los enemigos que se interpongan en esta.
+
+![nivel1](assets/Screenshots/nivel1Pantalla2.png)
 
 __Jefe:__
-[Insertar imagen nivel]
-//TODO: desarrollar
+![PrimerJefe](assets/Screenshots/JefeDragon.png)
+El jefe de este primer nivel, es un dragon el cual lanza bolas de fuego que el MC debe esquivar, para esto, puede subirse y bajarse usando las escalaras que hay en cada una de las plataformas.
+Para poder golpear al dragon de forma segura, deberás agarrar las bolas de cañon de las cajas de balas de cañon con el boton de interactuar y cargar los cañones, una vez hecho esto, al disparar e impactar 3 balas de cañon, el dragon quedara aturdido durante un breve periodo, en el cual podrá atacar a la bestia.
 
 
 # Desarrolladores: 
-- Desarrollador principal: Lo Surdo, Braian Gabriel
+
+- Desarrollador: Lo Surdo, Braian Gabriel
 - Colaboradores: Lautaro Martin Villagra y Luciano Ruggeri
 
 Todos estudiantes de programación de la misma comisión de Objetos I en la UNQ.

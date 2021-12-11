@@ -210,14 +210,6 @@ class  BarraDe inherits ObjetosInteractuables{
 
 }
 
-object barraDeVidaMC inherits BarraDe{
-
-	override method getUsuario(){
-		return personajePrincipal
-	}
-
-}
-
 object barraDeEnergiaMC inherits BarraDe{
 	
 	override method getUsuario(){
@@ -248,7 +240,7 @@ class BarraDeVidaEnemigo inherits BarraDe{
 		return "vida_enemigo_"
 	}
 	
-	override method cantDeVida() { // hay que hacer que cantDeVida lo convierta en % y luego lo divida por 10
+	override method cantDeVida() { 
 		return ((self.getUsuario().vida() / self.vidaInicial().max(1)).roundUp(1) * 100).max(0) / 10
 	}
 
@@ -267,6 +259,14 @@ object errorReporter {
 	var property image = "void.png"
 
 }
+
+
+// BarraMC
+
+const barraDeVidaMC = new BarraDe(usuario = personajePrincipal)
+
+
+// Pociones
 
 const pocionDe15 = new PocionDeVida(vidaQueRecupera = 15)
 
