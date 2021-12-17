@@ -333,15 +333,15 @@ object left {
 	}
 
 	method imagenPersonajeStand(objeto) {
-		return objeto + "_Stand_left.png"
+		return objeto + "_stand_left.png"
 	}
 
 	method imagenPersonajeAttack(objeto) { // probablemente los enemigos melee al igual que el MC tendran problemas al atacar del lado izquierdo
-		return objeto + "_Attack_left.png"
+		return objeto + "_attack_left.png"
 	}
 
 	method imagenPersonajeBlock(objeto) {
-		return objeto + "_Block_left.png"
+		return objeto + "_block_left.png"
 	}
 
 	method obtenerObjetosParaAtacar(objeto, distancia) {
@@ -384,15 +384,15 @@ object right {
 	}
 
 	method imagenPersonajeStand(objeto) {
-		return objeto + "_Stand_right.png"
+		return objeto + "_stand_right.png"
 	}
 
 	method imagenPersonajeAttack(objeto) { // probablemente los enemigos melee al igual que el MC tendran problemas al atacar del lado izquierdo
-		return objeto + "_Attack_right.png"
+		return objeto + "_attack_right.png"
 	}
 
 	method imagenPersonajeBlock(objeto) {
-		return objeto + "_Block_right.png"
+		return objeto + "_block_right.png"
 	}
 
 	method obtenerObjetosParaAtacar(objeto, distancia) {
@@ -420,7 +420,7 @@ object up {
 	}
 
 	method imagenPersonajeStand(objeto) {
-		return objeto + "_Stand_up.png"
+		return objeto + "_stand_up.png"
 	}
 	method darLaVuelta(objeto){
 		objeto.direccion(down)
@@ -439,7 +439,7 @@ object down {
 	}
 
 	method imagenPersonajeStand(objeto) {
-		return objeto + "_Stand_up.png"
+		return objeto + "_stand_up.png"
 	}
 	method darLaVuelta(objeto){
 		objeto.direccion(up)

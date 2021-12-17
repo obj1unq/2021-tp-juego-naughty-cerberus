@@ -143,7 +143,7 @@ class Lightning {
 	}
 
 	method animacion() {
-		return new Mode(accion = "Falling", speedFrame = 35, totalImg = 10, time = 0)
+		return new Mode(accion = "falling", speedFrame = 35, totalImg = 10, time = 0)
 	}
 	method standPositionImage(){
 		return "void.png"
@@ -165,7 +165,7 @@ object raining {
 	}
 
 	method animacion() {
-		return new Mode(accion = "Falling", speedFrame = 100, totalImg = 9, time = 0)
+		return new Mode(accion = "falling", speedFrame = 100, totalImg = 9, time = 0)
 	}
 }
 

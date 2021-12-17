@@ -278,7 +278,7 @@ class Spectrum inherits Enemies {
 	}
 
 	override method dieMode() {
-		return new Mode(accion = "Die", speedFrame = 100, totalImg = 8, time = 0)
+		return new Mode(accion = "die", speedFrame = 100, totalImg = 8, time = 0)
 	}
 
 }
@@ -314,7 +314,7 @@ class Ogre inherits Enemies {
 	}
 
 	override method dieMode() {
-		return new Mode(accion = "Die", speedFrame = 250, totalImg = 7, time = 0)
+		return new Mode(accion = "die", speedFrame = 250, totalImg = 7, time = 0)
 	}
 
 	override method morir() {
@@ -395,7 +395,7 @@ class Wolf inherits Enemies {
 	}
 
 	override method dieMode() {
-		return new Mode(accion = "Die", speedFrame = 250, totalImg = 8, time = 0)
+		return new Mode(accion = "die", speedFrame = 250, totalImg = 8, time = 0)
 	}
 
 	override method verificarQueSigaEnMiNivel() {
@@ -631,7 +631,7 @@ class Dragon inherits Enemies {
 	}
 
 	override method dieMode() {
-		return new Mode(accion = "Die", speedFrame = 250, totalImg = 4, time = 0)
+		return new Mode(accion = "die", speedFrame = 250, totalImg = 4, time = 0)
 	}
 	method soloSeMuereUnaVez(){
 		if(intentos == 1){
