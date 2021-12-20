@@ -40,8 +40,8 @@ class Run inherits Mode {
 	}
 
 }
-const runModeMC = new Run(accion = "Run", speedFrame = 30, totalImg = 4, time = 0)
-const runModeWolf = new Run(accion = "Run", speedFrame = 45, totalImg = 4, time = 0)
+const runModeMC = new Run(accion = "run", speedFrame = 30, totalImg = 4, time = 0)
+const runModeWolf = new Run(accion = "run", speedFrame = 45, totalImg = 4, time = 0)
 
 /*
 //object runModeL inherits Mode(accion = "Run", speedFrame = 30, totalImg = 4, time = 0) {
@@ -127,12 +127,12 @@ class AttackMC inherits Mode { //quiza luego este attackMC se convierta en un at
 //	}
 }
 
-const attackMode = new AttackMC(accion = "Attack", speedFrame = 65, totalImg = 3, time = 0)
+const attackMode = new AttackMC(accion = "attack", speedFrame = 65, totalImg = 3, time = 0)
 
 //const enemigoAtacarADistancia = new Mode(accion = "AttackDistance",speedFrame = 65, totalImg = 3, time=0)
 //const enemigoAtacarAAMelee = new Mode(accion = "AttackMelee",speedFrame = 65, totalImg = 3, time=0)
 //const dodgeMode = new Mode(accion = "Dodge", speedFrame = 65, totalImg = 3, time = 0)
-const dieModeMC = new Mode(accion = "Die", speedFrame = 60, totalImg = 3, time = 0)
+const dieModeMC = new Mode(accion = "die", speedFrame = 60, totalImg = 3, time = 0)
 
 class MiPosicion {
 
