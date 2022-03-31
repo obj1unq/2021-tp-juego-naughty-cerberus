@@ -1,4 +1,4 @@
-# Concurso Wollok Game 2021 - Presentacion de juego: Whispers in the Dark
+# Ganador 3er Puesto: Wollok Game 2021 - Presentacion de juego: Whispers in the Dark
 ![menu inicio](assets/Screenshots/mainMenu.png)
  
 # Introducción
